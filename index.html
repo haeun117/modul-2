@@ -2297,6 +2297,8 @@
         currentLayout = null;
         resetToken += 1;
         const token = resetToken;
+        stage.nodes = [];
+        renderStage();
         if (layoutSpinner) layoutSpinner.classList.remove("hidden");
         const attemptLayout = () => {
           if (token !== resetToken) return;
