@@ -1525,7 +1525,7 @@
           const chordV = ["sol", "ti", "re"].map((noteId) => getNoteNameForNoteId(noteId));
           const chordVHigh = ["sol2", "ti", "re"].map((noteId) => getNoteNameForNoteId(noteId));
           const progressionX = (currentStage.id === 7 || currentStage.id === 8)
-            ? staffLayout.chordXProgression.map((x) => x - 16)
+            ? staffLayout.chordXProgression.map((x) => x - 20)
             : staffLayout.chordXProgression;
           if (currentStage.id === 4) {
             renderChordAt(chordI, progressionX[0], "I");
