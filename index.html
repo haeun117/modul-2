@@ -1819,6 +1819,7 @@
       }
 
       function isLayoutComplex(layout) {
+        let invalidPairs = 0;
         currentStage.notes.forEach((note) => {
           const pair = layout.filter((node) => node.note === note);
           if (pair.length !== 2) return;
@@ -1827,8 +1828,11 @@
           const isAdjacent = dx + dy === 1;
           const isDiagonal = dx === 1 && dy === 1;
           const isStraightLine = dx === 0 || dy === 0;
-          if (isAdjacent || isDiagonal || isStraightLine) return false;
+          if (isAdjacent || isDiagonal || isStraightLine) {
+            invalidPairs += 1;
+          }
         });
+        if (invalidPairs > 1) return false;
 
         const rowSet = new Set();
         const colSet = new Set();
