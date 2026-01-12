@@ -1606,10 +1606,11 @@
       }
 
       function playChord() {
-        if (currentStage.id === 4 || currentStage.id === 5 || currentStage.id === 6 || currentStage.id === 7) {
+        if (currentStage.id === 4 || currentStage.id === 5 || currentStage.id === 6 || currentStage.id === 7 || currentStage.id === 8) {
           const chordI = ["do", "mi", "sol"].map((note) => noteFrequencies[note]).filter(Boolean);
           const chordIV = ["fa", "la", "do2"].map((note) => noteFrequencies[note]).filter(Boolean);
           const chordV = ["sol", "ti", "re"].map((note) => noteFrequencies[note]).filter(Boolean);
+          const chordVHigh = ["sol2", "ti", "re"].map((note) => noteFrequencies[note]).filter(Boolean);
           if (currentStage.id === 4) {
             chordI.forEach((freq) => playTone(freq, 0.4, 0.25));
             setTimeout(() => {
@@ -1626,14 +1627,21 @@
             setTimeout(() => {
               chordIStage6.forEach((freq) => playTone(freq, 0.4, 0.25));
             }, 800);
-          } else {
-            const chordVStage6 = ["sol2", "ti", "re"].map((note) => noteFrequencies[note]).filter(Boolean);
+          } else if (currentStage.id === 7) {
             chordI.forEach((freq) => playTone(freq, 0.4, 0.25));
             setTimeout(() => {
               chordIV.forEach((freq) => playTone(freq, 0.4, 0.25));
             }, 800);
             setTimeout(() => {
-              chordVStage6.forEach((freq) => playTone(freq, 0.4, 0.25));
+              chordVHigh.forEach((freq) => playTone(freq, 0.4, 0.25));
+            }, 1600);
+          } else {
+            chordIV.forEach((freq) => playTone(freq, 0.4, 0.25));
+            setTimeout(() => {
+              chordVHigh.forEach((freq) => playTone(freq, 0.4, 0.25));
+            }, 800);
+            setTimeout(() => {
+              chordI.forEach((freq) => playTone(freq, 0.4, 0.25));
             }, 1600);
           }
           return;
