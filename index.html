@@ -1,0 +1,2356 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Draw Chord - Stage 1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: "Pretendard", "Inter", system-ui, sans-serif;
+      }
+      .home-sky {
+        position: relative;
+        color: #e2e8f0;
+        background:
+          radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.35), transparent 45%),
+          radial-gradient(circle at 80% 10%, rgba(14, 165, 233, 0.25), transparent 40%),
+          radial-gradient(circle at 60% 80%, rgba(56, 189, 248, 0.2), transparent 50%),
+          linear-gradient(180deg, #0f172a 0%, #111827 40%, #0b1020 100%);
+        overflow: hidden;
+      }
+      .game-sky {
+        position: relative;
+        background:
+          radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.35), transparent 45%),
+          radial-gradient(circle at 80% 10%, rgba(14, 165, 233, 0.25), transparent 40%),
+          radial-gradient(circle at 60% 80%, rgba(56, 189, 248, 0.2), transparent 50%),
+          linear-gradient(180deg, #0f172a 0%, #111827 40%, #0b1020 100%);
+        overflow: hidden;
+      }
+      .home-sky::before {
+        content: "";
+        position: absolute;
+        inset: -20%;
+        background:
+          radial-gradient(1px 1px at 6% 14%, rgba(255, 255, 255, 0.85), transparent),
+          radial-gradient(1px 1px at 10% 32%, rgba(191, 219, 254, 0.75), transparent),
+          radial-gradient(2px 2px at 12% 58%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(1px 1px at 16% 76%, rgba(186, 230, 253, 0.7), transparent),
+          radial-gradient(1px 1px at 20% 22%, rgba(255, 255, 255, 0.7), transparent),
+          radial-gradient(2px 2px at 24% 44%, rgba(255, 255, 255, 0.85), transparent),
+          radial-gradient(1px 1px at 28% 66%, rgba(191, 219, 254, 0.65), transparent),
+          radial-gradient(2px 2px at 32% 12%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(1px 1px at 36% 82%, rgba(167, 243, 208, 0.65), transparent),
+          radial-gradient(1px 1px at 40% 34%, rgba(255, 255, 255, 0.75), transparent),
+          radial-gradient(2px 2px at 44% 56%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(1px 1px at 48% 18%, rgba(191, 219, 254, 0.7), transparent),
+          radial-gradient(1px 1px at 52% 74%, rgba(255, 255, 255, 0.75), transparent),
+          radial-gradient(2px 2px at 56% 36%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(1px 1px at 60% 86%, rgba(191, 219, 254, 0.7), transparent),
+          radial-gradient(1px 1px at 64% 52%, rgba(255, 255, 255, 0.8), transparent),
+          radial-gradient(2px 2px at 68% 24%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(1px 1px at 72% 68%, rgba(148, 197, 255, 0.7), transparent),
+          radial-gradient(1px 1px at 76% 14%, rgba(255, 255, 255, 0.8), transparent),
+          radial-gradient(2px 2px at 80% 40%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(1px 1px at 84% 62%, rgba(191, 219, 254, 0.75), transparent),
+          radial-gradient(2px 2px at 88% 22%, rgba(255, 255, 255, 0.95), transparent),
+          radial-gradient(1px 1px at 92% 78%, rgba(148, 197, 255, 0.7), transparent),
+          radial-gradient(1px 1px at 96% 48%, rgba(255, 255, 255, 0.75), transparent),
+          radial-gradient(2px 2px at 6% 48%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(2px 2px at 18% 10%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(2px 2px at 30% 88%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(2px 2px at 46% 8%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(2px 2px at 58% 62%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(2px 2px at 70% 90%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(2px 2px at 86% 36%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(2px 2px at 94% 12%, rgba(255, 255, 255, 0.9), transparent);
+        opacity: 0.8;
+        animation: twinkleSoft 9s infinite ease-in-out;
+      }
+      .home-sky::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 15% 65%, rgba(56, 189, 248, 0.12), transparent 35%),
+          radial-gradient(circle at 85% 55%, rgba(59, 130, 246, 0.12), transparent 40%),
+          radial-gradient(1px 1px at 8% 40%, rgba(255, 255, 255, 0.5), transparent),
+          radial-gradient(1px 1px at 14% 60%, rgba(191, 219, 254, 0.5), transparent),
+          radial-gradient(1px 1px at 26% 24%, rgba(255, 255, 255, 0.45), transparent),
+          radial-gradient(2px 2px at 30% 70%, rgba(255, 255, 255, 0.55), transparent),
+          radial-gradient(1px 1px at 42% 18%, rgba(165, 243, 252, 0.4), transparent),
+          radial-gradient(1px 1px at 50% 50%, rgba(255, 255, 255, 0.5), transparent),
+          radial-gradient(2px 2px at 62% 30%, rgba(255, 255, 255, 0.6), transparent),
+          radial-gradient(1px 1px at 70% 58%, rgba(255, 255, 255, 0.45), transparent),
+          radial-gradient(1px 1px at 78% 20%, rgba(191, 219, 254, 0.45), transparent),
+          radial-gradient(2px 2px at 86% 74%, rgba(255, 255, 255, 0.6), transparent),
+          radial-gradient(1px 1px at 94% 44%, rgba(255, 255, 255, 0.45), transparent),
+          radial-gradient(2px 2px at 18% 46%, rgba(255, 255, 255, 0.6), transparent),
+          radial-gradient(2px 2px at 38% 82%, rgba(255, 255, 255, 0.6), transparent),
+          radial-gradient(2px 2px at 54% 12%, rgba(255, 255, 255, 0.6), transparent),
+          radial-gradient(2px 2px at 76% 82%, rgba(255, 255, 255, 0.6), transparent);
+        mix-blend-mode: screen;
+        animation: twinkleSlow 12s infinite ease-in-out;
+      }
+      .game-sky::before {
+        content: "";
+        position: absolute;
+        inset: -20%;
+        background:
+          radial-gradient(1px 1px at 6% 14%, rgba(255, 255, 255, 0.85), transparent),
+          radial-gradient(1px 1px at 10% 32%, rgba(191, 219, 254, 0.75), transparent),
+          radial-gradient(2px 2px at 12% 58%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(1px 1px at 16% 76%, rgba(186, 230, 253, 0.7), transparent),
+          radial-gradient(1px 1px at 20% 22%, rgba(255, 255, 255, 0.7), transparent),
+          radial-gradient(2px 2px at 24% 44%, rgba(255, 255, 255, 0.85), transparent),
+          radial-gradient(1px 1px at 28% 66%, rgba(191, 219, 254, 0.65), transparent),
+          radial-gradient(2px 2px at 32% 12%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(1px 1px at 36% 82%, rgba(167, 243, 208, 0.65), transparent),
+          radial-gradient(1px 1px at 40% 34%, rgba(255, 255, 255, 0.75), transparent),
+          radial-gradient(2px 2px at 44% 56%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(1px 1px at 48% 18%, rgba(191, 219, 254, 0.7), transparent),
+          radial-gradient(1px 1px at 52% 74%, rgba(255, 255, 255, 0.75), transparent),
+          radial-gradient(2px 2px at 56% 36%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(1px 1px at 60% 86%, rgba(191, 219, 254, 0.7), transparent),
+          radial-gradient(1px 1px at 64% 52%, rgba(255, 255, 255, 0.8), transparent),
+          radial-gradient(2px 2px at 68% 24%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(1px 1px at 72% 68%, rgba(148, 197, 255, 0.7), transparent),
+          radial-gradient(1px 1px at 76% 14%, rgba(255, 255, 255, 0.8), transparent),
+          radial-gradient(2px 2px at 80% 40%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(1px 1px at 84% 62%, rgba(191, 219, 254, 0.75), transparent),
+          radial-gradient(2px 2px at 88% 22%, rgba(255, 255, 255, 0.95), transparent),
+          radial-gradient(1px 1px at 92% 78%, rgba(148, 197, 255, 0.7), transparent),
+          radial-gradient(1px 1px at 96% 48%, rgba(255, 255, 255, 0.75), transparent),
+          radial-gradient(2px 2px at 6% 48%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(2px 2px at 18% 10%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(2px 2px at 30% 88%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(2px 2px at 46% 8%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(2px 2px at 58% 62%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(2px 2px at 70% 90%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(2px 2px at 86% 36%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(2px 2px at 94% 12%, rgba(255, 255, 255, 0.9), transparent);
+        opacity: 0.8;
+        animation: twinkleSoft 9s infinite ease-in-out;
+        pointer-events: none;
+      }
+      .game-sky::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 15% 65%, rgba(56, 189, 248, 0.12), transparent 35%),
+          radial-gradient(circle at 85% 55%, rgba(59, 130, 246, 0.12), transparent 40%),
+          radial-gradient(1px 1px at 8% 40%, rgba(255, 255, 255, 0.5), transparent),
+          radial-gradient(1px 1px at 14% 60%, rgba(191, 219, 254, 0.5), transparent),
+          radial-gradient(1px 1px at 26% 24%, rgba(255, 255, 255, 0.45), transparent),
+          radial-gradient(2px 2px at 30% 70%, rgba(255, 255, 255, 0.55), transparent),
+          radial-gradient(1px 1px at 42% 18%, rgba(165, 243, 252, 0.4), transparent),
+          radial-gradient(1px 1px at 50% 50%, rgba(255, 255, 255, 0.5), transparent),
+          radial-gradient(2px 2px at 62% 30%, rgba(255, 255, 255, 0.6), transparent),
+          radial-gradient(1px 1px at 70% 58%, rgba(255, 255, 255, 0.45), transparent),
+          radial-gradient(1px 1px at 78% 20%, rgba(191, 219, 254, 0.45), transparent),
+          radial-gradient(2px 2px at 86% 74%, rgba(255, 255, 255, 0.6), transparent),
+          radial-gradient(1px 1px at 94% 44%, rgba(255, 255, 255, 0.45), transparent),
+          radial-gradient(2px 2px at 18% 46%, rgba(255, 255, 255, 0.6), transparent),
+          radial-gradient(2px 2px at 38% 82%, rgba(255, 255, 255, 0.6), transparent),
+          radial-gradient(2px 2px at 54% 12%, rgba(255, 255, 255, 0.6), transparent),
+          radial-gradient(2px 2px at 76% 82%, rgba(255, 255, 255, 0.6), transparent);
+        mix-blend-mode: screen;
+        animation: twinkleSlow 12s infinite ease-in-out;
+        pointer-events: none;
+      }
+      .game-sky > * {
+        position: relative;
+        z-index: 1;
+      }
+      .home-shell {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 72rem;
+        margin: 0 auto;
+      }
+      .home-title {
+        font-family: "Cinzel", "Pretendard", serif;
+        letter-spacing: 0.02em;
+      }
+      .hover-panel {
+        position: absolute;
+        right: 80px;
+        top: 34px;
+        z-index: 3;
+        min-width: 300px;
+        max-width: 360px;
+        padding: 18px 20px;
+        border-radius: 16px;
+        background: rgba(15, 23, 42, 0.62);
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        color: #e2e8f0;
+        font-size: 14px;
+        line-height: 1.5;
+        letter-spacing: 0.02em;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.45);
+        opacity: 0;
+        transform: translateY(-6px);
+        pointer-events: none;
+        transition: opacity 0.25s ease, transform 0.25s ease;
+      }
+      .hover-panel.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .hover-panel .panel-title {
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-size: 13px;
+        color: #f8fafc;
+      }
+      .hover-panel .panel-subtitle {
+        margin-top: 4px;
+        font-size: 14px;
+        color: #cbd5f5;
+        white-space: pre-line;
+      }
+      .hover-panel .panel-divider {
+        height: 1px;
+        margin: 10px 0;
+        background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.5), transparent);
+      }
+      .hover-panel .panel-detail {
+        font-size: 12px;
+        color: #e2e8f0;
+        white-space: pre-line;
+      }
+      .part-star {
+        position: absolute;
+        width: 110px;
+        height: 110px;
+        border: none;
+        background: transparent;
+        color: #e2e8f0;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition: transform 0.3s ease, filter 0.3s ease;
+      }
+      .part-star .star-core {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 20px;
+        height: 20px;
+        border-radius: 999px;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0.35) 60%, transparent 75%);
+        box-shadow:
+          0 0 14px rgba(255, 255, 255, 0.9),
+          0 0 40px rgba(59, 130, 246, 0.6),
+          0 0 80px rgba(14, 165, 233, 0.4);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .part-star::before,
+      .part-star::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 70px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
+        transform: translate(-50%, -50%);
+        filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+      }
+      .part-star::after {
+        width: 2px;
+        height: 70px;
+        background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.9), transparent);
+      }
+      .part-star:hover {
+        transform: scale(1.14);
+        filter: drop-shadow(0 0 26px rgba(255, 255, 255, 0.9));
+      }
+      .part-star:hover .star-core {
+        animation: starPulse 0.9s ease-in-out infinite;
+        box-shadow:
+          0 0 18px rgba(255, 255, 255, 1),
+          0 0 48px rgba(59, 130, 246, 0.8),
+          0 0 110px rgba(14, 165, 233, 0.6);
+      }
+      .part-label {
+        position: absolute;
+        left: 50%;
+        top: -14px;
+        transform: translateX(-50%);
+        font-size: 12px;
+        color: #e2e8f0;
+        letter-spacing: 0.2em;
+      }
+      .part-star.part-1 {
+        left: 8%;
+        top: 10%;
+      }
+      .part-star.part-2 {
+        left: 50%;
+        top: 72%;
+        transform: translate(-50%, -50%);
+      }
+      .part-star.part-3 {
+        left: 84%;
+        top: 99%;
+      }
+      .stage-picker {
+        position: absolute;
+        z-index: 2;
+      }
+      .stage-picker.part-1 {
+        left: 18%;
+        top: 20%;
+      }
+      .stage-picker.part-2 {
+        left: 50%;
+        top: 94%;
+        transform: translateX(-50%);
+      }
+      .stage-picker.part-3 {
+        left: 84%;
+        top: 116%;
+        transform: translateX(-100%);
+      }
+      .constellation-row {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 0;
+        padding-bottom: 60px;
+      }
+      .constellation-line {
+        height: 2px;
+        width: 170px;
+        margin: 0 -6px;
+        background: linear-gradient(90deg, rgba(148, 163, 184, 0.7), rgba(56, 189, 248, 0.2), rgba(148, 163, 184, 0.6));
+        transform-origin: left;
+        animation: lineGrowX 0.6s ease forwards;
+        --line-offset: 0px;
+        --line-rotate: 0deg;
+        transform: translateY(var(--line-offset)) rotate(var(--line-rotate)) scaleX(0);
+      }
+      .constellation-row.reverse {
+        flex-direction: row-reverse;
+      }
+      .stage-star {
+        position: relative;
+        width: 64px;
+        height: 64px;
+        border: none;
+        background: transparent;
+        color: #e2e8f0;
+        --star-offset: 0px;
+        transform: translateY(var(--star-offset));
+        transition: transform 0.3s ease, filter 0.3s ease;
+      }
+      .stage-star .star-core {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0.45) 60%, transparent 75%);
+        box-shadow:
+          0 0 10px rgba(255, 255, 255, 0.8),
+          0 0 24px rgba(56, 189, 248, 0.5);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .stage-star::before,
+      .stage-star::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 38px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
+        transform: translate(-50%, -50%);
+      }
+      .stage-star::after {
+        width: 2px;
+        height: 38px;
+        background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.9), transparent);
+      }
+      .stage-label {
+        position: absolute;
+        left: 50%;
+        top: -14px;
+        transform: translateX(-50%);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        color: #e2e8f0;
+      }
+      .stage-star:hover {
+        transform: translateY(var(--star-offset)) scale(1.16);
+        filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.85));
+      }
+      .stage-star:hover .star-core {
+        animation: starPulse 0.9s ease-in-out infinite;
+        box-shadow:
+          0 0 14px rgba(255, 255, 255, 0.95),
+          0 0 36px rgba(56, 189, 248, 0.75),
+          0 0 90px rgba(125, 211, 252, 0.65);
+      }
+      .animate-node {
+        animation: nodePop 0.5s ease both;
+      }
+      .status-complete {
+        animation: statusPulse 1.4s ease-in-out infinite;
+        color: #2563eb;
+        text-shadow: 0 0 12px rgba(37, 99, 235, 0.55);
+      }
+      .fade-out {
+        animation: collapseOut 0.3s ease forwards;
+        transform-origin: left;
+        filter: none;
+      }
+      .fade-out.center-collapse {
+        animation: collapseUp 0.3s ease forwards;
+        transform-origin: top;
+      }
+      .fade-out.right-collapse {
+        animation: collapseOutRight 0.3s ease forwards;
+        transform-origin: right;
+      }
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.55;
+        }
+        50% {
+          opacity: 0.95;
+        }
+      }
+      @keyframes twinkleSoft {
+        0%,
+        100% {
+          opacity: 0.55;
+        }
+        50% {
+          opacity: 0.95;
+        }
+      }
+      @keyframes twinkleSlow {
+        0%,
+        100% {
+          opacity: 0.45;
+        }
+        50% {
+          opacity: 0.85;
+        }
+      }
+      @keyframes lineGrow {
+        from {
+          transform: scaleY(0);
+        }
+        to {
+          transform: scaleY(1);
+        }
+      }
+      @keyframes lineGrowX {
+        from {
+          transform: translateY(var(--line-offset, 0px)) rotate(var(--line-rotate, 0deg)) scaleX(0);
+        }
+        to {
+          transform: translateY(var(--line-offset, 0px)) rotate(var(--line-rotate, 0deg)) scaleX(1);
+        }
+      }
+      @keyframes nodePop {
+        from {
+          opacity: 0;
+          transform: translateY(calc(var(--star-offset, 0px) + 6px)) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(var(--star-offset, 0px)) scale(1);
+        }
+      }
+      @keyframes starPulse {
+        0% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          transform: translate(-50%, -50%) scale(1.45);
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+      @keyframes collapseOut {
+        from {
+          opacity: 1;
+          transform: scaleX(1);
+        }
+        to {
+          opacity: 0;
+          transform: scaleX(0.4);
+        }
+      }
+      @keyframes collapseOutRight {
+        from {
+          opacity: 1;
+          transform: translateX(-100%) scaleX(1);
+        }
+        to {
+          opacity: 0;
+          transform: translateX(-100%) scaleX(0.4);
+        }
+      }
+      @keyframes collapseUp {
+        from {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0) scaleY(1);
+        }
+        to {
+          opacity: 0;
+          transform: translateX(-50%) translateY(-40px) scaleY(0.4);
+        }
+      }
+      @keyframes statusPulse {
+        0%,
+        100% {
+          transform: scale(1);
+          letter-spacing: 0.01em;
+        }
+        50% {
+          transform: scale(1.04);
+          letter-spacing: 0.06em;
+        }
+      }
+      @keyframes collapseRight {
+        from {
+          opacity: 1;
+          transform: scaleX(1);
+        }
+        to {
+          opacity: 0;
+          transform: scaleX(0.3);
+        }
+      }
+      .board {
+        touch-action: none;
+        background-image:
+          linear-gradient(to right, rgba(148, 163, 184, 0.35) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(148, 163, 184, 0.35) 1px, transparent 1px);
+      }
+      .note {
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-slate-100 text-slate-900">
+    <main class="mx-auto flex w-full max-w-none flex-col gap-6 px-4 py-6">
+      <section
+        id="homeScreen"
+        class="home-sky flex min-h-[95vh] flex-col items-center justify-start gap-8 rounded-3xl p-8 pt-10 shadow-2xl"
+      >
+        <div id="hoverPanel" class="hover-panel">
+          <div id="hoverTitle" class="panel-title"></div>
+          <div id="hoverSubtitle" class="panel-subtitle"></div>
+          <div class="panel-divider"></div>
+          <div id="hoverDetail" class="panel-detail"></div>
+        </div>
+        <div class="home-shell">
+          <div class="text-center">
+            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Draw Chord</p>
+            <h1 class="home-title mt-3 text-4xl font-semibold text-white">Draw Chord</h1>
+            <p class="mt-2 text-sm text-slate-300">난이도에 따라 스테이지를 선택하고, 단계별로 화음을 연결해 보세요.</p>
+          </div>
+          <div class="relative mt-8 min-h-[380px] w-full">
+            <button type="button" data-part="1" class="part-card part-star part-1">
+              <span class="part-label">PART 1</span>
+              <span class="star-core"></span>
+            </button>
+            <button type="button" data-part="2" class="part-card part-star part-2">
+              <span class="part-label">PART 2</span>
+              <span class="star-core"></span>
+            </button>
+            <button type="button" data-part="3" class="part-card part-star part-3">
+              <span class="part-label">PART 3</span>
+              <span class="star-core"></span>
+            </button>
+            <div id="stagePicker" class="stage-picker hidden">
+              <div id="stageButtons" class="grid gap-3"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <div id="gameScreen" class="game-sky hidden min-h-[95vh] flex-col gap-6 rounded-3xl p-8 pt-10 shadow-2xl">
+      <header class="flex flex-col gap-3">
+        <div class="text-center">
+          <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Draw Chord</p>
+          <div class="mt-3 flex justify-center">
+            <h1 id="stageTitle" class="home-title text-4xl font-semibold text-white">Stage 1</h1>
+          </div>
+        </div>
+      </header>
+
+      <div class="mt-6 mx-auto w-[70%] rounded-3xl bg-white/35 p-6 backdrop-blur-sm">
+        <div class="grid items-center gap-3 lg:grid-cols-[360px_1fr_280px]">
+          <div class="hidden lg:block"></div>
+          <div class="hidden lg:block"></div>
+          <div class="hidden w-[280px] lg:block"></div>
+        </div>
+
+        <section class="mt-6 grid gap-6 lg:grid-cols-[1fr_360px_1fr] lg:items-start">
+          <div class="relative flex justify-end">
+            <div
+              id="chordDescription"
+              class="flex w-fit flex-col items-center justify-center rounded-2xl bg-white/70 px-6 py-4 text-center text-sm text-slate-600 shadow-lg backdrop-blur-sm"
+            >
+              <p class="text-base font-semibold text-slate-800">🎵 으뜸화음 (I)</p>
+              <p class="mt-2 leading-relaxed">가장 편안한 화음이에요.</p>
+              <p class="leading-relaxed">노래가 시작하거나 끝날 때 나와요.</p>
+            </div>
+          </div>
+          <div class="flex flex-col items-center gap-4">
+            <div
+              id="board"
+              class="board relative aspect-square w-full max-w-[360px] rounded-2xl border border-slate-200 bg-white"
+            >
+              <svg
+                id="lineLayer"
+                class="pointer-events-none absolute inset-0 h-full w-full"
+                viewBox="0 0 520 520"
+                preserveAspectRatio="none"
+              >
+                <g id="committedLines"></g>
+                <polyline
+                  id="activeLine"
+                  fill="none"
+                  stroke="#38bdf8"
+                  stroke-width="14"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  points=""
+                ></polyline>
+              </svg>
+              <div id="nodesLayer" class="absolute inset-0"></div>
+            </div>
+            <div id="controlButtons" class="flex w-full max-w-[360px] items-start">
+              <div class="flex flex-col items-start gap-2">
+                <button
+                  id="backButton"
+                  type="button"
+                  class="rounded-full border border-slate-300 bg-white/70 px-4 py-2 text-sm font-semibold backdrop-blur-sm"
+                >
+                  Back
+                </button>
+                <button
+                  id="resetLinesButton"
+                  type="button"
+                  class="rounded-full border border-slate-300 bg-white/70 px-4 py-2 text-sm font-semibold backdrop-blur-sm"
+                >
+                  Line Reset
+                </button>
+                <button
+                  id="resetButton"
+                  type="button"
+                  class="rounded-full bg-slate-900/70 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm"
+                >
+                  New
+                </button>
+              </div>
+            </div>
+          </div>
+
+        <aside class="flex w-full flex-col items-end gap-4 lg:w-[280px] lg:justify-self-start">
+          <div class="flex w-fit flex-col items-end gap-2">
+            <button
+              id="soundToggle"
+              type="button"
+              class="rounded-full border border-slate-300 bg-white/70 px-4 py-2 text-sm font-semibold backdrop-blur-sm"
+            >
+              🔊 Sound ON
+            </button>
+          </div>
+          <div class="flex w-fit flex-col items-end gap-2">
+            <label class="flex w-fit items-center gap-2 rounded-full bg-white/70 px-3 py-2 text-sm font-semibold backdrop-blur-sm">
+              <span>Key</span>
+              <select id="keySelect" class="w-fit rounded-full border border-slate-200 bg-white px-2 py-1 text-sm"></select>
+            </label>
+          </div>
+          <div class="w-[280px] rounded-2xl bg-white/70 p-5 shadow-md backdrop-blur-sm">
+            <h2 class="text-lg font-semibold">미션 진행</h2>
+            <p class="mt-2 text-sm text-slate-500">
+              <span id="missionOrder">도 → 미 → 솔</span> 순서로 연결하면 성공합니다.
+            </p>
+            <ul id="missionSteps" class="mt-4 space-y-2 text-sm text-slate-600"></ul>
+            <p id="missionFootnote" class="mt-3 hidden whitespace-pre-line text-xs text-slate-400"></p>
+          </div>
+          <div class="w-[280px] rounded-2xl bg-white/70 p-5 shadow-md backdrop-blur-sm">
+            <h2 class="text-lg font-semibold">실시간 안내</h2>
+            <p id="statusText" class="mt-2 text-sm font-semibold text-slate-700">도 쌍을 연결하세요</p>
+            <p id="layoutSpinner" class="mt-2 hidden text-xs font-semibold text-slate-400">⏳ 배치 중...</p>
+            <div id="staffWrapper" class="mt-3 hidden">
+              <svg id="staffSvg" viewBox="0 0 240 80" class="h-20 w-full" aria-hidden="true"></svg>
+              <button
+                id="replayButton"
+                type="button"
+                class="mt-2 rounded-full border border-slate-300 bg-white/70 px-3 py-1 text-xs font-semibold text-slate-600 backdrop-blur-sm"
+              >
+                화음 다시 듣기
+              </button>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+          <div class="mt-6 flex items-center justify-center">
+            <button
+              id="homeButton"
+              type="button"
+              class="rounded-full border border-slate-300 bg-white/70 px-4 py-2 text-sm font-semibold text-slate-700 backdrop-blur-sm"
+            >
+              Stage 선택
+            </button>
+          </div>
+        </div>
+      </div>
+      </main>
+
+    <script>
+      const board = document.getElementById("board");
+      const nodesLayer = document.getElementById("nodesLayer");
+      const activeLine = document.getElementById("activeLine");
+      const committedLines = document.getElementById("committedLines");
+      const resetButton = document.getElementById("resetButton");
+      const backButton = document.getElementById("backButton");
+      const resetLinesButton = document.getElementById("resetLinesButton");
+      const layoutSpinner = document.getElementById("layoutSpinner");
+      const soundToggle = document.getElementById("soundToggle");
+      const stageSelect = document.getElementById("stageSelect");
+      const keySelect = document.getElementById("keySelect");
+      const statusText = document.getElementById("statusText");
+      const chordTitle = document.getElementById("chordTitle");
+      const missionSteps = document.getElementById("missionSteps");
+      const missionOrder = document.getElementById("missionOrder");
+      const missionFootnote = document.getElementById("missionFootnote");
+      const chordDescription = document.getElementById("chordDescription");
+      const missionHeader = document.getElementById("missionHeader");
+      const stageTitle = document.getElementById("stageTitle");
+      const staffWrapper = document.getElementById("staffWrapper");
+      const staffSvg = document.getElementById("staffSvg");
+      const replayButton = document.getElementById("replayButton");
+      const controlButtons = document.getElementById("controlButtons");
+
+      const keyNames = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"];
+      const pitchNames = ["도", "도#", "레", "미b", "미", "파", "파#", "솔", "라b", "라", "시b", "시"];
+      const diatonicLetters = ["C", "D", "E", "F", "G", "A", "B"];
+      const degreeIndexByNote = { do: 0, re: 1, mi: 2, fa: 3, sol: 4, la: 5, ti: 6 };
+      degreeIndexByNote.do2 = 0;
+      degreeIndexByNote.sol2 = 4;
+      const solfegeMap = { C: "도", D: "레", E: "미", F: "파", G: "솔", A: "라", B: "시" };
+      const enharmonicMap = { "E#": "F", "B#": "C" };
+      const stageParts = [
+        { label: "Part 1 (화음)", stageIds: [1, 2, 3] },
+        { label: "Part 2 (화음 진행)", stageIds: [4, 5, 6] },
+        { label: "Part 3 (화음 진행 심화)", stageIds: [7, 8, 9] }
+      ];
+      const chordDescriptions = {
+        1: {
+          title: "🎵 으뜸화음 (I)",
+          lines: ["가장 편안한 화음이에요.", "노래가 시작하거나 끝날 때 나와요."]
+        },
+        2: {
+          title: "🎵 버금딸림화음 (IV)",
+          lines: ["음악이 움직이기 시작하는 화음이에요.", "으뜸화음에서 조금 변화를 줘요."]
+        },
+        3: {
+          title: "🎵 딸림화음 (V)",
+          lines: ["다시 으뜸화음으로 가고 싶게 만드는 화음이에요.", "들으면 끝날 것 같은 느낌이 들어요."]
+        },
+        4: {
+          title: "🎵 화음 진행 (I → IV)",
+          lines: ["으뜸화음에서 버금딸림화음으로 움직여볼까요?"]
+        },
+        5: {
+          title: "🎵 화음 진행 (IV → V)",
+          lines: ["버금딸림화음에서 딸림화음으로 움직여볼까요?"]
+        },
+        6: {
+          title: "🎵 화음 진행 (V → I)",
+          lines: ["딸림화음에서 으뜸화음으로 움직여볼까요?"]
+        },
+        7: {
+          title: "🎵 화음 진행 (I → IV → V)",
+          lines: ["으뜸화음-버금딸림화음-딸림화음 순서로 움직여볼까요?"]
+        }
+      };
+      const noteMeta = {
+        do: { label: "도", color: "#38bdf8" },
+        re: { label: "레", color: "#fb7185" },
+        mi: { label: "미", color: "#f472b6" },
+        fa: { label: "파", color: "#f59e0b" },
+        sol: { label: "솔", color: "#22c55e" },
+        la: { label: "라", color: "#14b8a6" },
+        ti: { label: "시", color: "#a3e635" },
+        do2: { label: "도", color: "#818cf8" },
+        sol2: { label: "솔", color: "#16a34a" }
+      };
+      const noteColorNames = {
+        do: "파란색",
+        re: "분홍색",
+        mi: "장미색",
+        fa: "주황색",
+        sol: "초록색",
+        la: "청록색",
+        ti: "연두색",
+        do2: "보라색",
+        sol2: "초록색"
+      };
+
+      const stages = [
+        {
+          id: 1,
+          title: "Stage 1",
+          chordName: "으뜸화음(I)",
+          notes: ["do", "mi", "sol"],
+          intervals: { do: 0, mi: 4, sol: 7 }
+        },
+        {
+          id: 2,
+          title: "Stage 2",
+          chordName: "버금딸림화음(IV)",
+          notes: ["fa", "la", "do"],
+          intervals: { fa: 5, la: 9, do: 0 }
+        },
+        {
+          id: 3,
+          title: "Stage 3",
+          chordName: "딸림화음(V)",
+          notes: ["sol", "ti", "re"],
+          intervals: { sol: 7, ti: 11, re: 2 }
+        },
+        {
+          id: 4,
+          title: "Stage 4",
+          chordName: "화음 진행(I → IV)",
+          notes: ["do", "mi", "sol", "fa", "la", "do2"],
+          intervals: { do: 0, mi: 4, sol: 7, fa: 5, la: 9, do2: 0 }
+        },
+        {
+          id: 5,
+          title: "Stage 5",
+          chordName: "화음 진행(IV → V)",
+          notes: ["fa", "la", "do2", "sol", "ti", "re"],
+          intervals: { fa: 5, la: 9, do2: 0, sol: 7, ti: 11, re: 2 }
+        },
+        {
+          id: 6,
+          title: "Stage 6",
+          chordName: "화음 진행(V → I)",
+          notes: ["sol", "ti", "re", "do", "mi", "sol2"],
+          intervals: { sol: 7, ti: 11, re: 2, do: 0, mi: 4, sol2: 7 }
+        },
+        {
+          id: 7,
+          title: "Stage 7",
+          chordName: "화음 진행(I → IV → V)",
+          notes: ["do", "mi", "sol", "fa", "la", "do2", "sol2", "ti", "re"],
+          intervals: { do: 0, mi: 4, sol: 7, fa: 5, la: 9, do2: 0, sol2: 7, ti: 11, re: 2 }
+        }
+      ];
+
+      const stage = {
+        gridSize: 6,
+        boardSize: 360,
+        nodes: []
+      };
+
+      const layoutConfig = {
+        maxAttempts: 2500,
+        minPairDistance: 4
+      };
+
+      let currentStageIndex = 0;
+      let currentStage = stages[currentStageIndex];
+      let currentLayout = null;
+
+      const state = {
+        isDrawing: false,
+        pathCells: [],
+        startNodeId: null,
+        endNodeId: null,
+        invalidPath: false,
+        completedPairs: new Set(),
+        key: "C",
+        soundOn: true
+      };
+
+      let audioContext;
+      let noteFrequencies = {};
+      let nodeElements = new Map();
+      let nodeByCell = new Map();
+      let occupiedEdges = new Set();
+      let occupiedCells = new Set();
+      let connectionHistory = [];
+      let statusHintPersist = false;
+      const hoverPanel = document.getElementById("hoverPanel");
+      const hoverTitle = document.getElementById("hoverTitle");
+      const hoverSubtitle = document.getElementById("hoverSubtitle");
+      const hoverDetail = document.getElementById("hoverDetail");
+
+      const partDescriptions = {
+        1: {
+          title: "PART 1",
+          subtitle: "화음 연결하기",
+          detail: ""
+        },
+        2: {
+          title: "PART 2",
+          subtitle: "화음 진행 연결하기",
+          detail: ""
+        },
+        3: {
+          title: "PART 3",
+          subtitle: "화음 진행 연결하기 (심화)",
+          detail: ""
+        }
+      };
+
+      const stageDescriptions = {
+        1: {
+          title: "STAGE 1",
+          subtitle: "으뜸화음 (I) 연결하기",
+          detail: ""
+        },
+        2: {
+          title: "STAGE 2",
+          subtitle: "버금딸림화음 (IV) 연결하기",
+          detail: ""
+        },
+        3: {
+          title: "STAGE 3",
+          subtitle: "딸림화음 (V) 연결하기",
+          detail: ""
+        },
+        4: {
+          title: "STAGE 4",
+          subtitle: "으뜸화음 (I) - 버금딸림화음 (IV) 진행 연결하기",
+          detail: ""
+        },
+        5: {
+          title: "STAGE 5",
+          subtitle: "버금딸림화음 (IV) - 딸림화음 (V) 진행 연결하기",
+          detail: ""
+        },
+        6: {
+          title: "STAGE 6",
+          subtitle: "딸림화음 (V) - 으뜸화음 (I) 진행 연결하기",
+          detail: ""
+        },
+        7: {
+          title: "STAGE 7",
+          subtitle: "으뜸화음 (I) - 버금딸림화음 (IV) - 딸림화음 (V)\n진행 연결하기",
+          detail: ""
+        },
+        8: {
+          title: "STAGE 8",
+          subtitle: "준비 중",
+          detail: ""
+        },
+        9: {
+          title: "STAGE 9",
+          subtitle: "준비 중",
+          detail: ""
+        }
+      };
+
+      function showHoverPanel(payload) {
+        if (!hoverPanel || !payload) return;
+        hoverTitle.textContent = payload.title || "";
+        hoverSubtitle.textContent = payload.subtitle || "";
+        hoverDetail.textContent = payload.detail || "";
+        hoverPanel.classList.add("is-visible");
+      }
+
+      function hideHoverPanel() {
+        hoverPanel?.classList.remove("is-visible");
+      }
+
+      function populateKeys() {
+        keyNames.forEach((name) => {
+          const option = document.createElement("option");
+          option.value = name;
+          option.textContent = name;
+          keySelect.append(option);
+        });
+        keySelect.value = state.key;
+      }
+
+      function populateStages() {
+        if (!stageSelect) return;
+        stageSelect.innerHTML = "";
+        stageParts.forEach((part) => {
+          const group = document.createElement("optgroup");
+          group.label = part.label;
+          part.stageIds.forEach((stageId) => {
+            const index = stages.findIndex((stageData) => stageData.id === stageId);
+            if (index === -1) return;
+            const stageData = stages[index];
+            const option = document.createElement("option");
+            option.value = String(index);
+            option.textContent = stageData.title;
+            group.append(option);
+          });
+          stageSelect.append(group);
+        });
+        stageSelect.value = String(currentStageIndex);
+      }
+
+      function renderStagePicker(partNumber) {
+        const stagePicker = document.getElementById("stagePicker");
+        const stageButtons = document.getElementById("stageButtons");
+        if (!stagePicker || !stageButtons) return;
+        const isSamePart = stagePicker.dataset.activePart === partNumber;
+        if (isSamePart && !stagePicker.classList.contains("hidden")) {
+          stagePicker.classList.add("fade-out");
+          if (partNumber === "2") {
+            stagePicker.classList.add("center-collapse");
+          } else if (partNumber === "3") {
+            stagePicker.classList.add("right-collapse");
+          }
+          setTimeout(() => {
+            stagePicker.classList.add("hidden");
+            stagePicker.classList.remove("fade-out");
+            stagePicker.classList.remove("center-collapse");
+            stagePicker.classList.remove("right-collapse");
+            stageButtons.innerHTML = "";
+            stagePicker.dataset.activePart = "";
+          }, 250);
+          return;
+        }
+        const stageNameMap = {
+          1: "으뜸화음 (I) 만들기",
+          2: "버금딸림화음 (IV) 만들기",
+          3: "딸림화음 (V) 만들기",
+          4: "으뜸화음 (I) -> 버금딸림화음 (IV)\n진행 만들기",
+          5: "버금딸림화음 (IV) -> 딸림화음 (V)\n진행 만들기",
+          6: "딸림화음 (V) -> 으뜸화음 (I)\n진행 만들기",
+          7: "으뜸화음 (I) -> 버금딸림화음 (IV)\n-> 딸림화음 (V) 진행 만들기",
+          8: "준비 중",
+          9: "준비 중"
+        };
+        stageButtons.innerHTML = "";
+        const directionClass = partNumber === "3" ? "reverse" : "";
+        const alignClass = partNumber === "2" ? "justify-center" : "";
+        stagePicker.className = `stage-picker part-${partNumber}`;
+        stagePicker.dataset.activePart = partNumber;
+        stageButtons.className = `constellation-row is-visible ${directionClass} ${alignClass}`;
+        const part = stageParts.find((item) => String(item.label).startsWith(`Part ${partNumber}`));
+        const stageIds = part?.stageIds || [];
+        if (stageIds.length > 0 && partNumber !== "2") {
+          const startLine = document.createElement("span");
+          startLine.className = "constellation-line";
+          if (partNumber === "1") {
+            startLine.style.setProperty("--line-offset", "30px");
+            startLine.style.setProperty("--line-rotate", "14deg");
+          } else {
+            startLine.style.setProperty("--line-offset", "-12px");
+            startLine.style.setProperty("--line-rotate", "-8deg");
+          }
+          startLine.style.animationDelay = "0.05s";
+          stageButtons.append(startLine);
+        }
+        stageIds.forEach((stageId, idx) => {
+          const index = stages.findIndex((stageData) => stageData.id === stageId);
+          if (index === -1 && stageId < 8) return;
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "stage-star animate-node";
+          let starOffset = idx % 2 === 0 ? 64 : -40;
+          if (partNumber === "1") {
+            starOffset = idx % 2 === 0 ? 40 : -40;
+          } else if (partNumber === "3") {
+            starOffset = stageId === 8 ? 90 : 20;
+          } else if (partNumber === "2" && stageId === 5) {
+            starOffset = -20;
+          } else if (stageId === 8) {
+            starOffset = 80;
+          }
+          button.style.setProperty("--star-offset", `${starOffset}px`);
+          button.style.animationDelay = `${(idx + 1) * 0.18}s`;
+          button.innerHTML = `<span class="stage-label">STAGE ${stageId}</span><span class="star-core"></span>`;
+          button.addEventListener("click", () => {
+            if (stageId >= 8) {
+              alert("Play 모드 준비중");
+              return;
+            }
+            currentStageIndex = index;
+            currentStage = stages[currentStageIndex];
+            if (stageSelect) {
+              stageSelect.value = String(currentStageIndex);
+            }
+            state.key = "C";
+            if (keySelect) keySelect.value = state.key;
+            document.getElementById("homeScreen").classList.add("hidden");
+            document.getElementById("gameScreen").classList.remove("hidden");
+            resetAll();
+            updateFrequencies();
+          });
+          button.addEventListener("mouseenter", () => {
+            showHoverPanel(stageDescriptions[stageId]);
+          });
+          button.addEventListener("mouseleave", hideHoverPanel);
+          stageButtons.append(button);
+          if (idx < stageIds.length - 1) {
+            const line = document.createElement("span");
+            line.className = "constellation-line";
+            let lineOffset = 0;
+            let lineRotate = 0;
+            if (partNumber === "1") {
+              const offsets = [40, -40, 40];
+              const nextOffset = offsets[idx + 1] ?? 0;
+              lineOffset = (starOffset + nextOffset) / 2;
+              lineRotate = idx % 2 === 0 ? -14 : 14;
+            } else if (partNumber === "3") {
+              lineOffset = stageId === 7 ? 34 : stageId === 8 ? 24 : 12;
+              lineRotate = stageId === 7 ? -8 : stageId === 8 ? 8 : 0;
+            } else if (partNumber === "2") {
+              const offsets = [64, -20, 64];
+              const nextOffset = offsets[idx + 1] ?? 0;
+              lineOffset = (starOffset + nextOffset) / 2;
+              lineRotate = idx % 2 === 0 ? -16 : 16;
+            } else {
+              const nextOffset = idx % 2 === 0 ? -40 : 64;
+              lineOffset = (starOffset + nextOffset) / 2;
+              lineRotate = starOffset > nextOffset ? 18 : -18;
+            }
+            line.style.setProperty("--line-offset", `${lineOffset}px`);
+            line.style.setProperty("--line-rotate", `${lineRotate}deg`);
+            line.style.animationDelay = `${(idx + 1) * 0.2}s`;
+            stageButtons.append(line);
+          }
+        });
+        stagePicker.classList.remove("hidden");
+      }
+
+      function getCellSize(gridSize) {
+        return 520 / gridSize;
+      }
+
+      function cellCenter(col, row, gridSize) {
+        const size = getCellSize(gridSize);
+        return {
+          x: (col + 0.5) * size,
+          y: (row + 0.5) * size
+        };
+      }
+
+      function viewBoxToPercent(point) {
+        return {
+          left: `${(point.x / 520) * 100}%`,
+          top: `${(point.y / 520) * 100}%`
+        };
+      }
+
+      function setGridBackground(gridSize) {
+        const size = 100 / gridSize;
+        board.style.backgroundSize = `${size}% ${size}%`;
+      }
+
+      function getPitchForNote(noteId) {
+        const keyIndex = keyNames.indexOf(state.key);
+        const interval = currentStage.intervals[noteId] ?? 0;
+        const pitchIndex = (keyIndex + interval) % 12;
+        return {
+          letter: keyNames[pitchIndex],
+          korean: pitchNames[pitchIndex]
+        };
+      }
+
+      function updateMissionText() {
+        const noteNames = getStageNoteNames();
+        const orderText = noteNames.map((note) => formatNoteLabel(note)).join(" → ");
+        missionOrder.textContent = orderText;
+        if (chordTitle) {
+          chordTitle.innerHTML = `<span class="block">${currentStage.chordName}</span><span class="block">${orderText} 연결</span>`;
+        }
+        if (stageTitle) {
+          stageTitle.textContent = currentStage.title;
+        }
+        if (missionSteps) {
+          const labels = noteNames.map((note) => formatNoteLabel(note));
+          missionSteps.innerHTML = labels
+            .map((label, index) => {
+              const prefix = index === 0 ? "시작" : index === labels.length - 1 ? "마지막" : "다음";
+              return `<li>${prefix}: <span>${label}</span></li>`;
+            })
+            .join("");
+        }
+        const description = chordDescriptions[currentStage.id];
+        if (description && chordDescription) {
+          chordDescription.innerHTML = `<p class="text-base font-semibold text-slate-800">${description.title}</p>` +
+            description.lines.map((line, index) => {
+              const margin = index === 0 ? "mt-1" : "";
+              return `<p class="${margin} leading-relaxed">${line}</p>`;
+            }).join("");
+        }
+
+        const footnotes = getEnharmonicFootnotes(noteNames);
+        if (footnotes.length > 0) {
+          missionFootnote.textContent = footnotes.join("\n");
+          missionFootnote.classList.remove("hidden");
+        } else {
+          missionFootnote.textContent = "";
+          missionFootnote.classList.add("hidden");
+        }
+      }
+
+      function updateNodeLabels() {
+        currentStage.notes.forEach((noteId) => {
+          const noteName = getNoteNameForNoteId(noteId);
+          stage.nodes
+            .filter((node) => node.note === noteId)
+            .forEach((node) => {
+              const nodeData = nodeElements.get(node.id);
+              nodeData.element.textContent = `${formatNoteLabelMain(noteName)}\n${formatNoteLatinMain(noteName)}`;
+              nodeData.element.style.whiteSpace = "pre-line";
+              nodeData.element.style.lineHeight = "1.1";
+            });
+        });
+      }
+
+      const enharmonicKeyMap = {
+        "D#": "Eb",
+        "G#": "Ab",
+        "A#": "Bb"
+      };
+
+      const keySignatureMap = {
+        C: { sharps: [], flats: [] },
+        G: { sharps: ["F"], flats: [] },
+        D: { sharps: ["F", "C"], flats: [] },
+        A: { sharps: ["F", "C", "G"], flats: [] },
+        E: { sharps: ["F", "C", "G", "D"], flats: [] },
+        B: { sharps: ["F", "C", "G", "D", "A"], flats: [] },
+        "F#": { sharps: ["F", "C", "G", "D", "A", "E"], flats: [] },
+        "C#": { sharps: ["F", "C", "G", "D", "A", "E", "B"], flats: [] },
+        F: { sharps: [], flats: ["B"] },
+        Bb: { sharps: [], flats: ["B", "E"] },
+        Eb: { sharps: [], flats: ["B", "E", "A"] },
+        Ab: { sharps: [], flats: ["B", "E", "A", "D"] },
+        Db: { sharps: [], flats: ["B", "E", "A", "D", "G"] }
+      };
+
+      const sharpOrder = ["F", "C", "G", "D", "A", "E", "B"];
+      const flatOrder = ["B", "E", "A", "D", "G", "C", "F"];
+      const staffLayout = {
+        yTop: 18,
+        gap: 8,
+        step: 4,
+        yE4: 50,
+        chordX: 190,
+        chordXProgression: [140, 185, 230],
+        accidentalX: 172
+      };
+      const keySigPositionsSharps = [
+        { letter: "F", octave: 5 },
+        { letter: "C", octave: 5 },
+        { letter: "G", octave: 5 },
+        { letter: "D", octave: 5 },
+        { letter: "A", octave: 4 },
+        { letter: "E", octave: 5 },
+        { letter: "B", octave: 4 }
+      ];
+      const keySigPositionsFlats = [
+        { letter: "B", octave: 4 },
+        { letter: "E", octave: 5 },
+        { letter: "A", octave: 4 },
+        { letter: "D", octave: 5 },
+        { letter: "G", octave: 4 },
+        { letter: "C", octave: 5 },
+        { letter: "F", octave: 4 }
+      ];
+
+      function clearStaff() {
+        staffSvg.innerHTML = "";
+      }
+
+      function getKeySignatureInfo(key) {
+        const mappedKey = enharmonicKeyMap[key] || key;
+        return {
+          key: mappedKey,
+          sharps: keySignatureMap[mappedKey]?.sharps || [],
+          flats: keySignatureMap[mappedKey]?.flats || []
+        };
+      }
+
+      function buildMajorScale(key) {
+        const info = getKeySignatureInfo(key);
+        const rootLetter = info.key[0];
+        const rootIndex = diatonicLetters.indexOf(rootLetter);
+        const scale = [];
+        for (let i = 0; i < 7; i += 1) {
+          const letter = diatonicLetters[(rootIndex + i) % diatonicLetters.length];
+          let accidental = "";
+          if (info.sharps.includes(letter)) accidental = "#";
+          if (info.flats.includes(letter)) accidental = "b";
+          scale.push(`${letter}${accidental}`);
+        }
+        return scale;
+      }
+
+      function getNoteNameForNoteId(noteId) {
+        const scale = buildMajorScale(state.key);
+        const degreeIndex = degreeIndexByNote[noteId] ?? 0;
+        return scale[degreeIndex];
+      }
+
+      function getStageNoteNames() {
+        return currentStage.notes.map((noteId) => getNoteNameForNoteId(noteId));
+      }
+
+      function formatNoteLabelMain(noteName) {
+        const letter = noteName[0];
+        const accidental = noteName.slice(1);
+        return `${solfegeMap[letter]}${accidental}`;
+      }
+
+      function formatNoteLabel(noteName) {
+        const mainLabel = formatNoteLabelMain(noteName);
+        const enharmonic = enharmonicMap[noteName];
+        if (!enharmonic) return mainLabel;
+        const enharmonicLabel = solfegeMap[enharmonic];
+        return `${mainLabel}(${enharmonicLabel})`;
+      }
+
+      function formatNoteLatinMain(noteName) {
+        const letter = noteName[0];
+        const accidental = noteName.slice(1);
+        return `${letter}${accidental}`;
+      }
+
+      function formatNoteLatin(noteName) {
+        const mainLabel = formatNoteLatinMain(noteName);
+        const enharmonic = enharmonicMap[noteName];
+        return enharmonic ? `${mainLabel}(${enharmonic})` : mainLabel;
+      }
+
+      function getEnharmonicFootnotes(noteNames) {
+        const footnotes = [];
+        if (noteNames.includes("E#")) footnotes.push("※ E# = F (피아노에서는 같은 건반)");
+        if (noteNames.includes("B#")) footnotes.push("※ B# = C (피아노에서는 같은 건반)");
+        return footnotes;
+      }
+
+      function getChordStack(noteNames) {
+        const chord = noteNames;
+        const stack = [];
+        let octave = 4;
+        let prevIndex = diatonicLetters.indexOf(chord[0][0]);
+        chord.forEach((note, idx) => {
+          const letter = note[0];
+          const index = diatonicLetters.indexOf(letter);
+          if (idx > 0 && index <= prevIndex) octave += 1;
+          stack.push({ note, letter, octave });
+          prevIndex = index;
+        });
+        return stack;
+      }
+
+      function noteY(letter, octave) {
+        const letterIndex = diatonicLetters.indexOf(letter);
+        const stepsFromE4 = (octave - 4) * 7 + (letterIndex - 2);
+        return staffLayout.yE4 - stepsFromE4 * staffLayout.step;
+      }
+
+      function drawLedgerLines(centerX, y) {
+        const lineSpacing = staffLayout.gap;
+        const bottomLine = staffLayout.yTop + staffLayout.gap * 4;
+        if (y > bottomLine) {
+          for (let ly = bottomLine + lineSpacing; ly <= y; ly += lineSpacing) {
+            const ledger = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            ledger.setAttribute("x1", String(centerX - 12));
+            ledger.setAttribute("x2", String(centerX + 12));
+            ledger.setAttribute("y1", String(ly));
+            ledger.setAttribute("y2", String(ly));
+            ledger.setAttribute("stroke", "#0f172a");
+            ledger.setAttribute("stroke-width", "1");
+            staffSvg.append(ledger);
+          }
+        }
+        if (y < staffLayout.yTop) {
+          for (let ly = staffLayout.yTop - lineSpacing; ly >= y; ly -= lineSpacing) {
+            const ledger = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            ledger.setAttribute("x1", String(centerX - 12));
+            ledger.setAttribute("x2", String(centerX + 12));
+            ledger.setAttribute("y1", String(ly));
+            ledger.setAttribute("y2", String(ly));
+            ledger.setAttribute("stroke", "#0f172a");
+            ledger.setAttribute("stroke-width", "1");
+            staffSvg.append(ledger);
+          }
+        }
+      }
+
+      function renderStaff() {
+        clearStaff();
+        for (let i = 0; i < 5; i += 1) {
+          const y = staffLayout.yTop + i * staffLayout.gap;
+          const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+          line.setAttribute("x1", "10");
+          line.setAttribute("x2", "230");
+          line.setAttribute("y1", String(y));
+          line.setAttribute("y2", String(y));
+          line.setAttribute("stroke", "#334155");
+          line.setAttribute("stroke-width", "1");
+          staffSvg.append(line);
+        }
+
+        const clef = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        clef.setAttribute("x", "18");
+        clef.setAttribute("y", "44");
+        clef.setAttribute("font-size", "36");
+        clef.setAttribute("fill", "#0f172a");
+        clef.textContent = "𝄞";
+        staffSvg.append(clef);
+
+        const timeTop = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        timeTop.setAttribute("x", "52");
+        timeTop.setAttribute("y", "35");
+        timeTop.setAttribute("font-size", "14");
+        timeTop.setAttribute("font-weight", "600");
+        timeTop.setAttribute("fill", "#0f172a");
+        timeTop.textContent = "4";
+        staffSvg.append(timeTop);
+
+        const timeBottom = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        timeBottom.setAttribute("x", "52");
+        timeBottom.setAttribute("y", "49");
+        timeBottom.setAttribute("font-size", "14");
+        timeBottom.setAttribute("font-weight", "600");
+        timeBottom.setAttribute("fill", "#0f172a");
+        timeBottom.textContent = "4";
+        staffSvg.append(timeBottom);
+
+        const signature = getKeySignatureInfo(state.key);
+        const keySigStartX = 74;
+        signature.sharps.forEach((letter, index) => {
+          const position = keySigPositionsSharps[index];
+          if (!position || letter !== sharpOrder[index]) return;
+          const sharp = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          const y = noteY(position.letter, position.octave);
+          sharp.setAttribute("x", String(keySigStartX + index * 10));
+          sharp.setAttribute("y", String(y));
+          sharp.setAttribute("font-size", "12");
+          sharp.setAttribute("fill", "#0f172a");
+          sharp.textContent = "#";
+          staffSvg.append(sharp);
+        });
+        signature.flats.forEach((letter, index) => {
+          const position = keySigPositionsFlats[index];
+          if (!position || letter !== flatOrder[index]) return;
+          const flat = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          const y = noteY(position.letter, position.octave);
+          flat.setAttribute("x", String(keySigStartX + index * 10));
+          flat.setAttribute("y", String(y));
+          flat.setAttribute("font-size", "12");
+          flat.setAttribute("fill", "#0f172a");
+          flat.textContent = "♭";
+          staffSvg.append(flat);
+        });
+
+        function renderChordAt(noteNames, baseX, labelText) {
+          const chordStack = getChordStack(noteNames);
+          chordStack.forEach((noteInfo) => {
+            const y = noteY(noteInfo.letter, noteInfo.octave);
+            drawLedgerLines(baseX, y);
+            const noteHead = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
+            noteHead.setAttribute("cx", String(baseX));
+            noteHead.setAttribute("cy", String(y));
+            noteHead.setAttribute("rx", "7");
+            noteHead.setAttribute("ry", "5");
+            noteHead.setAttribute("fill", "none");
+            noteHead.setAttribute("stroke", "#0f172a");
+            noteHead.setAttribute("stroke-width", "1.8");
+            staffSvg.append(noteHead);
+
+            const accidental = noteInfo.note.slice(1);
+            const hasSharp = signature.sharps.includes(noteInfo.letter) && accidental === "#";
+            const hasFlat = signature.flats.includes(noteInfo.letter) && accidental === "b";
+            if (accidental && !hasSharp && !hasFlat) {
+              const acc = document.createElementNS("http://www.w3.org/2000/svg", "text");
+              acc.setAttribute("x", String(baseX - 18));
+              acc.setAttribute("y", String(y));
+              acc.setAttribute("font-size", "12");
+              acc.setAttribute("fill", "#0f172a");
+              acc.textContent = accidental === "b" ? "♭" : "#";
+              staffSvg.append(acc);
+            }
+          });
+
+          if (labelText) {
+            const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            label.setAttribute("x", String(baseX));
+            label.setAttribute("y", "72");
+            label.setAttribute("text-anchor", "middle");
+            label.setAttribute("font-size", "11");
+            label.setAttribute("fill", "#475569");
+            label.textContent = labelText;
+            staffSvg.append(label);
+          }
+        }
+
+        if (currentStage.id === 4 || currentStage.id === 5 || currentStage.id === 6 || currentStage.id === 7) {
+          const chordI = ["do", "mi", "sol"].map((noteId) => getNoteNameForNoteId(noteId));
+          const chordIV = ["fa", "la", "do2"].map((noteId) => getNoteNameForNoteId(noteId));
+          if (currentStage.id === 4) {
+            renderChordAt(chordI, staffLayout.chordXProgression[0], "I");
+            renderChordAt(chordIV, staffLayout.chordXProgression[1], "IV");
+          } else if (currentStage.id === 5) {
+            const chordV = ["sol", "ti", "re"].map((noteId) => getNoteNameForNoteId(noteId));
+            renderChordAt(chordIV, staffLayout.chordXProgression[0], "IV");
+            renderChordAt(chordV, staffLayout.chordXProgression[1], "V");
+          } else if (currentStage.id === 6) {
+            const chordV = ["sol", "ti", "re"].map((noteId) => getNoteNameForNoteId(noteId));
+            const chordIStage6 = ["do", "mi", "sol2"].map((noteId) => getNoteNameForNoteId(noteId));
+            renderChordAt(chordV, staffLayout.chordXProgression[0], "V");
+            renderChordAt(chordIStage6, staffLayout.chordXProgression[1], "I");
+          } else {
+            const chordV = ["sol2", "ti", "re"].map((noteId) => getNoteNameForNoteId(noteId));
+            renderChordAt(chordI, staffLayout.chordXProgression[0], "I");
+            renderChordAt(chordIV, staffLayout.chordXProgression[1], "IV");
+            renderChordAt(chordV, staffLayout.chordXProgression[2], "V");
+          }
+        } else {
+          renderChordAt(getStageNoteNames(), staffLayout.chordX, "I");
+        }
+      }
+
+      function updateStatusText() {
+        const requiredNote = getNextRequiredNote();
+        if (state.completedPairs.size === currentStage.notes.length) {
+          const orderText = getStageNoteNames().map((note) => formatNoteLabel(note)).join("-");
+          statusText.innerHTML = `<span class="status-complete">${currentStage.chordName} 완성!</span> <span class="text-slate-500">(${orderText})</span>`;
+          statusHintPersist = false;
+          staffWrapper.classList.remove("hidden");
+          renderStaff();
+          return;
+        }
+        if (statusHintPersist) {
+          return;
+        }
+        staffWrapper.classList.add("hidden");
+        if (requiredNote) {
+          const noteName = getNoteNameForNoteId(requiredNote);
+          statusText.textContent = `${formatNoteLabel(noteName)} 쌍을 연결하세요`;
+        }
+      }
+
+      function showStatusHint(noteId) {
+        if (!statusText) return;
+        const noteName = getNoteNameForNoteId(noteId);
+        const colorName = noteColorNames[noteId] || "";
+        const prefix = colorName ? `${colorName} ` : "";
+        const color = noteMeta[noteId]?.color || "#38bdf8";
+        const icon = `<span class="mr-2 inline-block h-4 w-4 rounded-full align-middle" style="background:${color}"></span>`;
+        statusText.innerHTML = `${icon}${prefix}${formatNoteLabel(noteName)}부터 연결하세요`;
+        statusHintPersist = true;
+      }
+
+
+      function ensureAudioContext() {
+        if (!state.soundOn) return;
+        if (!audioContext) {
+          audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioContext.state === "suspended") {
+          audioContext.resume();
+        }
+      }
+
+      function playTone(freq, duration, gainLevel = 0.25) {
+        if (!state.soundOn) return;
+        ensureAudioContext();
+        if (!audioContext) return;
+        const now = audioContext.currentTime;
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.type = "sine";
+        osc.frequency.value = freq;
+        gain.gain.value = 0;
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+        gain.gain.linearRampToValueAtTime(gainLevel, now + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+        osc.start(now);
+        osc.stop(now + duration + 0.05);
+      }
+
+      function playChord() {
+        if (currentStage.id === 4 || currentStage.id === 5 || currentStage.id === 6 || currentStage.id === 7) {
+          const chordI = ["do", "mi", "sol"].map((note) => noteFrequencies[note]).filter(Boolean);
+          const chordIV = ["fa", "la", "do2"].map((note) => noteFrequencies[note]).filter(Boolean);
+          const chordV = ["sol", "ti", "re"].map((note) => noteFrequencies[note]).filter(Boolean);
+          if (currentStage.id === 4) {
+            chordI.forEach((freq) => playTone(freq, 0.4, 0.25));
+            setTimeout(() => {
+              chordIV.forEach((freq) => playTone(freq, 0.4, 0.25));
+            }, 800);
+          } else if (currentStage.id === 5) {
+            chordIV.forEach((freq) => playTone(freq, 0.4, 0.25));
+            setTimeout(() => {
+              chordV.forEach((freq) => playTone(freq, 0.4, 0.25));
+            }, 800);
+          } else if (currentStage.id === 6) {
+            const chordIStage6 = ["do", "mi", "sol2"].map((note) => noteFrequencies[note]).filter(Boolean);
+            chordV.forEach((freq) => playTone(freq, 0.4, 0.25));
+            setTimeout(() => {
+              chordIStage6.forEach((freq) => playTone(freq, 0.4, 0.25));
+            }, 800);
+          } else {
+            const chordVStage6 = ["sol2", "ti", "re"].map((note) => noteFrequencies[note]).filter(Boolean);
+            chordI.forEach((freq) => playTone(freq, 0.4, 0.25));
+            setTimeout(() => {
+              chordIV.forEach((freq) => playTone(freq, 0.4, 0.25));
+            }, 800);
+            setTimeout(() => {
+              chordVStage6.forEach((freq) => playTone(freq, 0.4, 0.25));
+            }, 1600);
+          }
+          return;
+        }
+        const freqs = currentStage.notes.map((note) => noteFrequencies[note]).filter(Boolean);
+        freqs.forEach((freq) => playTone(freq, 0.4, 0.25));
+      }
+
+      function updateFrequencies() {
+        const keyIndex = keyNames.indexOf(state.key);
+        const baseMidi = 60 + keyIndex;
+        noteFrequencies = {};
+        currentStage.notes.forEach((note, index) => {
+          let octaveShift = 0;
+          if (note === "do2") {
+            octaveShift = 12;
+          }
+          if (currentStage.id === 5 && index === currentStage.notes.length - 1) {
+            octaveShift = 12;
+          }
+          if (currentStage.id === 6 && index === 2) {
+            octaveShift = 12;
+          }
+          if (currentStage.id === 6 && index === 5) {
+            octaveShift = 0;
+          }
+          if (currentStage.id === 2 && index === currentStage.notes.length - 1) {
+            octaveShift = 12;
+          }
+          if (currentStage.id === 3 && index === currentStage.notes.length - 1) {
+            octaveShift = 12;
+          }
+          if (currentStage.id === 7 && index === currentStage.notes.length - 1) {
+            octaveShift = 12;
+          }
+          const midi = baseMidi + currentStage.intervals[note] + octaveShift;
+          noteFrequencies[note] = 440 * Math.pow(2, (midi - 69) / 12);
+        });
+        updateMissionText();
+        updateNodeLabels();
+      }
+
+      function renderStage() {
+        board.style.maxWidth = `${stage.boardSize}px`;
+        if (controlButtons) {
+          controlButtons.style.maxWidth = `${stage.boardSize}px`;
+        }
+        setGridBackground(stage.gridSize);
+        nodesLayer.innerHTML = "";
+        nodeElements = new Map();
+        nodeByCell = new Map();
+        stage.nodes.forEach((node) => {
+          const center = cellCenter(node.col, node.row, stage.gridSize);
+          const pos = viewBoxToPercent(center);
+          const element = document.createElement("div");
+          const isStage7 = currentStage.id === 7;
+          element.className = isStage7
+            ? "note absolute flex h-10 w-10 items-center justify-center rounded-full text-[10px] font-bold text-white shadow"
+            : "note absolute flex h-12 w-12 items-center justify-center rounded-full text-xs font-bold text-white shadow";
+          const meta = noteMeta[node.note];
+          element.style.backgroundColor = meta ? meta.color : "#94a3b8";
+          element.style.left = pos.left;
+          element.style.top = pos.top;
+          element.dataset.note = node.note;
+          element.dataset.nodeId = node.id;
+          nodesLayer.append(element);
+          nodeElements.set(node.id, { element, note: node.note, col: node.col, row: node.row });
+          nodeByCell.set(`${node.col},${node.row}`, node.id);
+        });
+        updateNodeLabels();
+        committedLines.innerHTML = "";
+        occupiedEdges = new Set();
+        occupiedCells = new Set();
+        state.completedPairs = new Set();
+        updateStatusText();
+        clearActiveLine();
+      }
+
+      function applyLayout(layout) {
+        stage.nodes = layout.map((node) => ({ ...node }));
+      }
+
+      function setActiveLine(points, color) {
+        activeLine.setAttribute("points", points.map((point) => `${point.x},${point.y}`).join(" "));
+        activeLine.setAttribute("stroke", color);
+      }
+
+      function clearActiveLine() {
+        activeLine.setAttribute("points", "");
+        state.pathCells = [];
+        state.startNodeId = null;
+        state.endNodeId = null;
+        state.invalidPath = false;
+      }
+
+      function edgeKey(a, b) {
+        const keyA = `${a.col},${a.row}`;
+        const keyB = `${b.col},${b.row}`;
+        return keyA < keyB ? `${keyA}-${keyB}` : `${keyB}-${keyA}`;
+      }
+
+      function isOccupiedEdge(from, to) {
+        return occupiedEdges.has(edgeKey(from, to));
+      }
+
+      function addEdge(from, to) {
+        occupiedEdges.add(edgeKey(from, to));
+      }
+
+      function removeEdge(from, to) {
+        occupiedEdges.delete(edgeKey(from, to));
+      }
+
+      function markPathOccupied(path) {
+        path.forEach((cell, index) => {
+          if (index > 0) {
+            addEdge(path[index - 1], cell);
+          }
+          occupiedCells.add(`${cell.col},${cell.row}`);
+        });
+      }
+
+      function unmarkPathOccupied(path) {
+        path.forEach((cell, index) => {
+          if (index > 0) {
+            removeEdge(path[index - 1], cell);
+          }
+          occupiedCells.delete(`${cell.col},${cell.row}`);
+        });
+      }
+
+      function cellFromPointer(pointer, gridSize) {
+        const cellSize = getCellSize(gridSize);
+        return {
+          col: Math.min(gridSize - 1, Math.max(0, Math.floor(pointer.x / cellSize))),
+          row: Math.min(gridSize - 1, Math.max(0, Math.floor(pointer.y / cellSize)))
+        };
+      }
+
+      function cellCenterFor(cell, gridSize) {
+        return cellCenter(cell.col, cell.row, gridSize);
+      }
+
+      function buildPathPolyline(path, gridSize) {
+        return path.map((cell) => cellCenterFor(cell, gridSize));
+      }
+
+      function updateActivePathLine() {
+        const points = buildPathPolyline(state.pathCells, stage.gridSize);
+        const color = state.invalidPath ? "#ef4444" : "#38bdf8";
+        setActiveLine(points, color);
+      }
+
+      function manhattan(a, b) {
+        return Math.abs(a.col - b.col) + Math.abs(a.row - b.row);
+      }
+
+      function randomInt(max) {
+        return Math.floor(Math.random() * max);
+      }
+
+      function pickRandomCell(occupied) {
+        let cell;
+        let attempts = 0;
+        do {
+          cell = { col: randomInt(stage.gridSize), row: randomInt(stage.gridSize) };
+          attempts += 1;
+        } while (occupied.has(`${cell.col},${cell.row}`) && attempts < 200);
+        return cell;
+      }
+
+      function isValidPairPlacement(a, b) {
+        return manhattan(a, b) >= layoutConfig.minPairDistance;
+      }
+
+      function isLayoutComplex(layout) {
+        const rowSet = new Set();
+        const colSet = new Set();
+        layout.forEach((node) => {
+          rowSet.add(node.row);
+          colSet.add(node.col);
+        });
+        const minSpread = stage.gridSize >= 6 ? 4 : 3;
+        if (rowSet.size < minSpread || colSet.size < minSpread) return false;
+        if (currentStage.id >= 6) return true;
+        let alignedPairs = 0;
+        currentStage.notes.forEach((note) => {
+          const pair = layout.filter((node) => node.note === note);
+          if (pair.length !== 2) return;
+          if (pair[0].col === pair[1].col || pair[0].row === pair[1].row) {
+            alignedPairs += 1;
+          }
+        });
+        return alignedPairs <= 1;
+      }
+
+      function generateRandomLayout() {
+        const layout = [];
+        const occupied = new Set();
+        for (const note of currentStage.notes) {
+          let placed = false;
+          for (let attempt = 0; attempt < 200; attempt += 1) {
+            const first = pickRandomCell(occupied);
+            occupied.add(`${first.col},${first.row}`);
+            const second = pickRandomCell(occupied);
+            if (!isValidPairPlacement(first, second)) {
+              occupied.delete(`${first.col},${first.row}`);
+              continue;
+            }
+            occupied.add(`${second.col},${second.row}`);
+            layout.push({ id: `${note}-1`, note, col: first.col, row: first.row });
+            layout.push({ id: `${note}-2`, note, col: second.col, row: second.row });
+            placed = true;
+            break;
+          }
+          if (!placed) return null;
+        }
+        return isLayoutComplex(layout) ? layout : null;
+      }
+
+      function canUseDirection(dirState, step) {
+        if (step === 0) return dirState;
+        if (dirState === 0) return step;
+        if (dirState !== step) return null;
+        return dirState;
+      }
+
+      function isLayoutSolvable(layout) {
+        if (currentStage.id === 7) {
+          return isLayoutSolvableFast(layout);
+        }
+        const nodesByNote = new Map();
+        layout.forEach((node) => {
+          if (!nodesByNote.has(node.note)) nodesByNote.set(node.note, []);
+          nodesByNote.get(node.note).push(node);
+        });
+
+        const pairs = currentStage.notes.map((note) => {
+          const [start, end] = nodesByNote.get(note);
+          return { note, start, end };
+        });
+
+        function solvePair(index, occupiedCells, occupiedEdges) {
+          if (index >= pairs.length) return true;
+          const pair = pairs[index];
+          const startKey = `${pair.start.col},${pair.start.row}`;
+          const endKey = `${pair.end.col},${pair.end.row}`;
+          const blocked = new Set(occupiedCells);
+          layout.forEach((node) => {
+            const key = `${node.col},${node.row}`;
+            if (node.note !== pair.note) blocked.add(key);
+          });
+
+          const visited = new Set([startKey]);
+          const path = [{ col: pair.start.col, row: pair.start.row }];
+
+          function dfs(cell, xDir, yDir) {
+            const cellKey = `${cell.col},${cell.row}`;
+            if (cellKey === endKey) {
+              const nextOccupiedCells = new Set(occupiedCells);
+              const nextOccupiedEdges = new Set(occupiedEdges);
+              path.forEach((point, idx) => {
+                const pointKey = `${point.col},${point.row}`;
+                nextOccupiedCells.add(pointKey);
+                if (idx > 0) {
+                  nextOccupiedEdges.add(edgeKey(path[idx - 1], point));
+                }
+              });
+              return solvePair(index + 1, nextOccupiedCells, nextOccupiedEdges);
+            }
+
+            if (path.length > stage.gridSize * stage.gridSize) return false;
+
+            const neighbors = [
+              { col: cell.col + 1, row: cell.row },
+              { col: cell.col - 1, row: cell.row },
+              { col: cell.col, row: cell.row + 1 },
+              { col: cell.col, row: cell.row - 1 }
+            ];
+
+            neighbors.sort((a, b) => manhattan(a, pair.end) - manhattan(b, pair.end));
+
+            for (const next of neighbors) {
+              if (next.col < 0 || next.col >= stage.gridSize || next.row < 0 || next.row >= stage.gridSize) {
+                continue;
+              }
+              const nextKey = `${next.col},${next.row}`;
+              if (visited.has(nextKey)) continue;
+              if (blocked.has(nextKey) && nextKey !== endKey) continue;
+              if (occupiedEdges.has(edgeKey(cell, next))) continue;
+
+              const stepX = Math.sign(next.col - cell.col);
+              const stepY = Math.sign(next.row - cell.row);
+              const nextXDir = canUseDirection(xDir, stepX);
+              const nextYDir = canUseDirection(yDir, stepY);
+              if (nextXDir === null || nextYDir === null) continue;
+
+              visited.add(nextKey);
+              path.push(next);
+              if (dfs(next, nextXDir, nextYDir)) return true;
+              path.pop();
+              visited.delete(nextKey);
+            }
+            return false;
+          }
+
+          return dfs(pair.start, 0, 0);
+        }
+
+        return solvePair(0, new Set(), new Set());
+      }
+
+      function isLayoutSolvableFast(layout) {
+        const nodesByNote = new Map();
+        layout.forEach((node) => {
+          if (!nodesByNote.has(node.note)) nodesByNote.set(node.note, []);
+          nodesByNote.get(node.note).push(node);
+        });
+
+        function canSolveWithOrder(noteOrder) {
+          const occupiedCells = new Set();
+          const occupiedEdges = new Set();
+
+          function bfs(start, end, blocked) {
+            const queue = [];
+            const visited = new Set();
+            const prev = new Map();
+            const startKey = `${start.col},${start.row}`;
+            const endKey = `${end.col},${end.row}`;
+            queue.push(start);
+            visited.add(startKey);
+
+            while (queue.length) {
+              const cell = queue.shift();
+              const cellKey = `${cell.col},${cell.row}`;
+              if (cellKey === endKey) break;
+              const neighbors = [
+                { col: cell.col + 1, row: cell.row },
+                { col: cell.col - 1, row: cell.row },
+                { col: cell.col, row: cell.row + 1 },
+                { col: cell.col, row: cell.row - 1 }
+              ];
+              neighbors.sort((a, b) => manhattan(a, end) - manhattan(b, end));
+              for (const next of neighbors) {
+                if (next.col < 0 || next.col >= stage.gridSize || next.row < 0 || next.row >= stage.gridSize) {
+                  continue;
+                }
+                const nextKey = `${next.col},${next.row}`;
+                if (visited.has(nextKey)) continue;
+                if (blocked.has(nextKey) && nextKey !== endKey) continue;
+                if (occupiedEdges.has(edgeKey(cell, next))) continue;
+                visited.add(nextKey);
+                prev.set(nextKey, cellKey);
+                queue.push(next);
+              }
+            }
+
+            if (!visited.has(endKey)) return null;
+            const path = [];
+            let key = endKey;
+            while (key) {
+              const [col, row] = key.split(",").map(Number);
+              path.push({ col, row });
+              if (key === startKey) break;
+              key = prev.get(key);
+            }
+            return path.reverse();
+          }
+
+          for (const note of noteOrder) {
+            const pair = nodesByNote.get(note);
+            if (!pair || pair.length !== 2) return false;
+            const [start, end] = pair;
+            const blocked = new Set(occupiedCells);
+            layout.forEach((node) => {
+              const key = `${node.col},${node.row}`;
+              if (node.note !== note) blocked.add(key);
+            });
+            const path = bfs(start, end, blocked);
+            if (!path) return false;
+            path.forEach((cell, index) => {
+              occupiedCells.add(`${cell.col},${cell.row}`);
+              if (index > 0) {
+                occupiedEdges.add(edgeKey(path[index - 1], cell));
+              }
+            });
+          }
+
+          return true;
+        }
+
+        const noteOrder = [...currentStage.notes];
+        for (let attempt = 0; attempt < 4; attempt += 1) {
+          if (attempt > 0) {
+            for (let i = noteOrder.length - 1; i > 0; i -= 1) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [noteOrder[i], noteOrder[j]] = [noteOrder[j], noteOrder[i]];
+            }
+          }
+          if (canSolveWithOrder(noteOrder)) return true;
+        }
+        return false;
+      }
+
+      function generateLayout() {
+        if (currentStage.id === 7) {
+          const original = layoutConfig.minPairDistance;
+          const tryGenerate = (minDistance, attempts) => {
+            layoutConfig.minPairDistance = minDistance;
+            for (let attempt = 0; attempt < attempts; attempt += 1) {
+              const layout = generateRandomLayout();
+              if (layout && isLayoutSolvableFast(layout)) {
+                return layout;
+              }
+            }
+            return null;
+          };
+
+          let layout = tryGenerate(original, 400);
+          if (!layout) layout = tryGenerate(2, 700);
+          if (!layout) layout = tryGenerate(1, 900);
+          layoutConfig.minPairDistance = original;
+
+          if (layout) {
+            currentLayout = layout;
+            return layout;
+          }
+          return currentLayout || [];
+        }
+
+        const attempts = layoutConfig.maxAttempts;
+        function attemptGenerateLayout(minDistance) {
+          const original = layoutConfig.minPairDistance;
+          layoutConfig.minPairDistance = minDistance;
+          for (let attempt = 0; attempt < attempts; attempt += 1) {
+            const layout = generateRandomLayout();
+            if (layout && isLayoutSolvable(layout)) {
+              layoutConfig.minPairDistance = original;
+              return layout;
+            }
+          }
+          layoutConfig.minPairDistance = original;
+          return null;
+        }
+
+        let layout = attemptGenerateLayout(layoutConfig.minPairDistance);
+        if (!layout) layout = attemptGenerateLayout(Math.max(2, layoutConfig.minPairDistance - 1));
+        if (!layout) layout = attemptGenerateLayout(2);
+
+        if (layout) {
+          currentLayout = layout;
+          return layout;
+        }
+
+        return currentLayout || [];
+      }
+
+      function updateDifficulty() {
+        const difficulty = [4, 5, 6, 5, 5, 2, 2, 2];
+        layoutConfig.minPairDistance = difficulty[currentStageIndex] ?? 4;
+      }
+
+      function updateBoardConfig() {
+        if (currentStage.id === 7) {
+          stage.gridSize = 8;
+          stage.boardSize = 640;
+        } else if (currentStage.id <= 3) {
+          stage.gridSize = 4;
+          stage.boardSize = 280;
+        } else {
+          stage.gridSize = 6;
+          stage.boardSize = 360;
+        }
+      }
+
+      function getNextRequiredNote() {
+        const order = currentStage.notes;
+        for (const note of order) {
+          if (!state.completedPairs.has(note)) return note;
+        }
+        return null;
+      }
+
+      function canEnterCell(cell) {
+        if (cell.col < 0 || cell.col >= stage.gridSize || cell.row < 0 || cell.row >= stage.gridSize) return false;
+        if (occupiedCells.has(`${cell.col},${cell.row}`)) return false;
+        return true;
+      }
+
+      function isBlockingNode(cell) {
+        const nodeId = nodeByCell.get(`${cell.col},${cell.row}`);
+        if (!nodeId) return false;
+        if (nodeId === state.startNodeId) return false;
+        if (nodeId === state.endNodeId) return false;
+        return true;
+      }
+
+      function handlePointerStep(pointer) {
+        const lastCell = state.pathCells[state.pathCells.length - 1];
+        if (!lastCell) return;
+        if (state.endNodeId) return;
+
+        const lastCenter = cellCenterFor(lastCell, stage.gridSize);
+        const dx = pointer.x - lastCenter.x;
+        const dy = pointer.y - lastCenter.y;
+        const absX = Math.abs(dx);
+        const absY = Math.abs(dy);
+        const cellSize = getCellSize(stage.gridSize);
+
+        if (Math.max(absX, absY) < cellSize * 0.45) return;
+
+        const step = absX >= absY ? { col: Math.sign(dx), row: 0 } : { col: 0, row: Math.sign(dy) };
+        const nextCell = { col: lastCell.col + step.col, row: lastCell.row + step.row };
+
+        if (isOccupiedEdge(lastCell, nextCell)) {
+          state.invalidPath = true;
+          return;
+        }
+
+        const nodeId = nodeByCell.get(`${nextCell.col},${nextCell.row}`);
+        if (!canEnterCell(nextCell)) {
+          state.invalidPath = true;
+          return;
+        }
+        if (nodeId && nodeId !== state.startNodeId) {
+          const startNote = nodeElements.get(state.startNodeId).note;
+          const targetNote = nodeElements.get(nodeId).note;
+          if (startNote !== targetNote) {
+            state.invalidPath = true;
+            return;
+          }
+          state.endNodeId = nodeId;
+          playTone(noteFrequencies[targetNote], 0.12);
+        }
+        if (isBlockingNode(nextCell)) {
+          state.invalidPath = true;
+          return;
+        }
+
+        state.pathCells.push(nextCell);
+      }
+
+      function getPointerInViewBox(event) {
+        const rect = board.getBoundingClientRect();
+        return {
+          x: ((event.clientX - rect.left) / rect.width) * 520,
+          y: ((event.clientY - rect.top) / rect.height) * 520
+        };
+      }
+
+      function handleStart(event) {
+        const pointer = getPointerInViewBox(event);
+        const cell = cellFromPointer(pointer, stage.gridSize);
+        const nodeId = nodeByCell.get(`${cell.col},${cell.row}`);
+        if (!nodeId) return;
+        const note = nodeElements.get(nodeId).note;
+        const requiredNote = getNextRequiredNote();
+        if (requiredNote && note !== requiredNote) {
+          showStatusHint(requiredNote);
+          return;
+        }
+        if (statusHintPersist) {
+          statusHintPersist = false;
+          updateStatusText();
+        }
+        if (state.completedPairs.has(note)) return;
+
+        ensureAudioContext();
+        state.isDrawing = true;
+        state.invalidPath = false;
+        state.startNodeId = nodeId;
+        state.endNodeId = null;
+        state.pathCells = [cell];
+        playTone(noteFrequencies[note], 0.12);
+        updateActivePathLine();
+        statusText.textContent = "연결 중...";
+      }
+
+      function handleMove(event) {
+        if (!state.isDrawing) return;
+        const pointer = getPointerInViewBox(event);
+
+        if (state.invalidPath) {
+          updateActivePathLine();
+          return;
+        }
+
+        for (let i = 0; i < 2; i += 1) {
+          handlePointerStep(pointer);
+          if (state.invalidPath) break;
+        }
+
+        updateActivePathLine();
+      }
+
+      function handleEnd() {
+        if (!state.isDrawing) return;
+        state.isDrawing = false;
+
+        if (state.invalidPath || !state.endNodeId) {
+          setActiveLine([], "#ef4444");
+          clearActiveLine();
+          updateStatusText();
+          return;
+        }
+
+        const points = buildPathPolyline(state.pathCells, stage.gridSize);
+        const polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+        polyline.setAttribute("fill", "none");
+        polyline.setAttribute("stroke", "#38bdf8");
+        polyline.setAttribute("stroke-width", "14");
+        polyline.setAttribute("stroke-linecap", "round");
+        polyline.setAttribute("stroke-linejoin", "round");
+        polyline.setAttribute("points", points.map((point) => `${point.x},${point.y}`).join(" "));
+        committedLines.append(polyline);
+
+        markPathOccupied(state.pathCells);
+        const note = nodeElements.get(state.startNodeId).note;
+        state.completedPairs.add(note);
+        connectionHistory.push({
+          polyline,
+          path: [...state.pathCells],
+          note
+        });
+        if (state.completedPairs.size === currentStage.notes.length) {
+          playChord();
+        }
+        clearActiveLine();
+        updateStatusText();
+      }
+
+      function resetAll() {
+        updateDifficulty();
+        updateBoardConfig();
+        currentLayout = null;
+        if (layoutSpinner) layoutSpinner.classList.remove("hidden");
+        requestAnimationFrame(() => {
+          const layout = generateLayout();
+          applyLayout(layout);
+          renderStage();
+          connectionHistory = [];
+          if (layoutSpinner) layoutSpinner.classList.add("hidden");
+        });
+      }
+
+      function resetLinesOnly() {
+        committedLines.innerHTML = "";
+        occupiedEdges = new Set();
+        occupiedCells = new Set();
+        state.completedPairs = new Set();
+        connectionHistory = [];
+        clearActiveLine();
+        updateStatusText();
+      }
+
+      board.addEventListener("pointerdown", (event) => {
+        board.setPointerCapture(event.pointerId);
+        handleStart(event);
+      });
+
+      board.addEventListener("pointermove", (event) => {
+        handleMove(event);
+      });
+
+      board.addEventListener("pointerup", () => {
+        handleEnd();
+      });
+
+      board.addEventListener("pointerleave", () => {
+        handleEnd();
+      });
+
+      resetButton.addEventListener("click", () => {
+        resetAll();
+      });
+      backButton.addEventListener("click", () => {
+        const last = connectionHistory.pop();
+        if (!last) return;
+        last.polyline.remove();
+        unmarkPathOccupied(last.path);
+        state.completedPairs.delete(last.note);
+        updateStatusText();
+      });
+      resetLinesButton.addEventListener("click", () => {
+        resetLinesOnly();
+      });
+
+      soundToggle.addEventListener("click", () => {
+        state.soundOn = !state.soundOn;
+        soundToggle.textContent = state.soundOn ? "🔊 Sound ON" : "🔇 Sound OFF";
+      });
+
+      replayButton?.addEventListener("click", () => {
+        playChord();
+      });
+
+      keySelect.addEventListener("change", (event) => {
+        state.key = event.target.value;
+        resetAll();
+        updateFrequencies();
+      });
+
+      stageSelect?.addEventListener("change", (event) => {
+        currentStageIndex = Number(event.target.value);
+        currentStage = stages[currentStageIndex];
+        state.key = "C";
+        if (keySelect) keySelect.value = state.key;
+        resetAll();
+        updateFrequencies();
+      });
+
+      window.addEventListener("resize", () => {
+        renderStage();
+      });
+
+      populateStages();
+      populateKeys();
+      document.querySelectorAll(".part-card").forEach((card) => {
+        card.addEventListener("mouseenter", () => {
+          const partNumber = card.dataset.part;
+          showHoverPanel(partDescriptions[partNumber]);
+        });
+        card.addEventListener("mouseleave", hideHoverPanel);
+        card.addEventListener("click", () => {
+          renderStagePicker(card.dataset.part);
+        });
+      });
+      document.getElementById("homeButton")?.addEventListener("click", () => {
+        document.getElementById("gameScreen").classList.add("hidden");
+        document.getElementById("homeScreen").classList.remove("hidden");
+      });
+    </script>
+  </body>
+</html>
