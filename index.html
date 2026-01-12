@@ -1873,7 +1873,7 @@
       }
 
       function isLayoutSolvable(layout) {
-        if (currentStage.id === 7) {
+        if (currentStage.id === 7 || currentStage.id === 8) {
           return isLayoutSolvableFast(layout);
         }
         const nodesByNote = new Map();
@@ -2050,7 +2050,7 @@
       }
 
       function generateLayout() {
-        if (currentStage.id === 7) {
+        if (currentStage.id === 7 || currentStage.id === 8) {
           const original = layoutConfig.minPairDistance;
           const tryGenerate = (minDistance, attempts) => {
             layoutConfig.minPairDistance = minDistance;
@@ -2108,7 +2108,7 @@
       }
 
       function updateBoardConfig() {
-        if (currentStage.id === 7) {
+        if (currentStage.id === 7 || currentStage.id === 8) {
           stage.gridSize = 8;
           stage.boardSize = 640;
         } else if (currentStage.id <= 3) {
