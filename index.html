@@ -1425,8 +1425,12 @@
 
         const clef = document.createElementNS("http://www.w3.org/2000/svg", "text");
         clef.setAttribute("x", "18");
-        clef.setAttribute("y", "44");
-        clef.setAttribute("font-size", "40");
+        clef.setAttribute("y", "46");
+        clef.setAttribute("font-size", "44");
+        clef.setAttribute(
+          "font-family",
+          "\"Apple Symbols\", \"Noto Music\", \"Bravura\", \"Segoe UI Symbol\", serif"
+        );
         clef.setAttribute("fill", "#0f172a");
         clef.textContent = "𝄞";
         staffSvg.append(clef);
