@@ -1823,8 +1823,7 @@
       }
 
       function isValidPairPlacement(a, b) {
-        const minDistance = Math.max(layoutConfig.minPairDistance, 2);
-        return manhattan(a, b) >= minDistance;
+        return manhattan(a, b) >= layoutConfig.minPairDistance;
       }
 
       function isLayoutComplex(layout) {
