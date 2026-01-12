@@ -1431,23 +1431,6 @@
         clef.textContent = "𝄞";
         staffSvg.append(clef);
 
-        const timeTop = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        timeTop.setAttribute("x", "52");
-        timeTop.setAttribute("y", "35");
-        timeTop.setAttribute("font-size", "14");
-        timeTop.setAttribute("font-weight", "600");
-        timeTop.setAttribute("fill", "#0f172a");
-        timeTop.textContent = "4";
-        staffSvg.append(timeTop);
-
-        const timeBottom = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        timeBottom.setAttribute("x", "52");
-        timeBottom.setAttribute("y", "49");
-        timeBottom.setAttribute("font-size", "14");
-        timeBottom.setAttribute("font-weight", "600");
-        timeBottom.setAttribute("fill", "#0f172a");
-        timeBottom.textContent = "4";
-        staffSvg.append(timeBottom);
 
         const signature = getKeySignatureInfo(state.key);
         const keySigStartX = 74;
