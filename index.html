@@ -1550,7 +1550,7 @@
         const requiredNote = getNextRequiredNote();
         if (state.completedPairs.size === currentStage.notes.length) {
           const orderText = getStageNoteNames().map((note) => formatNoteLabel(note)).join("-");
-          statusText.innerHTML = `<span class="status-complete">${currentStage.chordName} 완성!</span> <span class="text-slate-500">(${orderText})</span>`;
+          statusText.innerHTML = `<span class="status-complete block">${currentStage.chordName} 완성!</span><span class="mt-2 block text-slate-500">(${orderText})</span>`;
           statusHintPersist = false;
           staffWrapper.classList.remove("hidden");
           renderStaff();
