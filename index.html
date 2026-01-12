@@ -1508,7 +1508,7 @@
           if (labelText) {
             const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
             label.setAttribute("x", String(baseX));
-            label.setAttribute("y", "72");
+            label.setAttribute("y", "84");
             label.setAttribute("text-anchor", "middle");
             label.setAttribute("font-size", "11");
             label.setAttribute("fill", "#475569");
@@ -1818,7 +1818,8 @@
       }
 
       function isValidPairPlacement(a, b) {
-        return manhattan(a, b) >= layoutConfig.minPairDistance;
+        const minDistance = Math.max(layoutConfig.minPairDistance, 2);
+        return manhattan(a, b) >= minDistance;
       }
 
       function isLayoutComplex(layout) {
