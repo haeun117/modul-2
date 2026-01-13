@@ -1381,6 +1381,10 @@
         return 0;
       }
 
+      function getClaimedStars(run) {
+        return Number.isFinite(run?.claimedStars) ? run.claimedStars : 0;
+      }
+
       function isBetterRun(candidate, current) {
         if (!current) return true;
         if (candidate.stars !== current.stars) return candidate.stars > current.stars;
@@ -1418,7 +1422,7 @@
 
       function getTotalSummary() {
         const runs = Object.values(bestRuns).filter((run) => run.stageId >= 1 && run.stageId <= 9);
-        const starsSum = runs.reduce((acc, run) => acc + getRunStars(run), 0);
+        const starsSum = runs.reduce((acc, run) => acc + getClaimedStars(run), 0);
         return { starsSum };
       }
 
