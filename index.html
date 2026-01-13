@@ -2330,10 +2330,12 @@
           return;
         }
 
+        const note = nodeElements.get(state.startNodeId).note;
+        const lineColor = getNoteStyle(note).color;
         const points = buildPathPolyline(state.pathCells, stage.gridSize);
         const polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
         polyline.setAttribute("fill", "none");
-        polyline.setAttribute("stroke", "#38bdf8");
+        polyline.setAttribute("stroke", lineColor);
         polyline.setAttribute("stroke-width", "14");
         polyline.setAttribute("stroke-linecap", "round");
         polyline.setAttribute("stroke-linejoin", "round");
@@ -2341,7 +2343,6 @@
         committedLines.append(polyline);
 
         markPathOccupied(state.pathCells);
-        const note = nodeElements.get(state.startNodeId).note;
         state.completedPairs.add(note);
         connectionHistory.push({
           polyline,
