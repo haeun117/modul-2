@@ -703,11 +703,33 @@
       }
       .stage-complete-score {
         position: relative;
-        margin-top: 10px;
         font-size: 14px;
-        font-weight: 700;
+        font-weight: 800;
         color: #ffffff;
         z-index: 1;
+      }
+      .stage-complete-metrics {
+        position: relative;
+        margin-top: 12px;
+        display: grid;
+        gap: 8px;
+        z-index: 1;
+      }
+      .stage-complete-metric {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: rgba(15, 23, 42, 0.45);
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .stage-complete-metric .metric-value {
+        font-size: 14px;
+        font-weight: 800;
       }
       .stage-complete-details {
         position: relative;
@@ -986,10 +1008,19 @@
             <span class="star-off">★</span>
             <span class="star-off">★</span>
           </div>
-          <p class="stage-complete-score">Score: <span id="stageCompleteScore">0</span></p>
-          <div class="stage-complete-details">
-            <span id="stageCompleteOneStroke">⚡ Perfect Draw: X</span>
-            <span id="stageCompleteMistakes">💥 Mistakes: 0</span>
+          <div class="stage-complete-metrics">
+            <div class="stage-complete-metric">
+              <span>Score</span>
+              <span id="stageCompleteScore" class="metric-value">0</span>
+            </div>
+            <div class="stage-complete-metric">
+              <span>⚡ Perfect Draw</span>
+              <span id="stageCompleteOneStroke" class="metric-value">X</span>
+            </div>
+            <div class="stage-complete-metric">
+              <span>💥 Mistakes</span>
+              <span id="stageCompleteMistakes" class="metric-value">-0</span>
+            </div>
           </div>
           <div class="stage-complete-actions">
             <button id="stageRetryButton" type="button" class="stage-complete-button secondary">Retry</button>
