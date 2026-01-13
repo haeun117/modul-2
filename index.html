@@ -2047,6 +2047,26 @@
       function showStageCompleteOverlay() {
         if (!stageCompleteOverlay) return;
         if (stageCompleteTitle) stageCompleteTitle.textContent = `${currentStage.title} 완료!`;
+        if (lastRunResult) {
+          if (stageCompleteRank) stageCompleteRank.textContent = lastRunResult.rank;
+          if (stageCompleteScore) stageCompleteScore.textContent = String(lastRunResult.score);
+          if (stageCompleteOneStroke) {
+            stageCompleteOneStroke.textContent = `원샷 클리어: ${lastRunResult.oneStrokeClear ? "O" : "X"}`;
+          }
+          if (stageCompleteMistakes) {
+            stageCompleteMistakes.textContent = `실수(빨간 선): ${lastRunResult.redLineCount}`;
+          }
+          if (stageCompleteExtra) {
+            stageCompleteExtra.textContent = `불필요 선: ${lastRunResult.extraLineCount}`;
+          }
+          if (stageCompleteStars) {
+            const stars = formatStars(lastRunResult.stars);
+            stageCompleteStars.innerHTML = stars
+              .split("")
+              .map((ch) => `<span class="${ch === "★" ? "" : "star-off"}">${ch}</span>`)
+              .join("");
+          }
+        }
         stageCompleteOverlay.classList.remove("hidden");
       }
 
