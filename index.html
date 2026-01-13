@@ -596,11 +596,9 @@
         animation: sparklePulse 1s ease-in-out infinite;
       }
       .note-glow-diamond.note-highlight {
-        background:
-          radial-gradient(closest-side, rgba(255, 255, 255, 0) 58%, rgba(255, 255, 255, 0.95) 64%, rgba(255, 255, 255, 0) 74%),
-          radial-gradient(closest-side, rgba(255, 255, 255, 0) 50%, var(--glow-color, rgba(255, 255, 255, 0.9)) 70%, rgba(255, 255, 255, 0) 82%);
-        opacity: 0.95;
-        filter: drop-shadow(0 0 12px var(--glow-color, rgba(255, 255, 255, 0.95)));
+        background: radial-gradient(circle, var(--glow-color, rgba(255, 255, 255, 0.9)) 0%, rgba(255, 255, 255, 0) 65%);
+        opacity: 0.9;
+        transform: translate(-50%, -50%) scale(1.25);
         animation: sparklePulse 1s ease-in-out infinite;
       }
       .note-glow-diamond {
