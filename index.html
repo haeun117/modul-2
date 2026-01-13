@@ -3015,6 +3015,7 @@
         hideStageCompleteOverlay();
         document.getElementById("gameScreen").classList.add("hidden");
         document.getElementById("homeScreen").classList.remove("hidden");
+        updateSummaryUI();
       });
       stageCompleteOverlay?.addEventListener("click", (event) => {
         if (event.target === stageCompleteOverlay) {
@@ -3067,6 +3068,7 @@
       document.getElementById("homeButton")?.addEventListener("click", () => {
         document.getElementById("gameScreen").classList.add("hidden");
         document.getElementById("homeScreen").classList.remove("hidden");
+        updateSummaryUI();
       });
     </script>
   </body>
