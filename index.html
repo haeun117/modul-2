@@ -1736,13 +1736,20 @@
       }
 
       function updateRequiredNoteHighlight(noteId) {
-        nodeElements.forEach(({ element, note }) => {
+        nodeElements.forEach(({ element, glow, note }) => {
           element.classList.remove("note-highlight");
           element.style.removeProperty("--glow-color");
+          glow?.classList.remove("note-highlight");
+          glow?.style.removeProperty("--glow-color");
           if (noteId && note === noteId) {
             const style = getNoteStyle(noteId);
-            element.classList.add("note-highlight");
-            element.style.setProperty("--glow-color", style.color);
+            if (style.shapeClass === "note-shape-diamond") {
+              glow?.classList.add("note-highlight");
+              glow?.style.setProperty("--glow-color", style.color);
+            } else {
+              element.classList.add("note-highlight");
+              element.style.setProperty("--glow-color", style.color);
+            }
           }
         });
       }
