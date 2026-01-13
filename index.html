@@ -638,7 +638,7 @@
         </div>
 
         <section class="mt-6 grid gap-6 lg:grid-cols-[1fr_360px_1fr] lg:items-start">
-          <div class="relative flex justify-end">
+          <div class="relative flex flex-col items-end justify-end gap-4">
             <div
               id="chordDescription"
               class="flex w-fit flex-col items-center justify-center rounded-2xl bg-white/70 px-6 py-4 text-center text-sm text-slate-600 shadow-lg backdrop-blur-sm"
@@ -646,6 +646,14 @@
               <p class="text-base font-semibold text-slate-800">🎵 으뜸화음 (I)</p>
               <p class="mt-2 leading-relaxed">가장 편안한 화음이에요.</p>
               <p class="leading-relaxed">노래가 시작하거나 끝날 때 나와요.</p>
+            </div>
+            <div class="w-[280px] rounded-2xl bg-white/70 p-5 shadow-md backdrop-blur-sm">
+              <h2 class="text-lg font-semibold">미션 진행</h2>
+              <p class="mt-2 text-sm text-slate-500">
+                <span id="missionOrder">도 → 미 → 솔</span> 순서로 연결하면 성공합니다.
+              </p>
+              <ul id="missionSteps" class="mt-4 space-y-2 text-sm text-slate-600"></ul>
+              <p id="missionFootnote" class="mt-3 hidden whitespace-pre-line text-xs text-slate-400"></p>
             </div>
           </div>
           <div class="flex flex-col items-center gap-4">
@@ -714,14 +722,6 @@
               <span>Key</span>
               <select id="keySelect" class="w-fit rounded-full border border-slate-200 bg-white px-2 py-1 text-sm"></select>
             </label>
-          </div>
-          <div class="w-[280px] rounded-2xl bg-white/70 p-5 shadow-md backdrop-blur-sm">
-            <h2 class="text-lg font-semibold">미션 진행</h2>
-            <p class="mt-2 text-sm text-slate-500">
-              <span id="missionOrder">도 → 미 → 솔</span> 순서로 연결하면 성공합니다.
-            </p>
-            <ul id="missionSteps" class="mt-4 space-y-2 text-sm text-slate-600"></ul>
-            <p id="missionFootnote" class="mt-3 hidden whitespace-pre-line text-xs text-slate-400"></p>
           </div>
           <div class="w-[280px] rounded-2xl bg-white/70 p-5 shadow-md backdrop-blur-sm">
             <h2 class="text-lg font-semibold">실시간 안내</h2>
