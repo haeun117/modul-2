@@ -1753,9 +1753,7 @@
             : `note absolute flex h-12 w-12 items-center justify-center text-xs font-bold shadow ${style.shapeClass}`;
           element.style.backgroundColor = style.color;
           element.style.color = style.textColor;
-          if (style.shapeClass === "note-shape-star") {
-            element.style.transform = "translate(calc(-50% - 3px), -50%)";
-          }
+          element.style.transform = "translate(-50%, -50%)";
           element.style.left = pos.left;
           element.style.top = pos.top;
           element.dataset.note = node.note;
