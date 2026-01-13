@@ -1918,8 +1918,10 @@
           const center = cellCenter(node.col, node.row, stage.gridSize);
           const pos = viewBoxToPercent(center);
           const element = document.createElement("div");
+          const glow = document.createElement("div");
           const isStage7 = currentStage.id === 7 || currentStage.id === 8;
           const style = getNoteStyle(node.note);
+          glow.className = isStage7 ? "note-glow absolute h-10 w-10" : "note-glow absolute h-12 w-12";
           element.className = isStage7
             ? `note absolute flex h-10 w-10 items-center justify-center text-[10px] font-bold shadow ${style.shapeClass}`
             : `note absolute flex h-12 w-12 items-center justify-center text-xs font-bold shadow ${style.shapeClass}`;
@@ -1928,10 +1930,13 @@
           element.style.transform = "translate(-50%, -50%)";
           element.style.left = pos.left;
           element.style.top = pos.top;
+          glow.style.left = pos.left;
+          glow.style.top = pos.top;
           element.dataset.note = node.note;
           element.dataset.nodeId = node.id;
+          nodesLayer.append(glow);
           nodesLayer.append(element);
-          nodeElements.set(node.id, { element, note: node.note, col: node.col, row: node.row });
+          nodeElements.set(node.id, { element, glow, note: node.note, col: node.col, row: node.row });
           nodeByCell.set(`${node.col},${node.row}`, node.id);
         });
         updateNodeLabels();
