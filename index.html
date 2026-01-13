@@ -2606,6 +2606,14 @@
       resetLinesButton.addEventListener("click", () => {
         resetLinesOnly();
       });
+      stageCompleteButton?.addEventListener("click", () => {
+        hideStageCompleteOverlay();
+      });
+      stageCompleteOverlay?.addEventListener("click", (event) => {
+        if (event.target === stageCompleteOverlay) {
+          hideStageCompleteOverlay();
+        }
+      });
 
       soundToggle.addEventListener("click", () => {
         state.soundOn = !state.soundOn;
