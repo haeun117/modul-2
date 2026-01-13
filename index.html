@@ -585,35 +585,12 @@
       .stage-complete-overlay {
         position: fixed;
         inset: 0;
-        background:
-          linear-gradient(180deg, rgba(6, 10, 30, 0.92), rgba(6, 12, 30, 0.88)),
-          radial-gradient(circle at 50% 70%, rgba(125, 211, 252, 0.45), transparent 55%),
-          radial-gradient(circle at 50% 55%, rgba(224, 231, 255, 0.35), transparent 45%),
-          conic-gradient(from 220deg at 50% 70%, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0) 15%, rgba(255, 255, 255, 0.35) 30%, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0.35) 60%, rgba(255, 255, 255, 0) 75%, rgba(255, 255, 255, 0.35) 90%, rgba(255, 255, 255, 0) 100%),
-          linear-gradient(180deg, #0b1024 0%, #111b3b 45%, #0a2f5c 100%);
+        background: rgba(2, 6, 23, 0.7);
         display: flex;
         align-items: center;
         justify-content: center;
         z-index: 60;
         padding: 20px;
-      }
-      .stage-complete-overlay::before {
-        content: "";
-        position: absolute;
-        inset: -20%;
-        background:
-          radial-gradient(1px 1px at 6% 14%, rgba(255, 255, 255, 0.85), transparent),
-          radial-gradient(1px 1px at 12% 40%, rgba(191, 219, 254, 0.75), transparent),
-          radial-gradient(2px 2px at 20% 22%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(1px 1px at 32% 58%, rgba(186, 230, 253, 0.7), transparent),
-          radial-gradient(2px 2px at 44% 12%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(1px 1px at 56% 36%, rgba(191, 219, 254, 0.75), transparent),
-          radial-gradient(2px 2px at 68% 24%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(1px 1px at 80% 40%, rgba(191, 219, 254, 0.75), transparent),
-          radial-gradient(2px 2px at 88% 22%, rgba(255, 255, 255, 0.95), transparent),
-          radial-gradient(1px 1px at 94% 62%, rgba(255, 255, 255, 0.75), transparent);
-        opacity: 0.85;
-        pointer-events: none;
       }
       .stage-complete-card {
         position: relative;
