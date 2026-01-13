@@ -1766,13 +1766,8 @@
           glow?.style.removeProperty("--glow-color");
           if (noteId && note === noteId) {
             const style = getNoteStyle(noteId);
-            if (style.shapeClass === "note-shape-diamond") {
-              glow?.classList.add("note-highlight");
-              glow?.style.setProperty("--glow-color", style.color);
-            } else {
-              element.classList.add("note-highlight");
-              element.style.setProperty("--glow-color", style.color);
-            }
+            element.classList.add("note-highlight");
+            element.style.setProperty("--glow-color", style.color);
           }
         });
       }
