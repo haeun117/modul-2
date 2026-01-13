@@ -1608,6 +1608,7 @@
           const orderText = getStageNoteNames().map((note) => formatNoteLabel(note)).join("-");
           statusText.innerHTML = `<span class="status-complete block">${currentStage.chordName} 완성!</span><span class="mt-2 block text-slate-500">(${orderText})</span>`;
           statusHintPersist = false;
+          updateRequiredNoteHighlight(null);
           staffWrapper.classList.remove("hidden");
           renderStaff();
           return;
@@ -1622,6 +1623,7 @@
           const icon = `<span class="mr-2 inline-block h-4 w-4 align-middle ${style.shapeClass}" style="background:${style.color}"></span>`;
           statusText.innerHTML = `${icon}${formatNoteLabel(noteName)} 쌍을 연결하세요`;
         }
+        updateRequiredNoteHighlight(requiredNote);
       }
 
       function showStatusHint(noteId) {
@@ -1632,6 +1634,7 @@
         const icon = `<span class="mr-2 inline-block h-4 w-4 align-middle ${style.shapeClass}" style="background:${style.color}"></span>`;
         statusText.innerHTML = `${icon}${prefix}${formatNoteLabel(noteName)}부터 연결하세요`;
         statusHintPersist = true;
+        updateRequiredNoteHighlight(noteId);
       }
 
 
