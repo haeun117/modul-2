@@ -578,6 +578,7 @@
         transform: translate(-50%, -50%);
         text-align: center;
         overflow: visible;
+        z-index: 1;
       }
       .note-highlight {
         animation: sparklePulse 1s ease-in-out infinite;
@@ -586,6 +587,13 @@
         position: absolute;
         transform: translate(-50%, -50%);
         pointer-events: none;
+        z-index: 0;
+      }
+      .note-glow.note-highlight {
+        background: radial-gradient(circle, var(--glow-color, rgba(255, 255, 255, 0.9)) 0%, rgba(255, 255, 255, 0) 65%);
+        opacity: 0.9;
+        transform: translate(-50%, -50%) scale(1.25);
+        animation: sparklePulse 1s ease-in-out infinite;
       }
       .note-glow-diamond {
         -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 2 C58 2 64 7 70 13 L90 33 C95 38 98 44 98 50 C98 56 95 62 90 67 L70 87 C64 93 58 98 50 98 C42 98 36 93 30 87 L10 67 C5 62 2 56 2 50 C2 44 5 38 10 33 L30 13 C36 7 42 2 50 2 Z'/></svg>");
