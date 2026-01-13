@@ -1744,7 +1744,6 @@
       function showStageCompleteOverlay() {
         if (!stageCompleteOverlay) return;
         if (stageCompleteTitle) stageCompleteTitle.textContent = `${currentStage.title} 완료!`;
-        if (stageCompleteSubtitle) stageCompleteSubtitle.textContent = `${currentStage.chordName} 완성!`;
         stageCompleteOverlay.classList.remove("hidden");
       }
 
@@ -1759,11 +1758,7 @@
           statusText.innerHTML = `<span class="status-complete block">${currentStage.chordName} 완성!</span><span class="mt-2 block text-slate-500">(${orderText})</span>`;
           statusHintPersist = false;
           updateRequiredNoteHighlight(null);
-          if (currentStage.id <= 3) {
-            showStageCompleteOverlay();
-          } else {
-            hideStageCompleteOverlay();
-          }
+          showStageCompleteOverlay();
           staffWrapper.classList.remove("hidden");
           renderStaff();
           return;
