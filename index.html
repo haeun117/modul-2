@@ -814,27 +814,15 @@
           lines: ["버금딸림화음-딸림화음-으뜸화음 순서로 움직여볼까요?"]
         }
       };
-      const noteMeta = {
-        do: { label: "도", color: "#38bdf8" },
-        re: { label: "레", color: "#fb7185" },
-        mi: { label: "미", color: "#f472b6" },
-        fa: { label: "파", color: "#f59e0b" },
-        sol: { label: "솔", color: "#22c55e" },
-        la: { label: "라", color: "#14b8a6" },
-        ti: { label: "시", color: "#a3e635" },
-        do2: { label: "도", color: "#818cf8" },
-        sol2: { label: "솔", color: "#16a34a" }
-      };
-      const noteColorNames = {
-        do: "파란색",
-        re: "분홍색",
-        mi: "장미색",
-        fa: "주황색",
-        sol: "연한 초록색",
-        la: "청록색",
-        ti: "연두색",
-        do2: "보라색",
-        sol2: "진한 초록색"
+      const noteOrderStyles = [
+        { color: "#2563eb", textColor: "#f8fafc", name: "파란색" },
+        { color: "#facc15", textColor: "#1f2937", name: "노란색" },
+        { color: "#ef4444", textColor: "#f8fafc", name: "빨간색" }
+      ];
+      const chordShapeClassByType = {
+        I: "note-shape-circle",
+        IV: "note-shape-star",
+        V: "note-shape-heart"
       };
 
       const stages = [
