@@ -1985,7 +1985,6 @@
         if (!stageCompleteOverlay) return;
         if (stageCompleteTitle) stageCompleteTitle.textContent = `${currentStage.title} 완료!`;
         if (lastRunResult) {
-          if (stageCompleteRank) stageCompleteRank.textContent = lastRunResult.rank;
           if (stageCompleteScore) stageCompleteScore.textContent = String(lastRunResult.score);
           if (stageCompleteOneStroke) {
             stageCompleteOneStroke.textContent = `원샷 클리어: ${lastRunResult.oneStrokeClear ? "O" : "X"}`;
