@@ -1344,6 +1344,23 @@
         return currentStage.notes.map((noteId) => getNoteNameForNoteId(noteId));
       }
 
+      function getChordTypeForIndex(index) {
+        const groupIndex = Math.floor(index / 3);
+        return currentStage.chordTypes?.[groupIndex] || "I";
+      }
+
+      function getNoteStyle(noteId) {
+        const index = currentStage.notes.indexOf(noteId);
+        const orderIndex = index >= 0 ? index % 3 : 0;
+        const colorStyle = noteOrderStyles[orderIndex] || noteOrderStyles[0];
+        const chordType = getChordTypeForIndex(index);
+        return {
+          ...colorStyle,
+          chordType,
+          shapeClass: chordShapeClassByType[chordType] || "note-shape-circle"
+        };
+      }
+
       function formatNoteLabelMain(noteName) {
         const letter = noteName[0];
         const accidental = noteName.slice(1);
