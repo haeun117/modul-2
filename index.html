@@ -1255,7 +1255,6 @@
       function updateNodeLabels() {
         currentStage.notes.forEach((noteId) => {
           const noteName = getNoteNameForNoteId(noteId);
-          const style = getNoteStyle(noteId);
           stage.nodes
             .filter((node) => node.note === noteId)
             .forEach((node) => {
@@ -1263,7 +1262,6 @@
               nodeData.element.textContent = formatNoteLabelMain(noteName);
               nodeData.element.style.whiteSpace = "normal";
               nodeData.element.style.lineHeight = "1";
-              nodeData.element.style.paddingTop = style.shapeClass === "note-shape-star" ? "2px" : "0";
             });
         });
       }
