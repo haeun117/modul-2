@@ -816,6 +816,28 @@
             <h1 class="home-title mt-3 text-4xl font-semibold text-white">Draw Chord</h1>
             <p class="mt-2 text-sm text-slate-300">난이도에 따라 스테이지를 선택하고, 단계별로 화음을 연결해 보세요.</p>
           </div>
+          <div id="summaryPanel" class="mx-auto mt-4 grid w-full max-w-3xl gap-3 rounded-3xl bg-white/10 p-4 text-white backdrop-blur-sm sm:grid-cols-4">
+            <div class="rounded-2xl bg-white/10 p-3 text-center">
+              <p class="text-xs uppercase tracking-[0.2em] text-slate-200">Part 1</p>
+              <p id="summaryPart1Stars" class="mt-2 text-lg font-semibold">0/9</p>
+              <p id="summaryPart1Rank" class="text-sm text-slate-200">C</p>
+            </div>
+            <div class="rounded-2xl bg-white/10 p-3 text-center">
+              <p class="text-xs uppercase tracking-[0.2em] text-slate-200">Part 2</p>
+              <p id="summaryPart2Stars" class="mt-2 text-lg font-semibold">0/9</p>
+              <p id="summaryPart2Rank" class="text-sm text-slate-200">C</p>
+            </div>
+            <div class="rounded-2xl bg-white/10 p-3 text-center">
+              <p class="text-xs uppercase tracking-[0.2em] text-slate-200">Part 3</p>
+              <p id="summaryPart3Stars" class="mt-2 text-lg font-semibold">0/9</p>
+              <p id="summaryPart3Rank" class="text-sm text-slate-200">C</p>
+            </div>
+            <div class="rounded-2xl bg-white/15 p-3 text-center">
+              <p class="text-xs uppercase tracking-[0.2em] text-slate-200">Total</p>
+              <p id="summaryTotalStars" class="mt-2 text-lg font-semibold">0/27</p>
+              <p id="summaryTotalRank" class="text-sm text-slate-200">C</p>
+            </div>
+          </div>
           <div class="relative mt-8 min-h-[380px] w-full">
             <button type="button" data-part="1" class="part-card part-star part-1">
               <span class="part-label">PART 1</span>
