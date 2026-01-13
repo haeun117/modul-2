@@ -2819,6 +2819,7 @@
         state.completedPairs = new Set();
         connectionHistory = [];
         clearActiveLine();
+        state.redLineCount += 1;
         resetAttemptStats();
         updateStatusText();
       }
