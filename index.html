@@ -2046,11 +2046,11 @@
             stageCompleteMistakes.textContent = `-${mistakes}`;
           }
           if (stageCompleteStars) {
-            const stars = formatStars(lastRunResult.stars);
-            stageCompleteStars.innerHTML = stars
-              .split("")
-              .map((ch) => `<span class="${ch === "★" ? "" : "star-off"}">${ch}</span>`)
-              .join("");
+            const count = lastRunResult.stars;
+            stageCompleteStars.innerHTML = Array.from({ length: count }, (_, idx) => {
+              const delay = (idx * 0.18).toFixed(2);
+              return `<span class="star-on" style="animation-delay:${delay}s, ${delay}s;"></span>`;
+            }).join("");
           }
         }
         stageCompleteOverlay.classList.remove("hidden");
