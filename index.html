@@ -1553,7 +1553,7 @@
           }
           button.style.setProperty("--star-offset", `${starOffset}px`);
           button.style.animationDelay = `${(idx + 1) * 0.18}s`;
-          button.innerHTML = `<span class="stage-label">STAGE ${stageId}</span><span class="star-core"></span>`;
+          button.innerHTML = `<span class="stage-label">STAGE ${stageId}</span><span class="star-core"></span>${getStageBestMarkup(stageId)}`;
           button.addEventListener("click", () => {
             if (stageId >= 9) {
               alert("Play 모드 준비중");
