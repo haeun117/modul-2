@@ -1439,6 +1439,25 @@
         document.getElementById("summaryTotalStars").textContent = String(totalPoints);
       }
 
+      function refreshClaimButton() {
+        if (!stageClaimButton) return;
+        const best = bestRuns[currentStage.id];
+        const claimed = getClaimedStars(best);
+        const earned = lastRunResult?.stars ?? 0;
+        if (earned === 0) {
+          stageClaimButton.disabled = true;
+          stageClaimButton.textContent = "별 획득하기";
+          return;
+        }
+        if (claimed >= earned) {
+          stageClaimButton.disabled = true;
+          stageClaimButton.textContent = "획득 완료";
+        } else {
+          stageClaimButton.disabled = false;
+          stageClaimButton.textContent = "별 획득하기";
+        }
+      }
+
       function getStageBestMarkup(stageId) {
         return "";
       }
