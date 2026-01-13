@@ -973,8 +973,23 @@
           <div class="stage-complete-burst"></div>
           <div class="stage-complete-star"></div>
           <div class="stage-complete-ribbon">Stage Clear!</div>
-          <p id="stageCompleteTitle" class="stage-complete-title">Stage 1 완료!</p>
-          <button id="stageCompleteButton" type="button" class="stage-complete-button">다음 Stage</button>
+          <div id="stageCompleteRank" class="stage-complete-rank">C</div>
+          <div id="stageCompleteStars" class="stage-complete-stars">
+            <span class="star-off">★</span>
+            <span class="star-off">★</span>
+            <span class="star-off">★</span>
+          </div>
+          <p class="stage-complete-score">Score: <span id="stageCompleteScore">0</span></p>
+          <div class="stage-complete-details">
+            <span id="stageCompleteOneStroke">원샷 클리어: X</span>
+            <span id="stageCompleteMistakes">실수(빨간 선): 0</span>
+            <span id="stageCompleteExtra">불필요 선: 0</span>
+          </div>
+          <div class="stage-complete-actions">
+            <button id="stageRetryButton" type="button" class="stage-complete-button secondary">Retry</button>
+            <button id="stageNextButton" type="button" class="stage-complete-button">Next Stage</button>
+            <button id="stageSelectButton" type="button" class="stage-complete-button ghost">Stage Select</button>
+          </div>
         </div>
       </div>
       </main>
