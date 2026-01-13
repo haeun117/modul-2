@@ -1966,13 +1966,10 @@
         if (lastRunResult) {
           if (stageCompleteScore) stageCompleteScore.textContent = String(lastRunResult.score);
           if (stageCompleteOneStroke) {
-            stageCompleteOneStroke.textContent = `원샷 클리어: ${lastRunResult.oneStrokeClear ? "O" : "X"}`;
+            stageCompleteOneStroke.textContent = `⚡ Perfect Draw: ${lastRunResult.oneStrokeClear ? "O" : "X"}`;
           }
           if (stageCompleteMistakes) {
-            stageCompleteMistakes.textContent = `실수(빨간 선): ${lastRunResult.redLineCount}`;
-          }
-          if (stageCompleteExtra) {
-            stageCompleteExtra.textContent = `불필요 선: ${lastRunResult.extraLineCount}`;
+            stageCompleteMistakes.textContent = `💥 Mistakes: ${lastRunResult.redLineCount}`;
           }
           if (stageCompleteStars) {
             const stars = formatStars(lastRunResult.stars);
