@@ -1840,7 +1840,16 @@
 
       function updateActivePathLine() {
         const points = buildPathPolyline(state.pathCells, stage.gridSize);
-        const color = state.invalidPath ? "#ef4444" : "#38bdf8";
+        let color = "#38bdf8";
+        if (state.startNodeId) {
+          const note = nodeElements.get(state.startNodeId)?.note;
+          if (note) {
+            color = getNoteStyle(note).color;
+          }
+        }
+        if (state.invalidPath) {
+          color = "#ef4444";
+        }
         setActiveLine(points, color);
       }
 
