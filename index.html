@@ -2795,9 +2795,14 @@
         if (!state.isDrawing) return;
         state.isDrawing = false;
 
-        if (state.invalidPath || !state.endNodeId) {
+        if (state.invalidPath) {
           state.redLineCount += 1;
           setActiveLine([], "#ef4444");
+          clearActiveLine();
+          updateStatusText();
+          return;
+        }
+        if (!state.endNodeId) {
           clearActiveLine();
           updateStatusText();
           return;
