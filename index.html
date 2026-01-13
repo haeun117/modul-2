@@ -1734,11 +1734,12 @@
           const pos = viewBoxToPercent(center);
           const element = document.createElement("div");
           const isStage7 = currentStage.id === 7 || currentStage.id === 8;
+          const style = getNoteStyle(node.note);
           element.className = isStage7
-            ? "note absolute flex h-10 w-10 items-center justify-center rounded-full text-[10px] font-bold text-white shadow"
-            : "note absolute flex h-12 w-12 items-center justify-center rounded-full text-xs font-bold text-white shadow";
-          const meta = noteMeta[node.note];
-          element.style.backgroundColor = meta ? meta.color : "#94a3b8";
+            ? `note absolute flex h-10 w-10 items-center justify-center text-[10px] font-bold shadow ${style.shapeClass}`
+            : `note absolute flex h-12 w-12 items-center justify-center text-xs font-bold shadow ${style.shapeClass}`;
+          element.style.backgroundColor = style.color;
+          element.style.color = style.textColor;
           element.style.left = pos.left;
           element.style.top = pos.top;
           element.dataset.note = node.note;
