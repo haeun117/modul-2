@@ -2942,7 +2942,12 @@
       resetLinesButton.addEventListener("click", () => {
         resetLinesOnly();
       });
-      stageCompleteButton?.addEventListener("click", () => {
+      stageRetryButton?.addEventListener("click", () => {
+        hideStageCompleteOverlay();
+        resetAll();
+        updateFrequencies();
+      });
+      stageNextButton?.addEventListener("click", () => {
         hideStageCompleteOverlay();
         if (currentStageIndex < stages.length - 1) {
           currentStageIndex += 1;
@@ -2953,6 +2958,11 @@
           resetAll();
           updateFrequencies();
         }
+      });
+      stageSelectButton?.addEventListener("click", () => {
+        hideStageCompleteOverlay();
+        document.getElementById("gameScreen").classList.add("hidden");
+        document.getElementById("homeScreen").classList.remove("hidden");
       });
       stageCompleteOverlay?.addEventListener("click", (event) => {
         if (event.target === stageCompleteOverlay) {
