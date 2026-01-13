@@ -547,6 +547,27 @@
       .note {
         transform: translate(-50%, -50%);
       }
+      .note-shape-circle {
+        border-radius: 9999px;
+      }
+      .note-shape-star,
+      .note-shape-heart {
+        border-radius: 0;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+      }
+      .note-shape-star {
+        -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,4 61,35 95,35 67,57 77,91 50,70 23,91 33,57 5,35 39,35'/></svg>");
+        mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,4 61,35 95,35 67,57 77,91 50,70 23,91 33,57 5,35 39,35'/></svg>");
+      }
+      .note-shape-heart {
+        -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 86 L16 52 C5 41 5 23 19 13 C29 5 41 8 50 19 C59 8 71 5 81 13 C95 23 95 41 84 52 L50 86 Z'/></svg>");
+        mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 86 L16 52 C5 41 5 23 19 13 C29 5 41 8 50 19 C59 8 71 5 81 13 C95 23 95 41 84 52 L50 86 Z'/></svg>");
+      }
     </style>
   </head>
   <body class="min-h-screen bg-slate-100 text-slate-900">
