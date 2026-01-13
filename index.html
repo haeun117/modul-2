@@ -1290,11 +1290,7 @@
       }
 
       function getStageBestMarkup(stageId) {
-        const best = bestRuns[stageId];
-        if (!best) {
-          return `<span class="stage-best"><span class="best-stars">☆☆☆</span><span class="best-score">—</span></span>`;
-        }
-        return `<span class="stage-best"><span class="best-stars">${formatStars(best.stars)}</span><span class="best-score">${best.score}</span></span>`;
+        return "";
       }
       let statusHintPersist = false;
       let resetToken = 0;
