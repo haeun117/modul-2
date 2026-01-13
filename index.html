@@ -568,6 +568,29 @@
           transform: translateX(120%);
         }
       }
+      @keyframes starPop {
+        0% {
+          transform: scale(0.2) rotate(-12deg);
+          opacity: 0;
+        }
+        60% {
+          transform: scale(1.15) rotate(6deg);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1) rotate(0deg);
+          opacity: 1;
+        }
+      }
+      @keyframes starTwinkle {
+        0%,
+        100% {
+          filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.85)) drop-shadow(0 0 18px rgba(251, 191, 36, 0.8));
+        }
+        50% {
+          filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 30px rgba(251, 191, 36, 0.95));
+        }
+      }
       .board {
         touch-action: none;
         background-image:
@@ -675,16 +698,26 @@
       }
       .stage-complete-top-stars {
         position: relative;
-        margin: 6px auto 10px;
+        margin: 6px auto 16px;
         display: flex;
         justify-content: center;
-        gap: 6px;
-        font-size: 22px;
-        color: #fbbf24;
+        gap: 10px;
         z-index: 1;
       }
-      .stage-complete-top-stars .star-off {
-        color: rgba(148, 163, 184, 0.6);
+      .stage-complete-top-stars .star-on {
+        width: 64px;
+        height: 64px;
+        background: radial-gradient(circle at 30% 30%, #fff9c2 0%, #fde047 40%, #f59e0b 100%);
+        -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 6 C54 6 58 10 60 14 L69 31 C70 33 73 35 76 35 L95 36 C99 36 100 40 97 43 L83 56 C81 58 80 61 81 64 L86 83 C87 87 84 90 80 88 L62 78 C60 77 57 77 55 78 L37 88 C33 90 30 87 31 83 L36 64 C37 61 36 58 34 56 L20 43 C17 40 18 36 22 36 L41 35 C44 35 47 33 48 31 L57 14 C59 10 46 6 50 6 Z'/></svg>");
+        mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 6 C54 6 58 10 60 14 L69 31 C70 33 73 35 76 35 L95 36 C99 36 100 40 97 43 L83 56 C81 58 80 61 81 64 L86 83 C87 87 84 90 80 88 L62 78 C60 77 57 77 55 78 L37 88 C33 90 30 87 31 83 L36 64 C37 61 36 58 34 56 L20 43 C17 40 18 36 22 36 L41 35 C44 35 47 33 48 31 L57 14 C59 10 46 6 50 6 Z'/></svg>");
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+        animation: starPop 0.45s ease-out forwards, starTwinkle 1.2s ease-in-out infinite;
+        opacity: 0;
       }
       .stage-complete-rank {
         position: relative;
