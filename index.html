@@ -1510,6 +1510,12 @@
           stageClaimButton.classList.remove("claimed");
           return;
         }
+        if (lastRunResult?.claimedThisRun) {
+          stageClaimButton.disabled = true;
+          stageClaimButton.textContent = "획득 완료!";
+          stageClaimButton.classList.add("claimed");
+          return;
+        }
         stageClaimButton.disabled = false;
         stageClaimButton.textContent = "별 획득하기";
         stageClaimButton.classList.remove("claimed");
@@ -3160,8 +3166,7 @@
         totalClaimedStars += earned;
         saveClaimedStars();
         updateSummaryUI();
-        stageClaimButton.textContent = "획득 완료!";
-        stageClaimButton.classList.add("claimed");
+        lastRunResult.claimedThisRun = true;
         refreshClaimButton();
       });
       stageCompleteOverlay?.addEventListener("click", (event) => {
