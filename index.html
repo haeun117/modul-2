@@ -3275,7 +3275,7 @@
       });
       scoreButton?.addEventListener("click", () => {
         if (!state.chordHeardThisRun) {
-          alert("화음을 들어보세요!");
+          showListenWarning();
           return;
         }
         if (!lastRunResult) {
