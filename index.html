@@ -923,46 +923,6 @@
       .stage-complete-button.ghost {
         background: linear-gradient(180deg, #f1f5f9 0%, #cbd5f5 100%);
       }
-      .listen-nudge {
-        position: absolute;
-        left: -18px;
-        top: 50%;
-        transform: translateY(-50%);
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 12px;
-        font-weight: 800;
-        color: #2563eb;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        pointer-events: none;
-        animation: nudgePulse 0.9s ease-in-out infinite;
-      }
-      .listen-nudge .arrow {
-        font-size: 16px;
-        animation: nudgeArrow 0.9s ease-in-out infinite;
-      }
-      @keyframes nudgePulse {
-        0%,
-        100% {
-          opacity: 0.6;
-          transform: translateY(-50%) translateX(0);
-        }
-        50% {
-          opacity: 1;
-          transform: translateY(-50%) translateX(2px);
-        }
-      }
-      @keyframes nudgeArrow {
-        0%,
-        100% {
-          transform: translateX(0);
-        }
-        50% {
-          transform: translateX(-4px);
-        }
-      }
       .stage-complete-button.claim {
         background: linear-gradient(180deg, #d9f99d 0%, #86efac 100%);
         border-color: #22c55e;
