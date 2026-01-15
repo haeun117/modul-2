@@ -3240,7 +3240,13 @@
         }
       });
       scoreButton?.addEventListener("click", () => {
-        if (!lastRunResult) return;
+        if (!lastRunResult) {
+          if (state.completedPairs.size === currentStage.notes.length && state.chordHeardThisRun) {
+            finalizeRun();
+          } else {
+            return;
+          }
+        }
         showStageCompleteOverlay();
       });
 
