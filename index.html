@@ -1712,6 +1712,9 @@
       async function refreshLeaderboard() {
         if (!leaderboardList) return;
         if (!leaderboardDb) {
+          if (leaderboardStatus) {
+            leaderboardStatus.textContent = "랭킹 연결 실패";
+          }
           leaderboardList.innerHTML = '<div class="leaderboard-empty">랭킹 연결 실패</div>';
           return;
         }
