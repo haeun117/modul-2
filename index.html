@@ -3065,9 +3065,8 @@
           path: [...state.pathCells],
           note
         });
-        if (state.completedPairs.size !== currentStage.notes.length) {
-          checkChordCompletion();
-        } else {
+        checkChordCompletion();
+        if (state.completedPairs.size === currentStage.notes.length) {
           state.oneStrokeClear = state.strokesUsed === 1;
           state.awaitingChordListen = true;
           state.chordHeardThisRun = false;
