@@ -1495,6 +1495,7 @@
 
       function updateSummaryUI() {
         bestRuns = loadBestRuns();
+        totalClaimedStars = loadClaimedStars();
         const total = getTotalSummary();
         const totalPoints = total.starsSum * 100;
         document.getElementById("summaryTotalStars").textContent = String(totalPoints);
