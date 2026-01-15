@@ -1185,6 +1185,30 @@
               <div id="stageButtons" class="grid gap-3"></div>
             </div>
           </div>
+          <div class="leaderboard-panel mt-8">
+            <div class="leaderboard-header">
+              <div>
+                <h2 class="leaderboard-title">랭킹</h2>
+                <p class="leaderboard-subtitle">별 점수 높은 순</p>
+              </div>
+              <div class="leaderboard-my-score">내 점수: <span id="myScoreValue">0</span></div>
+            </div>
+            <form id="leaderboardForm" class="leaderboard-form">
+              <input
+                id="playerNameInput"
+                class="leaderboard-input"
+                type="text"
+                maxlength="12"
+                placeholder="플레이어 이름"
+                autocomplete="off"
+              />
+              <button id="savePlayerName" class="leaderboard-button" type="submit">이름 저장</button>
+            </form>
+            <p id="leaderboardStatus" class="leaderboard-status">이름을 저장하면 랭킹에 표시돼요.</p>
+            <div id="leaderboardList" class="leaderboard-list">
+              <div class="leaderboard-empty">랭킹 불러오는 중...</div>
+            </div>
+          </div>
         </div>
       </section>
 
