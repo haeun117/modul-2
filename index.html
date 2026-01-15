@@ -1321,6 +1321,12 @@
           </div>
           <button id="closeRankingButton" type="button" class="ranking-close">돌아가기</button>
         </div>
+        <div class="ranking-tabs">
+          <div class="ranking-tab active">플레이어</div>
+          <div class="ranking-tab">팸</div>
+          <div class="ranking-tab">친구</div>
+          <div class="ranking-tab">로얄</div>
+        </div>
         <div class="ranking-panel">
           <div class="leaderboard-header">
             <div>
@@ -1328,6 +1334,12 @@
               <p class="leaderboard-subtitle">별 점수 높은 순</p>
             </div>
             <div class="leaderboard-my-score">내 점수: <span id="myScoreValue">0</span></div>
+          </div>
+          <div id="leaderboardTop3" class="leaderboard-top3"></div>
+          <div class="ranking-list-panel">
+            <div id="leaderboardList" class="leaderboard-list">
+              <div class="leaderboard-empty">랭킹 불러오는 중...</div>
+            </div>
           </div>
           <form id="leaderboardForm" class="leaderboard-form">
             <input
@@ -1341,9 +1353,6 @@
             <button id="savePlayerName" class="leaderboard-button" type="submit">이름 저장</button>
           </form>
           <p id="leaderboardStatus" class="leaderboard-status">이름을 저장하면 랭킹에 표시돼요.</p>
-          <div id="leaderboardList" class="leaderboard-list">
-            <div class="leaderboard-empty">랭킹 불러오는 중...</div>
-          </div>
         </div>
       </section>
 
