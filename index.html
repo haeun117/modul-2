@@ -1882,8 +1882,14 @@
           if (leaderboardStatus) {
             leaderboardStatus.textContent = "랭킹 연결 실패";
           }
+          if (leaderboardTop3) {
+            leaderboardTop3.innerHTML = "";
+          }
           leaderboardList.innerHTML = '<div class="leaderboard-empty">랭킹 연결 실패</div>';
           return;
+        }
+        if (leaderboardTop3) {
+          leaderboardTop3.innerHTML = "";
         }
         leaderboardList.innerHTML = '<div class="leaderboard-empty">랭킹 불러오는 중...</div>';
         try {
