@@ -1503,23 +1503,16 @@
 
       function refreshClaimButton() {
         if (!stageClaimButton) return;
-        const best = bestRuns[currentStage.id];
-        const claimed = getClaimedStars(best);
         const earned = lastRunResult?.stars ?? 0;
         if (earned === 0) {
           stageClaimButton.disabled = true;
           stageClaimButton.textContent = "별 획득하기";
+          stageClaimButton.classList.remove("claimed");
           return;
         }
-        if (claimed >= earned) {
-          stageClaimButton.disabled = true;
-          stageClaimButton.textContent = "획득 완료!";
-          stageClaimButton.classList.add("claimed");
-        } else {
-          stageClaimButton.disabled = false;
-          stageClaimButton.textContent = "별 획득하기";
-          stageClaimButton.classList.remove("claimed");
-        }
+        stageClaimButton.disabled = false;
+        stageClaimButton.textContent = "별 획득하기";
+        stageClaimButton.classList.remove("claimed");
       }
 
       function getStageBestMarkup(stageId) {
