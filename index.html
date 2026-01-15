@@ -3155,12 +3155,10 @@
       });
       stageClaimButton?.addEventListener("click", () => {
         if (!lastRunResult) return;
-        const best = bestRuns[lastRunResult.stageId] || {};
-        const claimed = getClaimedStars(best);
         const earned = lastRunResult.stars;
-        if (earned <= claimed) return;
-        bestRuns[lastRunResult.stageId] = { ...best, claimedStars: earned };
-        saveBestRuns();
+        if (earned <= 0) return;
+        totalClaimedStars += earned;
+        saveClaimedStars();
         updateSummaryUI();
         refreshClaimButton();
       });
