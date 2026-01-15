@@ -3676,15 +3676,15 @@
         rankingScreen?.classList.add("hidden");
         document.getElementById("homeScreen").classList.remove("hidden");
       });
-      leaderboardForm?.addEventListener("submit", (event) => {
+      homeNameForm?.addEventListener("submit", (event) => {
         event.preventDefault();
-        if (!playerNameInput) return;
-        const nextName = sanitizePlayerName(playerNameInput.value);
+        if (!homePlayerNameInput) return;
+        const nextName = sanitizePlayerName(homePlayerNameInput.value);
         if (!nextName) {
           if (leaderboardStatus) {
             leaderboardStatus.textContent = "이름을 입력해주세요.";
           }
-          playerNameInput.focus();
+          homePlayerNameInput.focus();
           return;
         }
         ensurePlayerId();
