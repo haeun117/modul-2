@@ -2274,9 +2274,13 @@
           statusText.innerHTML = `<span class="status-complete block">${currentStage.chordName} 완성!</span><span class="mt-2 block text-slate-500">(${orderText})</span>`;
           statusHintPersist = false;
           updateRequiredNoteHighlight(null);
+          if (!state.chordHeardThisRun) {
+            staffWrapper.classList.remove("hidden");
+            renderStaff();
+            statusText.innerHTML = `<span class="status-complete block">${currentStage.chordName} 완성!</span><span class="mt-2 block text-slate-500">화음 듣기 후 완료</span>`;
+            return;
+          }
           showStageCompleteOverlay();
-          staffWrapper.classList.remove("hidden");
-          renderStaff();
           return;
         }
         hideStageCompleteOverlay();
