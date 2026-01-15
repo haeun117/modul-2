@@ -1262,6 +1262,17 @@
             <span id="summaryTotalStars" class="total-stars-score">0</span>
             <button id="openRankingButton" type="button" class="rank-link-button">랭킹보기</button>
           </div>
+          <form id="homeNameForm" class="leaderboard-form home-form absolute left-6 top-[58px]">
+            <input
+              id="homePlayerNameInput"
+              class="leaderboard-input"
+              type="text"
+              maxlength="12"
+              placeholder="플레이어 이름"
+              autocomplete="off"
+            />
+            <button id="homeSaveNameButton" class="leaderboard-button" type="submit">이름 저장</button>
+          </form>
           <div class="relative mt-8 min-h-[380px] w-full">
             <button type="button" data-part="1" class="part-card part-star part-1">
               <span class="part-label">PART 1</span>
@@ -1290,12 +1301,6 @@
           </div>
           <button id="closeRankingButton" type="button" class="ranking-close">돌아가기</button>
         </div>
-        <div class="ranking-tabs">
-          <div class="ranking-tab active">플레이어</div>
-          <div class="ranking-tab">팸</div>
-          <div class="ranking-tab">친구</div>
-          <div class="ranking-tab">로얄</div>
-        </div>
         <div class="ranking-panel">
           <div class="leaderboard-header">
             <div>
@@ -1309,18 +1314,7 @@
               <div class="leaderboard-empty">랭킹 불러오는 중...</div>
             </div>
           </div>
-          <form id="leaderboardForm" class="leaderboard-form">
-            <input
-              id="playerNameInput"
-              class="leaderboard-input"
-              type="text"
-              maxlength="12"
-              placeholder="플레이어 이름"
-              autocomplete="off"
-            />
-            <button id="savePlayerName" class="leaderboard-button" type="submit">이름 저장</button>
-          </form>
-          <p id="leaderboardStatus" class="leaderboard-status">이름을 저장하면 랭킹에 표시돼요.</p>
+          <p id="leaderboardStatus" class="leaderboard-status">랭킹이 자동으로 갱신됩니다.</p>
         </div>
       </section>
 
