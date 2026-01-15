@@ -1446,6 +1446,11 @@
       const replayButton = document.getElementById("replayButton");
       const scoreButton = document.getElementById("scoreButton");
       const controlButtons = document.getElementById("controlButtons");
+      const LEADERBOARD_COLLECTION = "leaderboard";
+      const PLAYER_ID_KEY = "drawChordPlayerId";
+      const PLAYER_NAME_KEY = "drawChordPlayerName";
+      let playerId = localStorage.getItem(PLAYER_ID_KEY) || "";
+      let playerName = localStorage.getItem(PLAYER_NAME_KEY) || "";
 
       const keyNames = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"];
       const pitchNames = ["도", "도#", "레", "미b", "미", "파", "파#", "솔", "라b", "라", "시b", "시"];
