@@ -1375,7 +1375,36 @@
       </div>
       </main>
 
-    <script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+      import {
+        collection,
+        doc,
+        getDocs,
+        getFirestore,
+        limit,
+        orderBy,
+        query,
+        serverTimestamp,
+        setDoc
+      } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDBA8AQFMFk_B-8aW84jGxNaeXq-CuLT2o",
+        authDomain: "draw-chord-260115.firebaseapp.com",
+        projectId: "draw-chord-260115",
+        storageBucket: "draw-chord-260115.firebasestorage.app",
+        messagingSenderId: "1093078605343",
+        appId: "1:1093078605343:web:c143c2440eef819559ff2a"
+      };
+
+      let leaderboardDb = null;
+      try {
+        const app = initializeApp(firebaseConfig);
+        leaderboardDb = getFirestore(app);
+      } catch (error) {
+        console.warn("Firebase init failed:", error);
+      }
       const board = document.getElementById("board");
       const nodesLayer = document.getElementById("nodesLayer");
       const activeLine = document.getElementById("activeLine");
@@ -1394,6 +1423,11 @@
       const chordCompleteMessage = document.getElementById("chordCompleteMessage");
       const listenWarningOverlay = document.getElementById("listenWarningOverlay");
       const listenWarningMessage = document.getElementById("listenWarningMessage");
+      const leaderboardForm = document.getElementById("leaderboardForm");
+      const playerNameInput = document.getElementById("playerNameInput");
+      const leaderboardList = document.getElementById("leaderboardList");
+      const leaderboardStatus = document.getElementById("leaderboardStatus");
+      const myScoreValue = document.getElementById("myScoreValue");
       const stageCompleteStars = document.getElementById("stageCompleteTopStars");
       const stageClaimButton = document.getElementById("stageClaimButton");
       const stageListenButton = document.getElementById("stageListenButton");
