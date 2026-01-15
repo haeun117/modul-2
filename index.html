@@ -1508,9 +1508,11 @@
         if (claimed >= earned) {
           stageClaimButton.disabled = true;
           stageClaimButton.textContent = "획득 완료!";
+          stageClaimButton.classList.add("claimed");
         } else {
           stageClaimButton.disabled = false;
           stageClaimButton.textContent = "별 획득하기";
+          stageClaimButton.classList.remove("claimed");
         }
       }
 
