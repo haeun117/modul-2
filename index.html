@@ -1214,6 +1214,7 @@
           >
             <span class="total-stars-badge">★</span>
             <span id="summaryTotalStars" class="total-stars-score">0</span>
+            <button id="openRankingButton" type="button" class="rank-link-button">랭킹보기</button>
           </div>
           <div class="relative mt-8 min-h-[380px] w-full">
             <button type="button" data-part="1" class="part-card part-star part-1">
@@ -1232,29 +1233,39 @@
               <div id="stageButtons" class="grid gap-3"></div>
             </div>
           </div>
-          <div class="leaderboard-panel mt-8">
-            <div class="leaderboard-header">
-              <div>
-                <h2 class="leaderboard-title">랭킹</h2>
-                <p class="leaderboard-subtitle">별 점수 높은 순</p>
-              </div>
-              <div class="leaderboard-my-score">내 점수: <span id="myScoreValue">0</span></div>
+        </div>
+      </section>
+
+      <section id="rankingScreen" class="ranking-screen hidden">
+        <div class="ranking-header">
+          <div>
+            <p class="leaderboard-subtitle">Draw Chord</p>
+            <h2 class="ranking-title">랭킹</h2>
+          </div>
+          <button id="closeRankingButton" type="button" class="ranking-close">돌아가기</button>
+        </div>
+        <div class="ranking-panel">
+          <div class="leaderboard-header">
+            <div>
+              <h3 class="leaderboard-title">전체 순위</h3>
+              <p class="leaderboard-subtitle">별 점수 높은 순</p>
             </div>
-            <form id="leaderboardForm" class="leaderboard-form">
-              <input
-                id="playerNameInput"
-                class="leaderboard-input"
-                type="text"
-                maxlength="12"
-                placeholder="플레이어 이름"
-                autocomplete="off"
-              />
-              <button id="savePlayerName" class="leaderboard-button" type="submit">이름 저장</button>
-            </form>
-            <p id="leaderboardStatus" class="leaderboard-status">이름을 저장하면 랭킹에 표시돼요.</p>
-            <div id="leaderboardList" class="leaderboard-list">
-              <div class="leaderboard-empty">랭킹 불러오는 중...</div>
-            </div>
+            <div class="leaderboard-my-score">내 점수: <span id="myScoreValue">0</span></div>
+          </div>
+          <form id="leaderboardForm" class="leaderboard-form">
+            <input
+              id="playerNameInput"
+              class="leaderboard-input"
+              type="text"
+              maxlength="12"
+              placeholder="플레이어 이름"
+              autocomplete="off"
+            />
+            <button id="savePlayerName" class="leaderboard-button" type="submit">이름 저장</button>
+          </form>
+          <p id="leaderboardStatus" class="leaderboard-status">이름을 저장하면 랭킹에 표시돼요.</p>
+          <div id="leaderboardList" class="leaderboard-list">
+            <div class="leaderboard-empty">랭킹 불러오는 중...</div>
           </div>
         </div>
       </section>
