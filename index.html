@@ -2241,6 +2241,8 @@
             if (style.shapeClass === "note-shape-diamond") {
               glow?.classList.add("note-highlight");
               glow?.style.setProperty("--glow-color", style.color);
+              element.classList.add("note-highlight");
+              element.style.setProperty("--glow-color", style.color);
             } else {
               element.classList.add("note-highlight");
               element.style.setProperty("--glow-color", style.color);
