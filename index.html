@@ -3720,7 +3720,11 @@
         }
         ensurePlayerId();
         setPlayerName(nextName);
+        setSaveButtonState(true);
         syncLeaderboardScore();
+      });
+      homePlayerNameInput?.addEventListener("input", () => {
+        setSaveButtonState(false);
       });
 
       soundToggle.addEventListener("click", () => {
