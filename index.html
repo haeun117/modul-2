@@ -1383,7 +1383,9 @@
         extraLineCount: 0,
         totalLines: 0,
         strokesUsed: 0,
-        oneStrokeClear: false
+        oneStrokeClear: false,
+        awaitingChordListen: false,
+        chordHeardThisRun: false
       };
 
       let audioContext;
@@ -2482,6 +2484,8 @@
         state.strokesUsed = 0;
         state.oneStrokeClear = false;
         state.completedChordGroups = new Set();
+        state.awaitingChordListen = false;
+        state.chordHeardThisRun = false;
         lastRunResult = null;
       }
 
