@@ -1395,6 +1395,7 @@
       let connectionHistory = [];
       let bestRuns = {};
       let lastRunResult = null;
+      let totalClaimedStars = 0;
 
       function loadBestRuns() {
         try {
@@ -1407,6 +1408,16 @@
 
       function saveBestRuns() {
         localStorage.setItem("drawChordBestRuns", JSON.stringify(bestRuns));
+      }
+
+      function loadClaimedStars() {
+        const raw = localStorage.getItem("drawChordClaimedStars");
+        const value = Number(raw);
+        return Number.isFinite(value) ? value : 0;
+      }
+
+      function saveClaimedStars() {
+        localStorage.setItem("drawChordClaimedStars", String(totalClaimedStars));
       }
 
       function getPartIdForStage(stageId) {
