@@ -3194,6 +3194,12 @@
         document.getElementById("homeScreen").classList.remove("hidden");
         updateSummaryUI();
       });
+      stageListenButton?.addEventListener("click", () => {
+        hideStageCompleteOverlay();
+        staffWrapper.classList.remove("hidden");
+        renderStaff();
+        replayButton?.classList.add("replay-attention");
+      });
       stageClaimButton?.addEventListener("click", () => {
         if (!lastRunResult) return;
         const earned = lastRunResult.stars;
