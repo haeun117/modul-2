@@ -1157,6 +1157,83 @@
         font-size: 13px;
         color: rgba(226, 232, 240, 0.85);
       }
+      .ranking-tabs {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 16px;
+      }
+      .ranking-tab {
+        border-radius: 14px;
+        padding: 8px 0;
+        font-size: 12px;
+        font-weight: 700;
+        text-align: center;
+        color: rgba(226, 232, 240, 0.7);
+        background: rgba(15, 23, 42, 0.4);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+      }
+      .ranking-tab.active {
+        color: #0f172a;
+        background: linear-gradient(180deg, #fde68a 0%, #f59e0b 100%);
+        border-color: rgba(251, 191, 36, 0.65);
+      }
+      .leaderboard-top3 {
+        margin-top: 18px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .podium-card {
+        border-radius: 18px;
+        padding: 12px 10px;
+        text-align: center;
+        position: relative;
+        color: #0f172a;
+        box-shadow: 0 12px 18px rgba(15, 23, 42, 0.35);
+      }
+      .podium-card.gold {
+        background: linear-gradient(180deg, #fef3c7 0%, #f59e0b 100%);
+      }
+      .podium-card.silver {
+        background: linear-gradient(180deg, #e2e8f0 0%, #94a3b8 100%);
+      }
+      .podium-card.bronze {
+        background: linear-gradient(180deg, #fed7aa 0%, #fb923c 100%);
+      }
+      .podium-rank {
+        width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        margin: 0 auto 6px;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        background: rgba(15, 23, 42, 0.15);
+      }
+      .podium-name {
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .podium-score {
+        margin-top: 6px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 12px;
+        font-weight: 700;
+        color: #0f172a;
+        background: rgba(255, 255, 255, 0.65);
+        padding: 3px 8px;
+        border-radius: 999px;
+      }
+      .ranking-list-panel {
+        margin-top: 16px;
+        border-radius: 18px;
+        padding: 12px;
+        background: rgba(15, 23, 42, 0.45);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+      }
       .note-shape-circle {
         border-radius: 9999px;
       }
