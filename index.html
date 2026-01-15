@@ -3213,7 +3213,7 @@
         if (state.completedPairs.size === currentStage.notes.length && state.awaitingChordListen && !state.chordHeardThisRun) {
           state.chordHeardThisRun = true;
           state.awaitingChordListen = false;
-          toggleListenNudge(false);
+          replayButton.classList.remove("replay-attention");
           finalizeRun();
           updateStatusText();
         }
