@@ -3780,6 +3780,7 @@
 
       keySelect.addEventListener("change", (event) => {
         state.key = event.target.value;
+        breakStageStreak();
         resetAll();
         updateFrequencies();
       });
@@ -3789,6 +3790,7 @@
         currentStage = stages[currentStageIndex];
         state.key = "C";
         if (keySelect) keySelect.value = state.key;
+        breakStageStreak();
         resetAll();
         updateFrequencies();
       });
@@ -3817,6 +3819,7 @@
       document.getElementById("homeButton")?.addEventListener("click", () => {
         document.getElementById("gameScreen").classList.add("hidden");
         document.getElementById("homeScreen").classList.remove("hidden");
+        breakStageStreak();
         updateSummaryUI();
       });
     </script>
