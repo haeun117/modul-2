@@ -2774,6 +2774,15 @@
               return `<span class="star-on" style="animation-delay:${delay}s, ${delay}s;"></span>`;
             }).join("");
           }
+          if (stageBonusText) {
+            const bonus = lastRunResult.bonusStars ?? 0;
+            if (bonus > 0) {
+              stageBonusText.textContent = `연속 보너스 +${bonus}★`;
+              stageBonusText.classList.remove("hidden");
+            } else {
+              stageBonusText.classList.add("hidden");
+            }
+          }
           if (stageCompleteRibbon) {
             const titleMap = {
               3: "참 잘했어요!",
