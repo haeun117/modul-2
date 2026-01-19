@@ -3635,6 +3635,10 @@
         updateStatusText();
       }
 
+      function breakStageStreak() {
+        stageStreakCount = 0;
+      }
+
       board.addEventListener("pointerdown", (event) => {
         board.setPointerCapture(event.pointerId);
         handleStart(event);
@@ -3653,6 +3657,7 @@
       });
 
       resetButton.addEventListener("click", () => {
+        breakStageStreak();
         resetAll();
       });
       backButton.addEventListener("click", () => {
@@ -3665,10 +3670,12 @@
         updateStatusText();
       });
       resetLinesButton.addEventListener("click", () => {
+        breakStageStreak();
         resetLinesOnly();
       });
       stageRetryButton?.addEventListener("click", () => {
         hideStageCompleteOverlay();
+        breakStageStreak();
         resetAll();
         updateFrequencies();
       });
@@ -3686,6 +3693,7 @@
       });
       stageSelectButton?.addEventListener("click", () => {
         hideStageCompleteOverlay();
+        breakStageStreak();
         document.getElementById("gameScreen").classList.add("hidden");
         document.getElementById("homeScreen").classList.remove("hidden");
         updateSummaryUI();
