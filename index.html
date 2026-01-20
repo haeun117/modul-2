@@ -87,89 +87,179 @@
       .customer {
         display: grid;
         place-items: center;
-        gap: 4px;
+        gap: 2px;
       }
 
       .head {
-        width: 120px;
-        height: 120px;
-        background: #f8d5b8;
-        border-radius: 50% 50% 46% 46%;
-        border: 4px solid #d7a27e;
+        width: 132px;
+        height: 132px;
+        background: #ffe7cf;
+        border-radius: 52% 52% 46% 46%;
+        border: 4px solid #5f4635;
         position: relative;
       }
 
-      .hair {
+      .hair-back {
         position: absolute;
-        inset: -6px -6px 40px -6px;
-        background: #5b3a2a;
-        border-radius: 60% 60% 40% 40%;
+        inset: -8px -8px 36px -8px;
+        background: #f6e1a6;
+        border: 4px solid #5f4635;
+        border-radius: 55% 55% 40% 40%;
+        z-index: 0;
+      }
+
+      .hair-front {
+        position: absolute;
+        inset: 14px 10px 48px 10px;
+        background: #f6e1a6;
+        border: 4px solid #5f4635;
+        border-bottom: none;
+        border-radius: 60% 60% 20% 20%;
+        z-index: 2;
       }
 
       .face {
         position: absolute;
-        inset: 18px 18px 20px 18px;
-        background: #f8d5b8;
+        inset: 22px 20px 18px 20px;
+        background: #ffe7cf;
         border-radius: 46% 46% 40% 40%;
+        z-index: 3;
       }
 
       .eye {
         position: absolute;
-        top: 40px;
-        width: 10px;
-        height: 10px;
-        background: #3f2b1c;
+        top: 44px;
+        width: 8px;
+        height: 14px;
+        background: #3a2a22;
         border-radius: 50%;
       }
 
       .eye.left {
-        left: 36px;
+        left: 34px;
       }
 
       .eye.right {
-        right: 36px;
+        right: 34px;
+      }
+
+      .blush {
+        position: absolute;
+        top: 62px;
+        width: 18px;
+        height: 12px;
+        background: #f7b5b5;
+        border-radius: 999px;
+        opacity: 0.7;
+      }
+
+      .blush.left {
+        left: 22px;
+      }
+
+      .blush.right {
+        right: 22px;
       }
 
       .mouth {
         position: absolute;
-        bottom: 28px;
+        bottom: 30px;
         left: 50%;
-        width: 30px;
-        height: 16px;
-        border-bottom: 4px solid #3f2b1c;
+        width: 22px;
+        height: 12px;
+        border-bottom: 4px solid #3a2a22;
         border-radius: 0 0 40px 40px;
         transform: translateX(-50%);
       }
 
-      .body {
-        width: 160px;
-        height: 120px;
-        background: #f3a7a7;
-        border-radius: 20px 20px 30px 30px;
-        border: 4px solid #d18c8c;
-        position: relative;
-      }
-
-      .body::before,
-      .body::after {
-        content: "";
+      .ribbon {
         position: absolute;
-        top: 20px;
-        width: 28px;
-        height: 60px;
-        background: #f3a7a7;
-        border: 4px solid #d18c8c;
-        border-radius: 16px;
+        top: 30px;
+        width: 24px;
+        height: 20px;
+        background: #f2a1b8;
+        border: 4px solid #5f4635;
+        border-radius: 8px;
+        z-index: 4;
       }
 
-      .body::before {
-        left: -20px;
+      .ribbon.left {
+        left: -8px;
+        transform: rotate(-8deg);
+      }
+
+      .ribbon.right {
+        right: -8px;
+        transform: rotate(8deg);
+      }
+
+      .body {
+        width: 170px;
+        height: 150px;
+        background: #f2a1b8;
+        border-radius: 28px 28px 40px 40px;
+        border: 4px solid #5f4635;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .sleeve {
+        position: absolute;
+        top: 26px;
+        width: 44px;
+        height: 70px;
+        background: #ffffff;
+        border: 4px solid #5f4635;
+        border-radius: 22px;
+      }
+
+      .sleeve.left {
+        left: -6px;
         transform: rotate(-12deg);
       }
 
-      .body::after {
-        right: -20px;
+      .sleeve.right {
+        right: -6px;
         transform: rotate(12deg);
+      }
+
+      .collar {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        width: 80px;
+        height: 26px;
+        background: #ffffff;
+        border: 4px solid #5f4635;
+        border-radius: 0 0 30px 30px;
+        transform: translateX(-50%);
+        z-index: 2;
+      }
+
+      .bow {
+        position: absolute;
+        top: 40px;
+        left: 50%;
+        width: 28px;
+        height: 20px;
+        background: #f08cab;
+        border: 4px solid #5f4635;
+        border-radius: 8px;
+        transform: translateX(-50%);
+        z-index: 2;
+      }
+
+      .skirt {
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        width: 200px;
+        height: 120px;
+        background: #f2a1b8;
+        border: 4px solid #5f4635;
+        border-top: none;
+        border-radius: 0 0 80px 80px;
+        transform: translateX(-50%);
       }
 
       .counter {
