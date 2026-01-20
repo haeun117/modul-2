@@ -3,3845 +3,795 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Draw Chord - Stage 1</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Draw Chord - Fruit Note Cafe</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Gowun+Dodum&family=Space+Grotesk:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
     <style>
+      :root {
+        color-scheme: only light;
+        --bg-1: #f3f1ff;
+        --bg-2: #ffecd2;
+        --bg-3: #e1f5ff;
+        --ink-1: #1c1b2a;
+        --ink-2: #4b4b61;
+        --accent-1: #ff7a59;
+        --accent-2: #3b82f6;
+        --accent-3: #ffd166;
+        --accent-4: #22c55e;
+        --panel: #ffffff;
+        --shadow: 0 24px 60px rgba(24, 24, 48, 0.15);
+        --radius-lg: 32px;
+        --radius-md: 20px;
+        --radius-sm: 14px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
       body {
-        font-family: "Pretendard", "Inter", system-ui, sans-serif;
-      }
-      .home-sky {
-        position: relative;
-        color: #e2e8f0;
+        margin: 0;
+        font-family: "Gowun Dodum", "Space Grotesk", sans-serif;
+        color: var(--ink-1);
+        min-height: 100vh;
         background:
-          radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.35), transparent 45%),
-          radial-gradient(circle at 80% 10%, rgba(14, 165, 233, 0.25), transparent 40%),
-          radial-gradient(circle at 60% 80%, rgba(56, 189, 248, 0.2), transparent 50%),
-          linear-gradient(180deg, #0f172a 0%, #111827 40%, #0b1020 100%);
-        overflow: hidden;
-      }
-      .game-sky {
-        position: relative;
-        background:
-          radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.35), transparent 45%),
-          radial-gradient(circle at 80% 10%, rgba(14, 165, 233, 0.25), transparent 40%),
-          radial-gradient(circle at 60% 80%, rgba(56, 189, 248, 0.2), transparent 50%),
-          linear-gradient(180deg, #0f172a 0%, #111827 40%, #0b1020 100%);
-        overflow: hidden;
-      }
-      .home-sky::before {
-        content: "";
-        position: absolute;
-        inset: -20%;
-        background:
-          radial-gradient(1px 1px at 6% 14%, rgba(255, 255, 255, 0.85), transparent),
-          radial-gradient(1px 1px at 10% 32%, rgba(191, 219, 254, 0.75), transparent),
-          radial-gradient(2px 2px at 12% 58%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(1px 1px at 16% 76%, rgba(186, 230, 253, 0.7), transparent),
-          radial-gradient(1px 1px at 20% 22%, rgba(255, 255, 255, 0.7), transparent),
-          radial-gradient(2px 2px at 24% 44%, rgba(255, 255, 255, 0.85), transparent),
-          radial-gradient(1px 1px at 28% 66%, rgba(191, 219, 254, 0.65), transparent),
-          radial-gradient(2px 2px at 32% 12%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(1px 1px at 36% 82%, rgba(167, 243, 208, 0.65), transparent),
-          radial-gradient(1px 1px at 40% 34%, rgba(255, 255, 255, 0.75), transparent),
-          radial-gradient(2px 2px at 44% 56%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(1px 1px at 48% 18%, rgba(191, 219, 254, 0.7), transparent),
-          radial-gradient(1px 1px at 52% 74%, rgba(255, 255, 255, 0.75), transparent),
-          radial-gradient(2px 2px at 56% 36%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(1px 1px at 60% 86%, rgba(191, 219, 254, 0.7), transparent),
-          radial-gradient(1px 1px at 64% 52%, rgba(255, 255, 255, 0.8), transparent),
-          radial-gradient(2px 2px at 68% 24%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(1px 1px at 72% 68%, rgba(148, 197, 255, 0.7), transparent),
-          radial-gradient(1px 1px at 76% 14%, rgba(255, 255, 255, 0.8), transparent),
-          radial-gradient(2px 2px at 80% 40%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(1px 1px at 84% 62%, rgba(191, 219, 254, 0.75), transparent),
-          radial-gradient(2px 2px at 88% 22%, rgba(255, 255, 255, 0.95), transparent),
-          radial-gradient(1px 1px at 92% 78%, rgba(148, 197, 255, 0.7), transparent),
-          radial-gradient(1px 1px at 96% 48%, rgba(255, 255, 255, 0.75), transparent),
-          radial-gradient(2px 2px at 6% 48%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(2px 2px at 18% 10%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(2px 2px at 30% 88%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(2px 2px at 46% 8%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(2px 2px at 58% 62%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(2px 2px at 70% 90%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(2px 2px at 86% 36%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(2px 2px at 94% 12%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(circle at 50% 75%, rgba(255, 255, 255, 0.45), transparent 40%);
-        opacity: 0.8;
-        animation: twinkleSoft 9s infinite ease-in-out;
-      }
-      .home-sky::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-          radial-gradient(circle at 15% 65%, rgba(56, 189, 248, 0.12), transparent 35%),
-          radial-gradient(circle at 85% 55%, rgba(59, 130, 246, 0.12), transparent 40%),
-          radial-gradient(1px 1px at 8% 40%, rgba(255, 255, 255, 0.5), transparent),
-          radial-gradient(1px 1px at 14% 60%, rgba(191, 219, 254, 0.5), transparent),
-          radial-gradient(1px 1px at 26% 24%, rgba(255, 255, 255, 0.45), transparent),
-          radial-gradient(2px 2px at 30% 70%, rgba(255, 255, 255, 0.55), transparent),
-          radial-gradient(1px 1px at 42% 18%, rgba(165, 243, 252, 0.4), transparent),
-          radial-gradient(1px 1px at 50% 50%, rgba(255, 255, 255, 0.5), transparent),
-          radial-gradient(2px 2px at 62% 30%, rgba(255, 255, 255, 0.6), transparent),
-          radial-gradient(1px 1px at 70% 58%, rgba(255, 255, 255, 0.45), transparent),
-          radial-gradient(1px 1px at 78% 20%, rgba(191, 219, 254, 0.45), transparent),
-          radial-gradient(2px 2px at 86% 74%, rgba(255, 255, 255, 0.6), transparent),
-          radial-gradient(1px 1px at 94% 44%, rgba(255, 255, 255, 0.45), transparent),
-          radial-gradient(2px 2px at 18% 46%, rgba(255, 255, 255, 0.6), transparent),
-          radial-gradient(2px 2px at 38% 82%, rgba(255, 255, 255, 0.6), transparent),
-          radial-gradient(2px 2px at 54% 12%, rgba(255, 255, 255, 0.6), transparent),
-          radial-gradient(2px 2px at 76% 82%, rgba(255, 255, 255, 0.6), transparent);
-        mix-blend-mode: screen;
-        animation: twinkleSlow 12s infinite ease-in-out;
-      }
-      .game-sky::before {
-        content: "";
-        position: absolute;
-        inset: -20%;
-        background:
-          radial-gradient(1px 1px at 6% 14%, rgba(255, 255, 255, 0.85), transparent),
-          radial-gradient(1px 1px at 10% 32%, rgba(191, 219, 254, 0.75), transparent),
-          radial-gradient(2px 2px at 12% 58%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(1px 1px at 16% 76%, rgba(186, 230, 253, 0.7), transparent),
-          radial-gradient(1px 1px at 20% 22%, rgba(255, 255, 255, 0.7), transparent),
-          radial-gradient(2px 2px at 24% 44%, rgba(255, 255, 255, 0.85), transparent),
-          radial-gradient(1px 1px at 28% 66%, rgba(191, 219, 254, 0.65), transparent),
-          radial-gradient(2px 2px at 32% 12%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(1px 1px at 36% 82%, rgba(167, 243, 208, 0.65), transparent),
-          radial-gradient(1px 1px at 40% 34%, rgba(255, 255, 255, 0.75), transparent),
-          radial-gradient(2px 2px at 44% 56%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(1px 1px at 48% 18%, rgba(191, 219, 254, 0.7), transparent),
-          radial-gradient(1px 1px at 52% 74%, rgba(255, 255, 255, 0.75), transparent),
-          radial-gradient(2px 2px at 56% 36%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(1px 1px at 60% 86%, rgba(191, 219, 254, 0.7), transparent),
-          radial-gradient(1px 1px at 64% 52%, rgba(255, 255, 255, 0.8), transparent),
-          radial-gradient(2px 2px at 68% 24%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(1px 1px at 72% 68%, rgba(148, 197, 255, 0.7), transparent),
-          radial-gradient(1px 1px at 76% 14%, rgba(255, 255, 255, 0.8), transparent),
-          radial-gradient(2px 2px at 80% 40%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(1px 1px at 84% 62%, rgba(191, 219, 254, 0.75), transparent),
-          radial-gradient(2px 2px at 88% 22%, rgba(255, 255, 255, 0.95), transparent),
-          radial-gradient(1px 1px at 92% 78%, rgba(148, 197, 255, 0.7), transparent),
-          radial-gradient(1px 1px at 96% 48%, rgba(255, 255, 255, 0.75), transparent),
-          radial-gradient(2px 2px at 6% 48%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(2px 2px at 18% 10%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(2px 2px at 30% 88%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(2px 2px at 46% 8%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(2px 2px at 58% 62%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(2px 2px at 70% 90%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(2px 2px at 86% 36%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(2px 2px at 94% 12%, rgba(255, 255, 255, 0.9), transparent);
-        opacity: 0.8;
-        animation: twinkleSoft 9s infinite ease-in-out;
-        pointer-events: none;
-      }
-      .game-sky::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-          radial-gradient(circle at 15% 65%, rgba(56, 189, 248, 0.12), transparent 35%),
-          radial-gradient(circle at 85% 55%, rgba(59, 130, 246, 0.12), transparent 40%),
-          radial-gradient(1px 1px at 8% 40%, rgba(255, 255, 255, 0.5), transparent),
-          radial-gradient(1px 1px at 14% 60%, rgba(191, 219, 254, 0.5), transparent),
-          radial-gradient(1px 1px at 26% 24%, rgba(255, 255, 255, 0.45), transparent),
-          radial-gradient(2px 2px at 30% 70%, rgba(255, 255, 255, 0.55), transparent),
-          radial-gradient(1px 1px at 42% 18%, rgba(165, 243, 252, 0.4), transparent),
-          radial-gradient(1px 1px at 50% 50%, rgba(255, 255, 255, 0.5), transparent),
-          radial-gradient(2px 2px at 62% 30%, rgba(255, 255, 255, 0.6), transparent),
-          radial-gradient(1px 1px at 70% 58%, rgba(255, 255, 255, 0.45), transparent),
-          radial-gradient(1px 1px at 78% 20%, rgba(191, 219, 254, 0.45), transparent),
-          radial-gradient(2px 2px at 86% 74%, rgba(255, 255, 255, 0.6), transparent),
-          radial-gradient(1px 1px at 94% 44%, rgba(255, 255, 255, 0.45), transparent),
-          radial-gradient(2px 2px at 18% 46%, rgba(255, 255, 255, 0.6), transparent),
-          radial-gradient(2px 2px at 38% 82%, rgba(255, 255, 255, 0.6), transparent),
-          radial-gradient(2px 2px at 54% 12%, rgba(255, 255, 255, 0.6), transparent),
-          radial-gradient(2px 2px at 76% 82%, rgba(255, 255, 255, 0.6), transparent);
-        mix-blend-mode: screen;
-        animation: twinkleSlow 12s infinite ease-in-out;
-        pointer-events: none;
-      }
-      .game-sky > * {
-        position: relative;
-        z-index: 1;
-      }
-      .home-shell {
-        position: relative;
-        z-index: 1;
-        width: 100%;
-        max-width: 72rem;
-        margin: 0 auto;
-      }
-      .home-title {
-        font-family: "Cinzel", "Pretendard", serif;
-        letter-spacing: 0.02em;
-      }
-      .hover-panel {
-        position: absolute;
-        right: 80px;
-        top: 34px;
-        z-index: 3;
-        min-width: 300px;
-        max-width: 360px;
-        padding: 18px 20px;
-        border-radius: 16px;
-        background: rgba(15, 23, 42, 0.62);
-        border: 1px solid rgba(148, 163, 184, 0.4);
-        color: #e2e8f0;
-        font-size: 14px;
-        line-height: 1.5;
-        letter-spacing: 0.02em;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.45);
-        opacity: 0;
-        transform: translateY(-6px);
-        pointer-events: none;
-        transition: opacity 0.25s ease, transform 0.25s ease;
-      }
-      .hover-panel.is-visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .hover-panel .panel-title {
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
-        font-size: 13px;
-        color: #f8fafc;
-      }
-      .hover-panel .panel-subtitle {
-        margin-top: 4px;
-        font-size: 14px;
-        color: #cbd5f5;
-        white-space: pre-line;
-      }
-      .hover-panel .panel-divider {
-        height: 1px;
-        margin: 10px 0;
-        background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.5), transparent);
-      }
-      .hover-panel .panel-detail {
-        font-size: 12px;
-        color: #e2e8f0;
-        white-space: pre-line;
-      }
-      .part-star {
-        position: absolute;
-        width: 110px;
-        height: 110px;
-        border: none;
-        background: transparent;
-        color: #e2e8f0;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        transition: transform 0.3s ease, filter 0.3s ease;
-      }
-      .part-star .star-core {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 20px;
-        height: 20px;
-        border-radius: 999px;
-        transform: translate(-50%, -50%);
-        background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0.35) 60%, transparent 75%);
-        box-shadow:
-          0 0 14px rgba(255, 255, 255, 0.9),
-          0 0 40px rgba(59, 130, 246, 0.6),
-          0 0 80px rgba(14, 165, 233, 0.4);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-      .part-star::before,
-      .part-star::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 70px;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
-        transform: translate(-50%, -50%);
-        filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
-      }
-      .part-star::after {
-        width: 2px;
-        height: 70px;
-        background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.9), transparent);
-      }
-      .part-star:hover {
-        transform: scale(1.14);
-        filter: drop-shadow(0 0 26px rgba(255, 255, 255, 0.9));
-      }
-      .part-star:hover .star-core {
-        animation: starPulse 0.9s ease-in-out infinite;
-        box-shadow:
-          0 0 18px rgba(255, 255, 255, 1),
-          0 0 48px rgba(59, 130, 246, 0.8),
-          0 0 110px rgba(14, 165, 233, 0.6);
-      }
-      .part-label {
-        position: absolute;
-        left: 50%;
-        top: -14px;
-        transform: translateX(-50%);
-        font-size: 12px;
-        color: #e2e8f0;
-        letter-spacing: 0.2em;
-      }
-      .part-star.part-1 {
-        left: 8%;
-        top: 10%;
-      }
-      .part-star.part-2 {
-        left: 50%;
-        top: 72%;
-        transform: translate(-50%, -50%);
-      }
-      .part-star.part-3 {
-        left: 84%;
-        top: 99%;
-      }
-      .stage-picker {
-        position: absolute;
-        z-index: 2;
-      }
-      .stage-picker.part-1 {
-        left: 18%;
-        top: 20%;
-      }
-      .stage-picker.part-2 {
-        left: 50%;
-        top: 94%;
-        transform: translateX(-50%);
-      }
-      .stage-picker.part-3 {
-        left: 84%;
-        top: 116%;
-        transform: translateX(-100%);
-      }
-      .constellation-row {
-        position: relative;
-        display: flex;
-        align-items: center;
-        gap: 0;
-        padding-bottom: 60px;
-      }
-      .constellation-line {
-        height: 2px;
-        width: 170px;
-        margin: 0 -6px;
-        background: linear-gradient(90deg, rgba(148, 163, 184, 0.7), rgba(56, 189, 248, 0.2), rgba(148, 163, 184, 0.6));
-        transform-origin: left;
-        animation: lineGrowX 0.6s ease forwards;
-        --line-offset: 0px;
-        --line-rotate: 0deg;
-        transform: translateY(var(--line-offset)) rotate(var(--line-rotate)) scaleX(0);
-      }
-      .constellation-row.reverse {
-        flex-direction: row-reverse;
-      }
-      .stage-star {
-        position: relative;
-        width: 64px;
-        height: 64px;
-        border: none;
-        background: transparent;
-        color: #e2e8f0;
-        --star-offset: 0px;
-        transform: translateY(var(--star-offset));
-        transition: transform 0.3s ease, filter 0.3s ease;
-      }
-      .stage-star .star-core {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 10px;
-        height: 10px;
-        border-radius: 999px;
-        transform: translate(-50%, -50%);
-        background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0.45) 60%, transparent 75%);
-        box-shadow:
-          0 0 10px rgba(255, 255, 255, 0.8),
-          0 0 24px rgba(56, 189, 248, 0.5);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-      .stage-star::before,
-      .stage-star::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 38px;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
-        transform: translate(-50%, -50%);
-      }
-      .stage-star::after {
-        width: 2px;
-        height: 38px;
-        background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.9), transparent);
-      }
-      .stage-label {
-        position: absolute;
-        left: 50%;
-        top: -14px;
-        transform: translateX(-50%);
-        font-size: 11px;
-        letter-spacing: 0.16em;
-        color: #e2e8f0;
-      }
-      .stage-star:hover {
-        transform: translateY(var(--star-offset)) scale(1.16);
-        filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.85));
-      }
-      .stage-star:hover .star-core {
-        animation: starPulse 0.9s ease-in-out infinite;
-        box-shadow:
-          0 0 14px rgba(255, 255, 255, 0.95),
-          0 0 36px rgba(56, 189, 248, 0.75),
-          0 0 90px rgba(125, 211, 252, 0.65);
-      }
-      .animate-node {
-        animation: nodePop 0.5s ease both;
-      }
-      .status-complete {
-        animation: statusPulse 1.4s ease-in-out infinite;
-        color: #2563eb;
-        text-shadow: 0 0 12px rgba(37, 99, 235, 0.55);
-      }
-      .fade-out {
-        animation: collapseOut 0.3s ease forwards;
-        transform-origin: left;
-        filter: none;
-      }
-      .fade-out.center-collapse {
-        animation: collapseUp 0.3s ease forwards;
-        transform-origin: top;
-      }
-      .fade-out.right-collapse {
-        animation: collapseOutRight 0.3s ease forwards;
-        transform-origin: right;
-      }
-      @keyframes twinkle {
-        0%,
-        100% {
-          opacity: 0.55;
-        }
-        50% {
-          opacity: 0.95;
-        }
-      }
-      @keyframes twinkleSoft {
-        0%,
-        100% {
-          opacity: 0.55;
-        }
-        50% {
-          opacity: 0.95;
-        }
-      }
-      @keyframes twinkleSlow {
-        0%,
-        100% {
-          opacity: 0.45;
-        }
-        50% {
-          opacity: 0.85;
-        }
-      }
-      @keyframes lineGrow {
-        from {
-          transform: scaleY(0);
-        }
-        to {
-          transform: scaleY(1);
-        }
-      }
-      @keyframes lineGrowX {
-        from {
-          transform: translateY(var(--line-offset, 0px)) rotate(var(--line-rotate, 0deg)) scaleX(0);
-        }
-        to {
-          transform: translateY(var(--line-offset, 0px)) rotate(var(--line-rotate, 0deg)) scaleX(1);
-        }
-      }
-      @keyframes nodePop {
-        from {
-          opacity: 0;
-          transform: translateY(calc(var(--star-offset, 0px) + 6px)) scale(0.95);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(var(--star-offset, 0px)) scale(1);
-        }
-      }
-      @keyframes starPulse {
-        0% {
-          transform: translate(-50%, -50%) scale(1);
-        }
-        50% {
-          transform: translate(-50%, -50%) scale(1.45);
-        }
-        100% {
-          transform: translate(-50%, -50%) scale(1);
-        }
-      }
-      @keyframes collapseOut {
-        from {
-          opacity: 1;
-          transform: scaleX(1);
-        }
-        to {
-          opacity: 0;
-          transform: scaleX(0.4);
-        }
-      }
-      @keyframes collapseOutRight {
-        from {
-          opacity: 1;
-          transform: translateX(-100%) scaleX(1);
-        }
-        to {
-          opacity: 0;
-          transform: translateX(-100%) scaleX(0.4);
-        }
-      }
-      @keyframes collapseUp {
-        from {
-          opacity: 1;
-          transform: translateX(-50%) translateY(0) scaleY(1);
-        }
-        to {
-          opacity: 0;
-          transform: translateX(-50%) translateY(-40px) scaleY(0.4);
-        }
-      }
-      @keyframes statusPulse {
-        0%,
-        100% {
-          transform: scale(1);
-          letter-spacing: 0.01em;
-        }
-        50% {
-          transform: scale(1.04);
-          letter-spacing: 0.06em;
-        }
-      }
-      @keyframes collapseRight {
-        from {
-          opacity: 1;
-          transform: scaleX(1);
-        }
-        to {
-          opacity: 0;
-          transform: scaleX(0.3);
-        }
-      }
-      @keyframes sparklePulse {
-        0%,
-        100% {
-          box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.75), 0 0 22px var(--glow-color, rgba(255, 255, 255, 0.85));
-          filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.85));
-        }
-        50% {
-          box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.95), 0 0 34px var(--glow-color, rgba(255, 255, 255, 0.95));
-          filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.95));
-        }
-      }
-      @keyframes completePop {
-        0% {
-          transform: translateY(16px) scale(0.9);
-          opacity: 0;
-        }
-        100% {
-          transform: translateY(0) scale(1);
-          opacity: 1;
-        }
-      }
-      @keyframes ribbonShine {
-        0% {
-          transform: translateX(-120%);
-        }
-        100% {
-          transform: translateX(120%);
-        }
-      }
-      @keyframes chordToast {
-        0% {
-          opacity: 0;
-          transform: translateY(8px) scale(0.98);
-        }
-        20% {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-        80% {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-        100% {
-          opacity: 0;
-          transform: translateY(-6px) scale(0.98);
-        }
-      }
-      @keyframes listenPulse {
-        0%,
-        100% {
-          transform: scale(1);
-          box-shadow: 0 0 0 rgba(56, 189, 248, 0);
-        }
-        50% {
-          transform: scale(1.08);
-          box-shadow: 0 0 18px rgba(56, 189, 248, 0.65);
-        }
-      }
-      .replay-attention {
-        animation: listenPulse 1s ease-in-out infinite;
-      }
-      @keyframes starPop {
-        0% {
-          transform: scale(0.2) rotate(-12deg);
-          opacity: 0;
-        }
-        60% {
-          transform: scale(1.15) rotate(6deg);
-          opacity: 1;
-        }
-        100% {
-          transform: scale(1) rotate(0deg);
-          opacity: 1;
-        }
-      }
-      @keyframes starTwinkle {
-        0%,
-        100% {
-          filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.85)) drop-shadow(0 0 18px rgba(251, 191, 36, 0.8));
-        }
-        50% {
-          filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 30px rgba(251, 191, 36, 0.95));
-        }
-      }
-      .board {
-        touch-action: none;
-        background-image:
-          linear-gradient(to right, rgba(148, 163, 184, 0.35) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(148, 163, 184, 0.35) 1px, transparent 1px);
-      }
-      .note {
-        transform: translate(-50%, -50%);
-        text-align: center;
-        overflow: visible;
-        z-index: 1;
-      }
-      .note-highlight {
-        animation: sparklePulse 1s ease-in-out infinite;
-      }
-      .note-glow {
-        position: absolute;
-        transform: translate(-50%, -50%);
-        pointer-events: none;
-        z-index: 0;
-        border-radius: 999px;
-      }
-      .note-glow.note-highlight {
-        background: radial-gradient(circle, var(--glow-color, rgba(255, 255, 255, 0.9)) 0%, rgba(255, 255, 255, 0) 65%);
-        opacity: 0.9;
-        transform: translate(-50%, -50%) scale(1.25);
-        animation: sparklePulse 1s ease-in-out infinite;
-      }
-      .note-glow.note-highlight.note-glow-diamond {
-        -webkit-mask-image: none;
-        mask-image: none;
-      }
-      .note-glow-diamond {
-        -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 2 C58 2 64 7 70 13 L90 33 C95 38 98 44 98 50 C98 56 95 62 90 67 L70 87 C64 93 58 98 50 98 C42 98 36 93 30 87 L10 67 C5 62 2 56 2 50 C2 44 5 38 10 33 L30 13 C36 7 42 2 50 2 Z'/></svg>");
-        mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 2 C58 2 64 7 70 13 L90 33 C95 38 98 44 98 50 C98 56 95 62 90 67 L70 87 C64 93 58 98 50 98 C42 98 36 93 30 87 L10 67 C5 62 2 56 2 50 C2 44 5 38 10 33 L30 13 C36 7 42 2 50 2 Z'/></svg>");
-        -webkit-mask-repeat: no-repeat;
-        mask-repeat: no-repeat;
-        -webkit-mask-position: center;
-        mask-position: center;
-        -webkit-mask-size: 100% 100%;
-        mask-size: 100% 100%;
-      }
-      .stage-complete-overlay {
-        position: fixed;
-        inset: 0;
-        background: linear-gradient(180deg, rgba(2, 6, 23, 0.9) 0%, rgba(2, 6, 23, 0.78) 45%, rgba(2, 6, 23, 0.78) 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 60;
-        padding: 20px;
-      }
-      .chord-complete-overlay {
-        position: fixed;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: transparent;
-        z-index: 55;
-        pointer-events: none;
-      }
-      .chord-complete-card {
-        padding: 12px 24px;
-        border-radius: 999px;
-        background: linear-gradient(180deg, #86efac 0%, #22c55e 100%);
-        border: 3px solid rgba(22, 163, 74, 0.65);
-        color: #ffffff;
-        font-size: 22px;
-        font-weight: 900;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        text-shadow: 0 2px 0 rgba(15, 23, 42, 0.35);
-        box-shadow:
-          inset 0 2px 0 rgba(255, 255, 255, 0.6),
-          inset 0 -3px 0 rgba(21, 128, 61, 0.5),
-          0 10px 18px rgba(15, 23, 42, 0.35);
-        animation: chordToast 1.2s ease-out;
-      }
-      .listen-warning-card {
-        padding: 12px 24px;
-        border-radius: 999px;
-        background: linear-gradient(180deg, #a5d8ff 0%, #0ea5e9 100%);
-        border: 3px solid rgba(30, 64, 175, 0.65);
-        color: #ffffff;
-        font-size: 18px;
-        font-weight: 900;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        text-shadow: 0 2px 0 rgba(15, 23, 42, 0.35);
-        box-shadow:
-          inset 0 2px 0 rgba(255, 255, 255, 0.6),
-          inset 0 -3px 0 rgba(30, 64, 175, 0.5),
-          0 10px 18px rgba(15, 23, 42, 0.35);
-        animation: chordToast 1.2s ease-out;
-      }
-      .stage-complete-card {
-        position: relative;
-        width: min(92vw, 420px);
-        padding: 36px 28px 30px;
-        border-radius: 28px;
-        background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 55%, #60a5fa 100%);
-        box-shadow: 0 22px 50px rgba(15, 23, 42, 0.35);
-        border: 4px solid #7dd3fc;
-        text-align: center;
-        overflow: hidden;
-        animation: completePop 0.4s ease-out;
-      }
-      .stage-complete-burst {
-        position: absolute;
-        inset: -40px;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0) 65%),
-          repeating-conic-gradient(rgba(255, 255, 255, 0.35) 0 8deg, rgba(255, 255, 255, 0) 8deg 16deg);
-        opacity: 0.6;
-        z-index: 0;
-      }
-      .stage-bonus-text {
-        position: relative;
-        margin-top: 8px;
-        font-size: 14px;
-        font-weight: 800;
-        color: #fef3c7;
-        text-shadow: 0 2px 0 rgba(15, 23, 42, 0.35);
-        z-index: 1;
-      }
-      .stage-complete-star {
-        position: relative;
-        width: 160px;
-        height: 160px;
-        margin: 0 auto 12px;
-        transform: translateX(-9px);
-        background: #7dd3fc;
-        -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 6 C54 6 58 10 60 14 L69 31 C70 33 73 35 76 35 L95 36 C99 36 100 40 97 43 L83 56 C81 58 80 61 81 64 L86 83 C87 87 84 90 80 88 L62 78 C60 77 57 77 55 78 L37 88 C33 90 30 87 31 83 L36 64 C37 61 36 58 34 56 L20 43 C17 40 18 36 22 36 L41 35 C44 35 47 33 48 31 L57 14 C59 10 46 6 50 6 Z'/></svg>");
-        mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 6 C54 6 58 10 60 14 L69 31 C70 33 73 35 76 35 L95 36 C99 36 100 40 97 43 L83 56 C81 58 80 61 81 64 L86 83 C87 87 84 90 80 88 L62 78 C60 77 57 77 55 78 L37 88 C33 90 30 87 31 83 L36 64 C37 61 36 58 34 56 L20 43 C17 40 18 36 22 36 L41 35 C44 35 47 33 48 31 L57 14 C59 10 46 6 50 6 Z'/></svg>");
-        -webkit-mask-repeat: no-repeat;
-        mask-repeat: no-repeat;
-        -webkit-mask-position: center;
-        mask-position: center;
-        -webkit-mask-size: 100% 100%;
-        mask-size: 100% 100%;
-        display: grid;
-        place-items: center;
-        color: #0f172a;
-        font-size: 44px;
-        font-weight: 900;
-        text-shadow: 0 3px 0 rgba(255, 255, 255, 0.8);
-        z-index: 1;
-      }
-      .stage-complete-ribbon {
-        position: relative;
-        display: inline-block;
-        margin: 4px auto 14px;
-        padding: 10px 28px;
-        border-radius: 6px;
-        background: linear-gradient(180deg, #38bdf8 0%, #2563eb 100%);
-        color: #e0f2fe;
-        font-weight: 800;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        border: 3px solid rgba(15, 23, 42, 0.6);
-        box-shadow:
-          inset 0 2px 0 rgba(255, 255, 255, 0.6),
-          inset 0 -3px 0 rgba(15, 23, 42, 0.35),
-          0 8px 0 rgba(30, 64, 175, 0.8),
-          0 12px 16px rgba(30, 41, 59, 0.35);
-        overflow: hidden;
-        z-index: 1;
-      }
-      .stage-complete-top-stars {
-        position: relative;
-        margin: 6px auto 16px;
+          radial-gradient(circle at 12% 15%, rgba(255, 214, 165, 0.6), transparent 40%),
+          radial-gradient(circle at 90% 10%, rgba(99, 102, 241, 0.2), transparent 45%),
+          linear-gradient(135deg, var(--bg-1), var(--bg-2) 45%, var(--bg-3));
         display: flex;
         justify-content: center;
-        gap: 10px;
-        z-index: 1;
-      }
-      .stage-complete-top-stars .star-on {
-        position: relative;
-        width: 64px;
-        height: 64px;
-        --star-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 6 C54 6 58 10 60 14 L69 31 C70 33 73 35 76 35 L95 36 C99 36 100 40 97 43 L83 56 C81 58 80 61 81 64 L86 83 C87 87 84 90 80 88 L62 78 C60 77 57 77 55 78 L37 88 C33 90 30 87 31 83 L36 64 C37 61 36 58 34 56 L20 43 C17 40 18 36 22 36 L41 35 C44 35 47 33 48 31 L57 14 C59 10 46 6 50 6 Z'/></svg>");
-        background: linear-gradient(145deg, #fff6b6 0%, #fde047 40%, #f59e0b 100%);
-        -webkit-mask-image: var(--star-mask);
-        mask-image: var(--star-mask);
-        -webkit-mask-repeat: no-repeat;
-        mask-repeat: no-repeat;
-        -webkit-mask-position: center;
-        mask-position: center;
-        -webkit-mask-size: 100% 100%;
-        mask-size: 100% 100%;
-        animation: starPop 0.45s ease-out forwards, starTwinkle 1.2s ease-in-out infinite;
-        opacity: 0;
-        transform-style: preserve-3d;
-        box-shadow:
-          inset -10px -12px 0 rgba(217, 119, 6, 0.6),
-          inset 8px 8px 0 rgba(255, 255, 255, 0.75),
-          0 10px 0 rgba(217, 119, 6, 0.7),
-          0 20px 24px rgba(15, 23, 42, 0.4);
-      }
-      .stage-complete-top-stars .star-on::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 60%);
-        -webkit-mask-image: var(--star-mask);
-        mask-image: var(--star-mask);
-        -webkit-mask-repeat: no-repeat;
-        mask-repeat: no-repeat;
-        -webkit-mask-position: center;
-        mask-position: center;
-        -webkit-mask-size: 100% 100%;
-        mask-size: 100% 100%;
-        mix-blend-mode: screen;
-        pointer-events: none;
-      }
-      .stage-complete-top-stars .star-on::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        top: 78%;
-        width: 70%;
-        height: 18%;
-        background: rgba(15, 23, 42, 0.35);
-        filter: blur(8px);
-        transform: translateX(-50%) scaleY(0.9);
-        z-index: -1;
-      }
-      .stage-complete-rank {
-        position: relative;
-        display: inline-flex;
         align-items: center;
-        justify-content: center;
-        width: 72px;
-        height: 72px;
-        margin: 8px auto 6px;
-        border-radius: 999px;
-        background: rgba(15, 23, 42, 0.7);
-        border: 3px solid rgba(255, 255, 255, 0.85);
-        color: #ffffff;
-        font-size: 32px;
-        font-weight: 900;
-        z-index: 1;
-      }
-      .stage-complete-stars {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        gap: 6px;
-        font-size: 18px;
-        color: #fbbf24;
-        z-index: 1;
-      }
-      .stage-complete-stars .star-off {
-        color: rgba(148, 163, 184, 0.6);
-      }
-      .stage-complete-score {
-        position: relative;
-        font-size: 14px;
-        font-weight: 800;
-        color: #ffffff;
-        z-index: 1;
-      }
-      .stage-complete-metrics {
-        position: relative;
-        margin-top: 12px;
-        display: grid;
-        gap: 8px;
-        z-index: 1;
-      }
-      .stage-complete-metric {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 12px;
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.22);
-        border: 1px solid rgba(255, 255, 255, 0.6);
-        color: #0f172a;
-        font-size: 13px;
-        font-weight: 700;
-      }
-      .stage-complete-metric .metric-value {
-        font-size: 14px;
-        font-weight: 800;
-      }
-      .stage-complete-details {
-        position: relative;
-        margin-top: 10px;
-        display: grid;
-        gap: 6px;
-        text-align: left;
-        font-size: 13px;
-        font-weight: 600;
-        color: #ffffff;
-        z-index: 1;
-      }
-      .stage-complete-actions {
-        position: relative;
-        margin-top: 18px;
-        display: grid;
-        gap: 8px;
-        z-index: 1;
-      }
-      .stage-complete-ribbon::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 50%;
-        height: 100%;
-        background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-        animation: ribbonShine 1.6s linear infinite;
-      }
-      .stage-complete-title {
-        position: relative;
-        font-size: 22px;
-        font-weight: 800;
-        color: #ffffff;
-        z-index: 1;
-      }
-      .stage-complete-button {
-        position: relative;
-        width: 100%;
-        margin-top: 0;
-        padding: 12px 24px;
-        border-radius: 999px;
-        background: linear-gradient(180deg, #e2e8f0 0%, #cbd5f5 100%);
-        border: 3px solid #64748b;
-        color: #1f2937;
-        font-weight: 900;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        box-shadow:
-          inset 0 2px 0 rgba(255, 255, 255, 0.9),
-          inset 0 -3px 0 rgba(30, 41, 59, 0.35),
-          0 6px 0 rgba(51, 65, 85, 0.9),
-          0 10px 16px rgba(15, 23, 42, 0.3);
-        z-index: 1;
-      }
-      .stage-complete-button.secondary {
-        background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
-      }
-      .stage-complete-button.ghost {
-        background: linear-gradient(180deg, #f1f5f9 0%, #cbd5f5 100%);
-      }
-      .stage-complete-button.claim {
-        background: linear-gradient(180deg, #d9f99d 0%, #86efac 100%);
-        border-color: #22c55e;
-        color: #14532d;
-      }
-      .stage-complete-button.claimed {
-        background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);
-        border-color: #93c5fd;
-        color: #1e3a8a;
-      }
-      .stage-complete-button.listen {
-        background: linear-gradient(180deg, #e2e8f0 0%, #cbd5f5 100%);
-        border-color: #64748b;
-        color: #1f2937;
-      }
-      .total-stars-hud {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 6px 12px 6px 6px;
-        border-radius: 999px;
-        background: linear-gradient(180deg, rgba(56, 189, 248, 0.5) 0%, rgba(14, 116, 144, 0.7) 100%);
-        border: 2px solid rgba(148, 197, 255, 0.5);
-        box-shadow:
-          inset 0 2px 0 rgba(255, 255, 255, 0.7),
-          inset 0 -2px 0 rgba(15, 23, 42, 0.3),
-          0 6px 12px rgba(2, 6, 23, 0.45);
-        color: #fff7ed;
-        font-weight: 800;
-      }
-      .total-stars-badge {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 30px;
-        height: 30px;
-        border-radius: 999px;
-        background: linear-gradient(180deg, #fef9c3 0%, #fcd34d 45%, #f59e0b 100%);
-        border: 2px solid rgba(59, 130, 246, 0.45);
-        box-shadow:
-          inset 0 2px 0 rgba(255, 255, 255, 0.6),
-          inset 0 -2px 0 rgba(30, 64, 175, 0.35);
-        color: #1e3a8a;
-        font-size: 16px;
-      }
-      .total-stars-score {
-        font-size: 14px;
-        letter-spacing: 0.08em;
-      }
-      .rank-link-button {
-        margin-left: 10px;
-        border-radius: 999px;
-        padding: 6px 12px;
-        font-size: 12px;
-        font-weight: 700;
-        color: #e2e8f0;
-        background: rgba(15, 23, 42, 0.6);
-        border: 1px solid rgba(148, 163, 184, 0.45);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
-      }
-      .ranking-screen {
-        min-height: 95vh;
-        border-radius: 28px;
-        background:
-          radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.2), transparent 45%),
-          linear-gradient(180deg, #1e3a8a 0%, #0f172a 100%);
         padding: 28px;
-        color: #e2e8f0;
-        box-shadow: 0 25px 60px rgba(15, 23, 42, 0.45);
       }
-      .ranking-header {
+
+      .app-shell {
+        width: min(1100px, 100%);
+        background: rgba(255, 255, 255, 0.82);
+        border-radius: 40px;
+        padding: 28px;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .app-shell::before,
+      .app-shell::after {
+        content: "";
+        position: absolute;
+        width: 320px;
+        height: 320px;
+        border-radius: 50%;
+        background: linear-gradient(160deg, rgba(255, 122, 89, 0.25), rgba(59, 130, 246, 0.2));
+        filter: blur(6px);
+        z-index: 0;
+      }
+
+      .app-shell::before {
+        top: -140px;
+        right: -120px;
+      }
+
+      .app-shell::after {
+        bottom: -180px;
+        left: -160px;
+      }
+
+      header.hud {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 14px;
+        margin-bottom: 24px;
+      }
+
+      .hud-card {
+        background: var(--panel);
+        border-radius: var(--radius-md);
+        padding: 16px 18px;
+        border: 1px solid rgba(28, 27, 42, 0.08);
+        box-shadow: 0 10px 24px rgba(24, 24, 48, 0.08);
         display: flex;
         align-items: center;
         justify-content: space-between;
+        font-family: "Space Grotesk", sans-serif;
+      }
+
+      .hud-card span {
+        font-weight: 600;
+      }
+
+      .timer {
+        position: relative;
+        height: 12px;
+        background: rgba(59, 130, 246, 0.12);
+        border-radius: 999px;
+        overflow: hidden;
+      }
+
+      .timer-bar {
+        height: 100%;
+        width: 100%;
+        background: linear-gradient(90deg, #60a5fa, #34d399);
+        transition: width 0.4s ease;
+      }
+
+      main {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 24px;
+      }
+
+      .screen {
+        display: none;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .screen.active {
+        display: flex;
+      }
+
+      .panel {
+        background: var(--panel);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        box-shadow: 0 20px 40px rgba(24, 24, 48, 0.08);
+        border: 1px solid rgba(28, 27, 42, 0.08);
+      }
+
+      .title {
+        font-family: "Fraunces", serif;
+        font-size: clamp(24px, 3vw, 32px);
+        margin: 0 0 8px;
+      }
+
+      .subtitle {
+        margin: 0;
+        color: var(--ink-2);
+        font-size: 15px;
+      }
+
+      .order-area {
+        display: grid;
+        grid-template-columns: 1fr;
         gap: 16px;
       }
-      .ranking-title {
-        font-size: 26px;
-        font-weight: 800;
-        letter-spacing: 0.02em;
-      }
-      .ranking-close {
-        border-radius: 999px;
-        padding: 8px 16px;
-        font-size: 13px;
-        font-weight: 700;
-        color: #0f172a;
-        background: linear-gradient(180deg, #bae6fd 0%, #38bdf8 100%);
-        border: 1px solid rgba(2, 132, 199, 0.7);
-        box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.6);
-      }
-      .ranking-panel {
-        margin-top: 20px;
-        border-radius: 24px;
-        background: rgba(255, 255, 255, 0.18);
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        padding: 18px;
-        backdrop-filter: blur(12px);
-      }
-      .leaderboard-panel {
-        width: min(92vw, 520px);
-        border-radius: 24px;
-        background: rgba(15, 23, 42, 0.55);
-        border: 1px solid rgba(148, 163, 184, 0.35);
-        box-shadow: 0 18px 30px rgba(15, 23, 42, 0.35);
-        padding: 20px 22px;
-        backdrop-filter: blur(10px);
-      }
-      .leaderboard-header {
+
+      .customer {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .customer .avatar {
+        width: 90px;
+        height: 90px;
+        border-radius: 24px;
+        background: linear-gradient(145deg, #fef3c7, #fde68a);
+        display: grid;
+        place-items: center;
+        font-size: 44px;
+        box-shadow: inset 0 4px 10px rgba(255, 255, 255, 0.7);
+      }
+
+      .speech {
+        flex: 1;
+        background: #fff9f0;
+        border-radius: 24px;
+        padding: 18px 20px;
+        border: 1px dashed rgba(255, 122, 89, 0.35);
+        position: relative;
+      }
+
+      .speech::after {
+        content: "";
+        position: absolute;
+        left: -8px;
+        top: 36px;
+        width: 16px;
+        height: 16px;
+        background: #fff9f0;
+        border-left: 1px dashed rgba(255, 122, 89, 0.35);
+        border-bottom: 1px dashed rgba(255, 122, 89, 0.35);
+        transform: rotate(45deg);
+      }
+
+      .order-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .order-chip {
+        background: rgba(255, 122, 89, 0.15);
+        color: var(--ink-1);
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 15px;
+      }
+
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      button {
+        border: none;
+        border-radius: 999px;
+        padding: 12px 18px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.2s ease;
+      }
+
+      button:active {
+        transform: scale(0.98);
+      }
+
+      .btn-primary {
+        background: linear-gradient(120deg, var(--accent-1), #ff9770);
+        color: #fff;
+        box-shadow: 0 16px 28px rgba(255, 122, 89, 0.4);
+      }
+
+      .btn-ghost {
+        background: rgba(59, 130, 246, 0.12);
+        color: var(--accent-2);
+      }
+
+      .btn-outline {
+        border: 1px solid rgba(28, 27, 42, 0.12);
+        background: #fff;
+        color: var(--ink-2);
+      }
+
+      .kitchen-header {
+        display: flex;
+        align-items: center;
         justify-content: space-between;
         gap: 12px;
       }
-      .leaderboard-title {
-        font-size: 20px;
-        font-weight: 800;
-        color: #f8fafc;
-        text-shadow: 0 2px 0 rgba(15, 23, 42, 0.35);
-      }
-      .leaderboard-subtitle {
-        font-size: 12px;
-        color: rgba(226, 232, 240, 0.85);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-      .leaderboard-form {
-        margin-top: 14px;
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 10px;
-      }
-      .leaderboard-form.home-form {
-        margin-top: 10px;
-      }
-      .leaderboard-input {
-        border-radius: 999px;
-        border: 1px solid rgba(148, 163, 184, 0.6);
-        background: rgba(255, 255, 255, 0.9);
-        padding: 10px 14px;
-        color: #0f172a;
-        font-size: 14px;
-      }
-      .leaderboard-input::placeholder {
-        color: rgba(15, 23, 42, 0.45);
-      }
-      .leaderboard-button {
-        border-radius: 999px;
-        background: linear-gradient(180deg, #fde68a 0%, #f59e0b 100%);
-        border: 1px solid rgba(251, 146, 60, 0.7);
-        color: #7c2d12;
-        font-size: 13px;
-        font-weight: 700;
-        padding: 0 16px;
-        box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.45);
-      }
-      .leaderboard-button.saved {
-        background: linear-gradient(180deg, rgba(56, 189, 248, 0.5) 0%, rgba(14, 116, 144, 0.7) 100%);
-        border-color: rgba(148, 197, 255, 0.5);
-        color: #fff7ed;
-        box-shadow:
-          inset 0 2px 0 rgba(255, 255, 255, 0.7),
-          inset 0 -2px 0 rgba(15, 23, 42, 0.3);
-      }
-      .leaderboard-status {
-        margin-top: 8px;
-        font-size: 12px;
-        color: rgba(226, 232, 240, 0.7);
-      }
-      .leaderboard-list {
-        margin-top: 14px;
-        display: grid;
+
+      .mini-order {
+        display: flex;
+        flex-wrap: wrap;
         gap: 8px;
+        font-size: 14px;
       }
-      .leaderboard-row {
+
+      .tray-scroll {
         display: grid;
-        grid-template-columns: 32px 52px 1fr auto;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(170px, 1fr);
+        gap: 14px;
+        overflow-x: auto;
+        padding-bottom: 8px;
+      }
+
+      .tray {
+        background: linear-gradient(160deg, #ffffff, #f8fafc);
+        border-radius: 20px;
+        padding: 14px;
+        border: 1px solid rgba(28, 27, 42, 0.1);
+        display: grid;
+        gap: 12px;
+        position: relative;
+        transition: transform 0.2s ease;
+      }
+
+      .tray.active {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 14px 28px rgba(59, 130, 246, 0.16);
+      }
+
+      .note-card {
+        background: #111827;
+        color: #fff;
+        border-radius: 14px;
+        padding: 8px 10px;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 13px;
+        display: flex;
+        justify-content: space-between;
         align-items: center;
+      }
+
+      .note-card strong {
+        font-size: 18px;
+      }
+
+      .fruit-stack {
+        font-size: 32px;
+      }
+
+      .tray-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+        color: var(--ink-2);
+      }
+
+      .badge {
+        background: rgba(34, 197, 94, 0.15);
+        color: #15803d;
+        padding: 4px 8px;
+        border-radius: 999px;
+        font-weight: 600;
+      }
+
+      .tray button {
+        width: 100%;
+        border-radius: 12px;
+        padding: 8px;
+        font-size: 13px;
+        background: rgba(59, 130, 246, 0.1);
+        color: var(--accent-2);
+      }
+
+      .basket {
+        background: #fff7ed;
+        border-radius: var(--radius-md);
+        padding: 14px;
+        display: grid;
         gap: 10px;
-        border-radius: 18px;
-        background: rgba(255, 255, 255, 0.9);
-        padding: 10px 12px;
-        color: #0f172a;
-        box-shadow: 0 6px 10px rgba(15, 23, 42, 0.18);
+        border: 1px dashed rgba(255, 122, 89, 0.35);
       }
-      .leaderboard-rank {
-        width: 28px;
-        height: 28px;
+
+      .basket-items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        min-height: 38px;
+      }
+
+      .basket-item {
+        padding: 6px 10px;
         border-radius: 999px;
+        background: rgba(255, 122, 89, 0.15);
+        font-weight: 600;
+      }
+
+      .feedback {
+        min-height: 42px;
+        padding: 10px 14px;
+        border-radius: 14px;
+        background: rgba(59, 130, 246, 0.1);
+        color: var(--ink-1);
+        font-weight: 600;
+      }
+
+      .side-panel {
         display: grid;
-        place-items: center;
-        font-size: 12px;
-        font-weight: 800;
-        background: linear-gradient(180deg, #fef3c7 0%, #fbbf24 100%);
-        color: #7c2d12;
-        border: 1px solid rgba(251, 146, 60, 0.6);
+        gap: 16px;
       }
-      .leaderboard-avatar {
-        width: 44px;
-        height: 44px;
-        border-radius: 16px;
-        display: grid;
-        place-items: center;
-        background: linear-gradient(180deg, #e0f2fe 0%, #60a5fa 100%);
-        border: 2px solid rgba(59, 130, 246, 0.6);
-        color: #1e3a8a;
-        font-weight: 800;
-        font-size: 16px;
+
+      .stage-card {
+        background: linear-gradient(140deg, #fff, #f8fafc);
+        border-radius: var(--radius-md);
+        padding: 16px;
+        border: 1px solid rgba(28, 27, 42, 0.08);
       }
-      .leaderboard-name {
-        font-size: 14px;
-        font-weight: 800;
+
+      .stage-card h3 {
+        margin: 0 0 6px;
+        font-family: "Fraunces", serif;
       }
-      .leaderboard-score {
-        font-size: 14px;
-        font-weight: 800;
-        color: #1f2937;
-        background: rgba(148, 163, 184, 0.2);
-        padding: 4px 10px;
-        border-radius: 999px;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-      }
-      .leaderboard-row.me {
-        border: 2px solid rgba(59, 130, 246, 0.7);
-        background: rgba(224, 231, 255, 0.95);
-      }
-      .leaderboard-empty {
-        text-align: center;
-        font-size: 13px;
-        color: rgba(226, 232, 240, 0.7);
-        padding: 10px 0;
-      }
-      .leaderboard-my-score {
-        margin-top: 10px;
-        font-size: 13px;
-        color: rgba(226, 232, 240, 0.95);
-      }
-      .home-name-wrap {
-        margin-top: 8px;
+
+      .mode-toggle {
         display: flex;
         align-items: center;
         gap: 8px;
+        font-size: 14px;
       }
-      .ranking-list-panel {
-        margin-top: 16px;
-        border-radius: 18px;
-        padding: 12px;
-        background: rgba(255, 255, 255, 0.25);
-        border: 1px solid rgba(255, 255, 255, 0.35);
+
+      .switch {
+        width: 44px;
+        height: 24px;
+        background: rgba(59, 130, 246, 0.15);
+        border-radius: 999px;
+        position: relative;
       }
-      .note-shape-circle {
-        border-radius: 9999px;
+
+      .switch::after {
+        content: "";
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #fff;
+        top: 3px;
+        left: 3px;
+        transition: transform 0.2s ease;
       }
-      .note-shape-star,
-      .note-shape-heart,
-      .note-shape-diamond {
-        border-radius: 0;
-        -webkit-mask-repeat: no-repeat;
-        mask-repeat: no-repeat;
-        -webkit-mask-position: center;
-        mask-position: center;
-        -webkit-mask-size: 100% 100%;
-        mask-size: 100% 100%;
+
+      .switch.on {
+        background: rgba(34, 197, 94, 0.25);
       }
-      .note-shape-diamond {
-        -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 2 C58 2 64 7 70 13 L90 33 C95 38 98 44 98 50 C98 56 95 62 90 67 L70 87 C64 93 58 98 50 98 C42 98 36 93 30 87 L10 67 C5 62 2 56 2 50 C2 44 5 38 10 33 L30 13 C36 7 42 2 50 2 Z'/></svg>");
-        mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 2 C58 2 64 7 70 13 L90 33 C95 38 98 44 98 50 C98 56 95 62 90 67 L70 87 C64 93 58 98 50 98 C42 98 36 93 30 87 L10 67 C5 62 2 56 2 50 C2 44 5 38 10 33 L30 13 C36 7 42 2 50 2 Z'/></svg>");
+
+      .switch.on::after {
+        transform: translateX(20px);
       }
-      .note-shape-square {
-        border-radius: 18%;
+
+      .hint {
+        font-size: 13px;
+        color: var(--ink-2);
       }
-      .note-shape-star {
-        -webkit-mask-size: 104% 104%;
-        mask-size: 104% 104%;
-        -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 8 C54 8 58 12 60 16 L69 32 C70 34 73 36 76 36 L95 37 C99 37 100 41 97 44 L83 57 C81 59 80 62 81 65 L86 84 C87 88 84 91 80 89 L62 79 C60 78 57 78 55 79 L37 89 C33 91 30 88 31 84 L36 65 C37 62 36 59 34 57 L20 44 C17 41 18 37 22 37 L41 36 C44 36 47 34 48 32 L57 16 C59 12 46 8 50 8 Z'/></svg>");
-        mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 8 C54 8 58 12 60 16 L69 32 C70 34 73 36 76 36 L95 37 C99 37 100 41 97 44 L83 57 C81 59 80 62 81 65 L86 84 C87 88 84 91 80 89 L62 79 C60 78 57 78 55 79 L37 89 C33 91 30 88 31 84 L36 65 C37 62 36 59 34 57 L20 44 C17 41 18 37 22 37 L41 36 C44 36 47 34 48 32 L57 16 C59 12 46 8 50 8 Z'/></svg>");
-      }
-      .note-shape-heart {
-        -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 90 L16 56 C6 46 6 30 18 20 C30 10 44 14 50 24 C56 14 70 10 82 20 C94 30 94 46 84 56 L50 90 Z'/></svg>");
-        mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 90 L16 56 C6 46 6 30 18 20 C30 10 44 14 50 24 C56 14 70 10 82 20 C94 30 94 46 84 56 L50 90 Z'/></svg>");
+
+      @media (max-width: 900px) {
+        main {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
-  <body class="min-h-screen bg-slate-100 text-slate-900">
-    <main class="mx-auto flex w-full max-w-none flex-col gap-6 px-4 py-6">
-      <section
-        id="homeScreen"
-        class="home-sky flex min-h-[95vh] flex-col items-center justify-start gap-8 rounded-3xl p-8 pt-10 shadow-2xl"
-      >
-        <div id="hoverPanel" class="hover-panel">
-          <div id="hoverTitle" class="panel-title"></div>
-          <div id="hoverSubtitle" class="panel-subtitle"></div>
-          <div class="panel-divider"></div>
-          <div id="hoverDetail" class="panel-detail"></div>
+  <body>
+    <div class="app-shell">
+      <header class="hud">
+        <div class="hud-card">
+          <span>Stage</span>
+          <strong id="hud-stage">1</strong>
         </div>
-        <div class="home-shell">
-          <div class="text-center">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Draw Chord</p>
-            <h1 class="home-title mt-3 text-4xl font-semibold text-white">Draw Chord</h1>
-            <p class="mt-2 text-sm text-slate-300">난이도에 따라 스테이지를 선택하고, 단계별로 화음을 연결해 보세요.</p>
-          </div>
-          <div class="absolute top-0 left-[-65px] flex flex-col items-start gap-3">
-            <div id="totalStarsHud" class="total-stars-hud">
-              <span class="total-stars-badge">★</span>
-              <span id="summaryTotalStars" class="total-stars-score">0</span>
-              <button id="openRankingButton" type="button" class="rank-link-button">랭킹보기</button>
-            </div>
-            <form id="homeNameForm" class="leaderboard-form home-form">
-              <input
-                id="homePlayerNameInput"
-                class="leaderboard-input"
-                type="text"
-                maxlength="12"
-                placeholder="플레이어 이름"
-                autocomplete="off"
-              />
-              <button id="homeSaveNameButton" class="leaderboard-button" type="submit">이름 저장</button>
-            </form>
-          </div>
-          <div class="relative mt-8 min-h-[380px] w-full">
-            <button type="button" data-part="1" class="part-card part-star part-1">
-              <span class="part-label">PART 1</span>
-              <span class="star-core"></span>
-            </button>
-            <button type="button" data-part="2" class="part-card part-star part-2">
-              <span class="part-label">PART 2</span>
-              <span class="star-core"></span>
-            </button>
-            <button type="button" data-part="3" class="part-card part-star part-3">
-              <span class="part-label">PART 3</span>
-              <span class="star-core"></span>
-            </button>
-            <div id="stagePicker" class="stage-picker hidden">
-              <div id="stageButtons" class="grid gap-3"></div>
-            </div>
-          </div>
+        <div class="hud-card">
+          <span>Coin</span>
+          <strong id="hud-coin">120</strong>
         </div>
-      </section>
-
-      <section id="rankingScreen" class="ranking-screen hidden">
-        <div class="ranking-header">
-          <div>
-            <p class="leaderboard-subtitle">Draw Chord</p>
-            <h2 class="ranking-title">랭킹</h2>
-          </div>
-          <button id="closeRankingButton" type="button" class="ranking-close">돌아가기</button>
+        <div class="hud-card">
+          <span>Combo</span>
+          <strong id="hud-combo">0</strong>
         </div>
-        <div class="ranking-panel">
-          <div class="leaderboard-header">
-            <div>
-              <h3 class="leaderboard-title">전체 순위</h3>
-              <p class="leaderboard-subtitle">별 점수 높은 순</p>
-            </div>
-            <div class="leaderboard-my-score">내 점수: <span id="myScoreValue">0</span></div>
-          </div>
-          <div class="ranking-list-panel">
-            <div id="leaderboardList" class="leaderboard-list">
-              <div class="leaderboard-empty">랭킹 불러오는 중...</div>
-            </div>
-          </div>
-          <p id="leaderboardStatus" class="leaderboard-status">랭킹이 자동으로 갱신됩니다.</p>
-        </div>
-      </section>
-
-    <div id="gameScreen" class="game-sky hidden min-h-[95vh] flex-col gap-6 rounded-3xl p-8 pt-10 shadow-2xl">
-      <header class="flex flex-col gap-3">
-        <div class="text-center">
-          <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Draw Chord</p>
-          <div class="mt-3 flex justify-center">
-            <h1 id="stageTitle" class="home-title text-4xl font-semibold text-white">Stage 1</h1>
-          </div>
+        <div class="hud-card" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+          <span>Timer</span>
+          <div class="timer"><div class="timer-bar" id="timer-bar"></div></div>
         </div>
       </header>
 
-      <div class="mt-6 mx-auto w-[74%] rounded-3xl bg-white/35 p-6 backdrop-blur-sm">
-        <div class="grid items-center gap-3 lg:grid-cols-[360px_1fr_280px]">
-          <div class="hidden lg:block"></div>
-          <div class="hidden lg:block"></div>
-          <div class="hidden w-[280px] lg:block"></div>
+      <main>
+        <div>
+          <section class="screen active" id="screen-counter">
+            <div class="panel">
+              <p class="subtitle">과일로 리듬을 만드는</p>
+              <h1 class="title">Fruit Note Cafe</h1>
+              <div class="order-area">
+                <div class="customer">
+                  <div class="avatar">🧑‍🍳</div>
+                  <div class="speech">
+                    <strong>주문!</strong>
+                    <div class="order-list" id="order-list"></div>
+                    <div class="hint" id="order-hint">총 길이: 1</div>
+                  </div>
+                </div>
+                <div class="cta-row">
+                  <button class="btn-primary" id="btn-prepare">준비하기</button>
+                  <button class="btn-ghost" id="btn-repeat">다시 묻기</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <h2 class="title" style="font-size: 22px;">게임 흐름</h2>
+              <p class="subtitle">음표와 과일이 1:1로 연결되고, 조합으로 같은 길이를 만드는 경험을 제공합니다.</p>
+              <div class="order-list" style="margin-top: 12px;">
+                <span class="order-chip">1단계: 1:1 매칭</span>
+                <span class="order-chip">2단계: 여러 개 선택</span>
+                <span class="order-chip">3단계: 길이 대체</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="screen" id="screen-kitchen">
+            <div class="panel">
+              <div class="kitchen-header">
+                <div>
+                  <p class="subtitle">현재 주문</p>
+                  <div class="mini-order" id="mini-order"></div>
+                </div>
+                <div class="cta-row">
+                  <button class="btn-outline" id="btn-back">카운터로</button>
+                </div>
+              </div>
+              <div class="tray-scroll" id="tray-scroll"></div>
+            </div>
+
+            <div class="panel">
+              <div class="basket">
+                <strong>내가 고른 과일</strong>
+                <div class="basket-items" id="basket-items"></div>
+                <div class="cta-row">
+                  <button class="btn-primary" id="btn-serve">서빙하기</button>
+                  <button class="btn-ghost" id="btn-undo">되돌리기</button>
+                  <button class="btn-outline" id="btn-clear">비우기</button>
+                </div>
+              </div>
+              <div class="feedback" id="feedback">과일을 골라 접시에 담아 주세요.</div>
+            </div>
+          </section>
         </div>
 
-        <section class="mt-6 grid gap-6 lg:grid-cols-[1fr_360px_1fr] lg:items-start">
-          <div class="relative flex flex-col items-end justify-end gap-4">
-            <div
-              id="chordDescription"
-              class="flex w-[280px] flex-col items-center justify-center rounded-2xl bg-white/70 px-6 py-4 text-center text-sm text-slate-600 shadow-lg backdrop-blur-sm"
-            >
-              <p class="text-base font-semibold text-slate-800">🎵 으뜸화음 (I)</p>
-              <p class="mt-2 leading-relaxed">가장 편안한 화음이에요.</p>
-              <p class="leading-relaxed">노래가 시작하거나 끝날 때 나와요.</p>
-            </div>
-            <div class="w-[280px] rounded-2xl bg-white/70 p-5 shadow-md backdrop-blur-sm">
-              <h2 class="text-lg font-semibold">미션 진행</h2>
-              <p class="mt-2 text-sm text-slate-500">
-                <span id="missionOrder">도 → 미 → 솔</span> 순서로 연결하면 성공합니다.
-              </p>
-              <ul id="missionSteps" class="mt-4 space-y-2 text-sm text-slate-600"></ul>
-              <p id="missionFootnote" class="mt-3 hidden whitespace-pre-line text-xs text-slate-400"></p>
+        <aside class="side-panel">
+          <div class="stage-card">
+            <h3>음표 카드</h3>
+            <p class="subtitle">트레이 상단의 카드에서 리듬 길이를 확인할 수 있어요.</p>
+            <div class="hint" style="margin-top: 10px;">카드 힌트는 Stage 3부터 점점 줄어듭니다.</div>
+          </div>
+          <div class="stage-card">
+            <h3>교실 모드</h3>
+            <p class="subtitle">시간 제한을 끄고, 힌트를 항상 켤 수 있어요.</p>
+            <div class="mode-toggle">
+              <span>시간 제한 OFF</span>
+              <div class="switch" id="mode-switch"></div>
             </div>
           </div>
-          <div class="flex flex-col items-center gap-4">
-            <div
-              id="board"
-              class="board relative aspect-square w-full max-w-[360px] rounded-2xl border border-slate-200 bg-white"
-            >
-              <svg
-                id="lineLayer"
-                class="pointer-events-none absolute inset-0 h-full w-full"
-                viewBox="0 0 520 520"
-                preserveAspectRatio="none"
-              >
-                <g id="committedLines"></g>
-                <polyline
-                  id="activeLine"
-                  fill="none"
-                  stroke="#38bdf8"
-                  stroke-width="14"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  points=""
-                ></polyline>
-              </svg>
-              <div id="nodesLayer" class="absolute inset-0"></div>
-            </div>
-            <div id="controlButtons" class="flex w-full max-w-[360px] items-start">
-              <div class="flex flex-col items-start gap-2">
-                <button
-                  id="backButton"
-                  type="button"
-                  class="rounded-full border border-slate-300 bg-white/70 px-4 py-2 text-sm font-semibold backdrop-blur-sm"
-                >
-                  이전
-                </button>
-                <button
-                  id="resetLinesButton"
-                  type="button"
-                  class="rounded-full border border-slate-300 bg-white/70 px-4 py-2 text-sm font-semibold backdrop-blur-sm"
-                >
-                  처음으로
-                </button>
-                <button
-                  id="resetButton"
-                  type="button"
-                  class="rounded-full bg-slate-900/70 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm"
-                >
-                  🔀 새 배치
-                </button>
-              </div>
-            </div>
-          </div>
-
-        <aside class="flex w-full flex-col items-end gap-4 lg:w-[280px] lg:justify-self-start">
-          <div class="flex w-fit flex-col items-end gap-2">
-            <button
-              id="soundToggle"
-              type="button"
-              class="rounded-full border border-slate-300 bg-white/70 px-4 py-2 text-sm font-semibold backdrop-blur-sm"
-            >
-              🔊 소리 켜기
-            </button>
-          </div>
-          <div class="flex w-fit flex-col items-end gap-2">
-            <label class="flex w-fit items-center gap-2 rounded-full bg-white/70 px-3 py-2 text-sm font-semibold backdrop-blur-sm">
-              <span>Key</span>
-              <select id="keySelect" class="w-fit rounded-full border border-slate-200 bg-white px-2 py-1 text-sm"></select>
-            </label>
-          </div>
-          <div class="w-[280px] rounded-2xl bg-white/70 p-5 shadow-md backdrop-blur-sm">
-            <h2 class="text-lg font-semibold">실시간 안내</h2>
-            <p id="statusText" class="mt-2 text-sm font-semibold text-slate-700">도 쌍을 연결하세요</p>
-            <p id="layoutSpinner" class="mt-2 hidden text-xs font-semibold text-slate-400">⏳ 배치 중...</p>
-            <div id="staffWrapper" class="mt-3 hidden">
-              <svg id="staffSvg" viewBox="0 0 240 80" class="h-20 w-full overflow-visible" aria-hidden="true"></svg>
-              <div class="mt-2 flex justify-center gap-2">
-                <button
-                  id="replayButton"
-                  type="button"
-                  class="rounded-full border border-slate-300 bg-white/70 px-3 py-1 text-xs font-semibold text-slate-600 backdrop-blur-sm"
-                >
-                  화음 듣기
-                </button>
-                <button
-                  id="scoreButton"
-                  type="button"
-                  class="rounded-full border border-slate-300 bg-white/70 px-3 py-1 text-xs font-semibold text-slate-600 backdrop-blur-sm"
-                >
-                  점수 보기
-                </button>
-              </div>
-            </div>
+          <div class="stage-card">
+            <h3>매핑 규칙</h3>
+            <div class="hint" id="mapping-list"></div>
           </div>
         </aside>
-      </section>
-
-          <div class="mt-6 flex items-center justify-center">
-            <button
-              id="homeButton"
-              type="button"
-              class="rounded-full border border-slate-300 bg-white/70 px-4 py-2 text-sm font-semibold text-slate-700 backdrop-blur-sm"
-            >
-              Stage 선택
-            </button>
-          </div>
-        </div>
-      </div>
-      <div id="stageCompleteOverlay" class="stage-complete-overlay hidden">
-          <div class="stage-complete-card">
-            <div class="stage-complete-burst"></div>
-            <div id="stageCompleteTopStars" class="stage-complete-top-stars"></div>
-            <div id="stageBonusText" class="stage-bonus-text hidden">연속 보너스 +1★</div>
-            <div id="stageCompleteRibbon" class="stage-complete-ribbon">Nice Connection!</div>
-            <div class="stage-complete-actions">
-            <button id="stageClaimButton" type="button" class="stage-complete-button claim">별 획득하기</button>
-            <button id="stageListenButton" type="button" class="stage-complete-button listen">악보 다시 듣기</button>
-            <button id="stageRetryButton" type="button" class="stage-complete-button secondary">다시 도전하기</button>
-            <button id="stageNextButton" type="button" class="stage-complete-button">다음 단계로</button>
-            <button id="stageSelectButton" type="button" class="stage-complete-button ghost">Stage 선택하기</button>
-          </div>
-        </div>
-      </div>
-      <div id="chordCompleteOverlay" class="chord-complete-overlay hidden">
-        <div id="chordCompleteMessage" class="chord-complete-card">버금딸림화음 완성!</div>
-      </div>
-      <div id="listenWarningOverlay" class="chord-complete-overlay hidden">
-        <div id="listenWarningMessage" class="listen-warning-card">연결된 화음을 들어보세요!</div>
-      </div>
       </main>
+    </div>
 
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-      import {
-        collection,
-        doc,
-        getDocs,
-        getFirestore,
-        limit,
-        orderBy,
-        query,
-        serverTimestamp,
-        setDoc
-      } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
-
-      const firebaseConfig = {
-        apiKey: "AIzaSyDBA8AQFMFk_B-8aW84jGxNaeXq-CuLT2o",
-        authDomain: "draw-chord-260115.firebaseapp.com",
-        projectId: "draw-chord-260115",
-        storageBucket: "draw-chord-260115.firebasestorage.app",
-        messagingSenderId: "1093078605343",
-        appId: "1:1093078605343:web:c143c2440eef819559ff2a"
-      };
-
-      let leaderboardDb = null;
-      try {
-        const app = initializeApp(firebaseConfig);
-        leaderboardDb = getFirestore(app);
-      } catch (error) {
-        console.warn("Firebase init failed:", error);
-      }
-      const board = document.getElementById("board");
-      const nodesLayer = document.getElementById("nodesLayer");
-      const activeLine = document.getElementById("activeLine");
-      const committedLines = document.getElementById("committedLines");
-      const resetButton = document.getElementById("resetButton");
-      const backButton = document.getElementById("backButton");
-      const resetLinesButton = document.getElementById("resetLinesButton");
-      const layoutSpinner = document.getElementById("layoutSpinner");
-      const soundToggle = document.getElementById("soundToggle");
-      const stageSelect = document.getElementById("stageSelect");
-      const keySelect = document.getElementById("keySelect");
-      const statusText = document.getElementById("statusText");
-      const stageCompleteOverlay = document.getElementById("stageCompleteOverlay");
-      const stageCompleteRibbon = document.getElementById("stageCompleteRibbon");
-      const chordCompleteOverlay = document.getElementById("chordCompleteOverlay");
-      const chordCompleteMessage = document.getElementById("chordCompleteMessage");
-      const listenWarningOverlay = document.getElementById("listenWarningOverlay");
-      const listenWarningMessage = document.getElementById("listenWarningMessage");
-      const stageBonusText = document.getElementById("stageBonusText");
-      const homeNameForm = document.getElementById("homeNameForm");
-      const homePlayerNameInput = document.getElementById("homePlayerNameInput");
-      const homeSaveNameButton = document.getElementById("homeSaveNameButton");
-      const leaderboardList = document.getElementById("leaderboardList");
-      const leaderboardStatus = document.getElementById("leaderboardStatus");
-      const myScoreValue = document.getElementById("myScoreValue");
-      const rankingScreen = document.getElementById("rankingScreen");
-      const openRankingButton = document.getElementById("openRankingButton");
-      const closeRankingButton = document.getElementById("closeRankingButton");
-      const stageCompleteStars = document.getElementById("stageCompleteTopStars");
-      const stageClaimButton = document.getElementById("stageClaimButton");
-      const stageListenButton = document.getElementById("stageListenButton");
-      const stageRetryButton = document.getElementById("stageRetryButton");
-      const stageNextButton = document.getElementById("stageNextButton");
-      const stageSelectButton = document.getElementById("stageSelectButton");
-      const chordTitle = document.getElementById("chordTitle");
-      const missionSteps = document.getElementById("missionSteps");
-      const missionOrder = document.getElementById("missionOrder");
-      const missionFootnote = document.getElementById("missionFootnote");
-      const chordDescription = document.getElementById("chordDescription");
-      const missionHeader = document.getElementById("missionHeader");
-      const stageTitle = document.getElementById("stageTitle");
-      const staffWrapper = document.getElementById("staffWrapper");
-      const staffSvg = document.getElementById("staffSvg");
-      const replayButton = document.getElementById("replayButton");
-      const scoreButton = document.getElementById("scoreButton");
-      const controlButtons = document.getElementById("controlButtons");
-      const LEADERBOARD_COLLECTION = "leaderboard";
-      const PLAYER_ID_KEY = "drawChordPlayerId";
-      const PLAYER_NAME_KEY = "drawChordPlayerName";
-      const LEADERBOARD_CACHE_KEY = "drawChordLeaderboardCache";
-      let playerId = localStorage.getItem(PLAYER_ID_KEY) || "";
-      let playerName = localStorage.getItem(PLAYER_NAME_KEY) || "";
-
-      const keyNames = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"];
-      const pitchNames = ["도", "도#", "레", "미b", "미", "파", "파#", "솔", "라b", "라", "시b", "시"];
-      const diatonicLetters = ["C", "D", "E", "F", "G", "A", "B"];
-      const degreeIndexByNote = { do: 0, re: 1, mi: 2, fa: 3, sol: 4, la: 5, ti: 6 };
-      degreeIndexByNote.do2 = 0;
-      degreeIndexByNote.sol2 = 4;
-      const solfegeMap = { C: "도", D: "레", E: "미", F: "파", G: "솔", A: "라", B: "시" };
-      const enharmonicMap = { "E#": "F", "B#": "C" };
-      const stageParts = [
-        { label: "Part 1 (화음)", stageIds: [1, 2, 3] },
-        { label: "Part 2 (화음 진행)", stageIds: [4, 5, 6] },
-        { label: "Part 3 (화음 진행 심화)", stageIds: [7, 8, 9] }
-      ];
-      const chordDescriptions = {
-        1: {
-          title: "🎵 으뜸화음 (I)",
-          lines: ["가장 편안한 화음이에요.", "노래가 시작하거나 끝날 때 나와요."]
-        },
-        2: {
-          title: "🎵 버금딸림화음 (IV)",
-          lines: ["음악이 움직이기 시작하는 화음이에요.", "으뜸화음에서 조금 변화를 줘요."]
-        },
-        3: {
-          title: "🎵 딸림화음 (V)",
-          lines: ["다시 으뜸화음으로 가고 싶게 만드는 화음이에요.", "들으면 끝날 것 같은 느낌이 들어요."]
-        },
-        4: {
-          title: "🎵 화음 진행 (I → IV)",
-          lines: ["으뜸화음에서 버금딸림화음으로 움직여볼까요?"]
-        },
-        5: {
-          title: "🎵 화음 진행 (IV → V)",
-          lines: ["버금딸림화음에서 딸림화음으로 움직여볼까요?"]
-        },
-        6: {
-          title: "🎵 화음 진행 (V → I)",
-          lines: ["딸림화음에서 으뜸화음으로 움직여볼까요?"]
-        },
-        7: {
-          title: "🎵 화음 진행 (I → IV → V)",
-          lines: ["으뜸화음-버금딸림화음-딸림화음 순서로 움직여볼까요?"]
-        },
-        8: {
-          title: "🎵 화음 진행 (IV → V → I)",
-          lines: ["버금딸림화음-딸림화음-으뜸화음 순서로 움직여볼까요?"]
-        }
-      };
-      const noteOrderStyles = [
-        { color: "#38bdf8", textColor: "#ffffff", name: "하늘색" },
-        { color: "#f59e0b", textColor: "#ffffff", name: "주황색" },
-        { color: "#f472b6", textColor: "#ffffff", name: "분홍색" }
-      ];
-      const chordShapeClassByType = {
-        I: "note-shape-circle",
-        IV: "note-shape-diamond",
-        V: "note-shape-square"
-      };
-
-      const stages = [
-        {
-          id: 1,
-          title: "Stage 1",
-          chordName: "으뜸화음(I)",
-          chordTypes: ["I"],
-          notes: ["do", "mi", "sol"],
-          intervals: { do: 0, mi: 4, sol: 7 }
-        },
-        {
-          id: 2,
-          title: "Stage 2",
-          chordName: "버금딸림화음(IV)",
-          chordTypes: ["IV"],
-          notes: ["fa", "la", "do"],
-          intervals: { fa: 5, la: 9, do: 0 }
-        },
-        {
-          id: 3,
-          title: "Stage 3",
-          chordName: "딸림화음(V)",
-          chordTypes: ["V"],
-          notes: ["sol", "ti", "re"],
-          intervals: { sol: 7, ti: 11, re: 2 }
-        },
-        {
-          id: 4,
-          title: "Stage 4",
-          chordName: "화음 진행(I → IV)",
-          chordTypes: ["I", "IV"],
-          notes: ["do", "mi", "sol", "fa", "la", "do2"],
-          intervals: { do: 0, mi: 4, sol: 7, fa: 5, la: 9, do2: 0 }
-        },
-        {
-          id: 5,
-          title: "Stage 5",
-          chordName: "화음 진행(IV → V)",
-          chordTypes: ["IV", "V"],
-          notes: ["fa", "la", "do2", "sol", "ti", "re"],
-          intervals: { fa: 5, la: 9, do2: 0, sol: 7, ti: 11, re: 2 }
-        },
-        {
-          id: 6,
-          title: "Stage 6",
-          chordName: "화음 진행(V → I)",
-          chordTypes: ["V", "I"],
-          notes: ["sol", "ti", "re", "do", "mi", "sol2"],
-          intervals: { sol: 7, ti: 11, re: 2, do: 0, mi: 4, sol2: 7 }
-        },
-        {
-          id: 7,
-          title: "Stage 7",
-          chordName: "화음 진행(I → IV → V)",
-          chordTypes: ["I", "IV", "V"],
-          notes: ["do", "mi", "sol", "fa", "la", "do2", "sol2", "ti", "re"],
-          intervals: { do: 0, mi: 4, sol: 7, fa: 5, la: 9, do2: 0, sol2: 7, ti: 11, re: 2 }
-        },
-        {
-          id: 8,
-          title: "Stage 8",
-          chordName: "화음 진행(IV → V → I)",
-          chordTypes: ["IV", "V", "I"],
-          notes: ["fa", "la", "do2", "sol2", "ti", "re", "do", "mi", "sol"],
-          intervals: { fa: 5, la: 9, do2: 0, sol2: 7, ti: 11, re: 2, do: 0, mi: 4, sol: 7 }
-        }
+    <script>
+      const trays = [
+        { id: "orange", name: "귤", emoji: "🍊", length: 1, note: "1/4" },
+        { id: "apple", name: "사과", emoji: "🍎", length: 0.5, note: "1/8" },
+        { id: "pear", name: "배", emoji: "🍐", length: 2, note: "1/2" },
+        { id: "grape", name: "포도", emoji: "🍇", length: 0.25, note: "1/16" },
+        { id: "banana", name: "바나나", emoji: "🍌", length: 1.5, note: "점4" },
+        { id: "cherry", name: "체리", emoji: "🍒", length: 4, note: "1/1" }
       ];
 
-      const stage = {
-        gridSize: 6,
-        boardSize: 360,
-        nodes: []
-      };
+      const orders = [
+        { stage: 1, items: { orange: 1 }, target: 1, message: "🍊 주세요!" },
+        { stage: 2, items: { orange: 1, apple: 2 }, target: 2, message: "🍊 + 🍎🍎 주세요!" },
+        { stage: 3, items: { pear: 1 }, target: 2, message: "🍐 주세요! (길이 2)" }
+      ];
 
-      const layoutConfig = {
-        maxAttempts: 2500,
-        minPairDistance: 4
-      };
+      let stageIndex = 0;
+      let selection = {};
+      let history = [];
+      let combo = 0;
+      let coins = 120;
+      let timer = 100;
+      let timerActive = true;
+      let timerInterval = null;
 
-      let currentStageIndex = 0;
-      let currentStage = stages[currentStageIndex];
-      let currentLayout = null;
+      const orderList = document.getElementById("order-list");
+      const orderHint = document.getElementById("order-hint");
+      const miniOrder = document.getElementById("mini-order");
+      const trayScroll = document.getElementById("tray-scroll");
+      const basketItems = document.getElementById("basket-items");
+      const feedback = document.getElementById("feedback");
+      const hudStage = document.getElementById("hud-stage");
+      const hudCombo = document.getElementById("hud-combo");
+      const hudCoin = document.getElementById("hud-coin");
+      const timerBar = document.getElementById("timer-bar");
+      const modeSwitch = document.getElementById("mode-switch");
+      const mappingList = document.getElementById("mapping-list");
 
-      const state = {
-        isDrawing: false,
-        pathCells: [],
-        startNodeId: null,
-        endNodeId: null,
-        invalidPath: false,
-        completedPairs: new Set(),
-        completedChordGroups: new Set(),
-        key: "C",
-        soundOn: true,
-        redLineCount: 0,
-        extraLineCount: 0,
-        totalLines: 0,
-        strokesUsed: 0,
-        oneStrokeClear: false,
-        awaitingChordListen: false,
-        chordHeardThisRun: false
-      };
+      function renderOrder() {
+        const order = orders[stageIndex];
+        orderList.innerHTML = "";
+        miniOrder.innerHTML = "";
 
-      let audioContext;
-      let noteFrequencies = {};
-      let nodeElements = new Map();
-      let nodeByCell = new Map();
-      let occupiedEdges = new Set();
-      let occupiedCells = new Set();
-      let connectionHistory = [];
-      let bestRuns = {};
-      let lastRunResult = null;
-      let totalClaimedStars = 0;
-      let stageStreakCount = 0;
+        Object.keys(order.items).forEach((id) => {
+          const tray = trays.find((item) => item.id === id);
+          const chip = document.createElement("span");
+          chip.className = "order-chip";
+          chip.textContent = `${tray.emoji} ${tray.name} x${order.items[id]}`;
+          orderList.appendChild(chip);
 
-      function loadBestRuns() {
-        try {
-          const raw = localStorage.getItem("drawChordBestRuns");
-          return raw ? JSON.parse(raw) : {};
-        } catch {
-          return {};
-        }
+          const mini = document.createElement("span");
+          mini.className = "order-chip";
+          mini.textContent = `${tray.emoji} x${order.items[id]}`;
+          miniOrder.appendChild(mini);
+        });
+
+        orderHint.textContent = `총 길이: ${order.target}`;
+        orderHint.style.display = order.stage >= 3 ? "block" : "none";
+        hudStage.textContent = String(order.stage);
       }
 
-      function saveBestRuns() {
-        localStorage.setItem("drawChordBestRuns", JSON.stringify(bestRuns));
+      function renderMapping() {
+        mappingList.innerHTML = trays
+          .map((tray) => `${tray.emoji} ${tray.name} = ${tray.note}`)
+          .join("<br />");
       }
 
-      function loadClaimedStars() {
-        const raw = localStorage.getItem("drawChordClaimedStars");
-        const value = Number(raw);
-        return Number.isFinite(value) ? value : 0;
-      }
-
-      function saveClaimedStars() {
-        localStorage.setItem("drawChordClaimedStars", String(totalClaimedStars));
-      }
-
-      function createPlayerId() {
-        if (typeof crypto !== "undefined" && crypto.randomUUID) {
-          return crypto.randomUUID();
-        }
-        return `player-${Date.now()}-${Math.floor(Math.random() * 100000)}`;
-      }
-
-      function ensurePlayerId() {
-        if (!playerId) {
-          playerId = createPlayerId();
-          localStorage.setItem(PLAYER_ID_KEY, playerId);
-        }
-      }
-
-      function sanitizePlayerName(name) {
-        return name.replace(/\s+/g, " ").trim().slice(0, 12);
-      }
-
-      function setSaveButtonState(saved) {
-        if (!homeSaveNameButton) return;
-        homeSaveNameButton.classList.toggle("saved", saved);
-      }
-
-      function setPlayerName(name) {
-        playerName = name;
-        localStorage.setItem(PLAYER_NAME_KEY, playerName);
-        if (homePlayerNameInput) {
-          homePlayerNameInput.value = playerName;
-        }
-        if (leaderboardStatus) {
-          leaderboardStatus.textContent = playerName
-            ? `현재 이름: ${playerName}`
-            : "랭킹이 자동으로 갱신됩니다.";
-        }
-      }
-
-      function loadCachedLeaderboard() {
-        try {
-          const raw = localStorage.getItem(LEADERBOARD_CACHE_KEY);
-          return raw ? JSON.parse(raw) : [];
-        } catch {
-          return [];
-        }
-      }
-
-      function saveCachedLeaderboard(rows) {
-        localStorage.setItem(LEADERBOARD_CACHE_KEY, JSON.stringify(rows));
-      }
-
-      function updateMyScoreDisplay() {
-        if (!myScoreValue) return;
-        const totalPoints = totalClaimedStars * 100;
-        myScoreValue.textContent = String(totalPoints);
-      }
-
-      function renderLeaderboardRows(rows) {
-        if (!leaderboardList) return;
-        leaderboardList.innerHTML = "";
-        if (!rows.length) {
-          const empty = document.createElement("div");
-          empty.className = "leaderboard-empty";
-          empty.textContent = "아직 랭킹이 없어요.";
-          leaderboardList.append(empty);
-          return;
-        }
-
-        rows.forEach((row, index) => {
-          const entry = document.createElement("div");
-          entry.className = `leaderboard-row${row.playerId === playerId ? " me" : ""}`;
-          const rank = document.createElement("div");
-          rank.className = "leaderboard-rank";
-          rank.textContent = `${index + 1}`;
-          const avatar = document.createElement("div");
-          avatar.className = "leaderboard-avatar";
-          const initial = (row.name || "P").trim().charAt(0) || "P";
-          avatar.textContent = initial;
-          const name = document.createElement("div");
-          name.className = "leaderboard-name";
-          name.textContent = row.name || "이름 없음";
-          const score = document.createElement("div");
-          score.className = "leaderboard-score";
-          score.textContent = `★ ${row.totalScore ?? 0}`;
-          entry.append(rank, avatar, name, score);
-          leaderboardList.append(entry);
+      function renderTrays() {
+        trayScroll.innerHTML = "";
+        trays.forEach((tray) => {
+          const card = document.createElement("div");
+          card.className = "tray";
+          card.innerHTML = `
+            <div class="note-card">
+              <strong>${tray.note}</strong>
+              <span>${tray.emoji} ${tray.name}</span>
+            </div>
+            <div class="fruit-stack">${tray.emoji}${tray.emoji}</div>
+            <div class="tray-footer">
+              <span>길이 ${tray.length}</span>
+              <span class="badge">+1</span>
+            </div>
+            <button type="button">선택하기</button>
+          `;
+          card.querySelector("button").addEventListener("click", () => addSelection(tray.id));
+          trayScroll.appendChild(card);
         });
       }
 
-      async function refreshLeaderboard() {
-        if (!leaderboardList) return;
-        if (!leaderboardDb) {
-          if (leaderboardStatus) {
-            leaderboardStatus.textContent = "랭킹 연결 실패";
-          }
-          leaderboardList.innerHTML = '<div class="leaderboard-empty">랭킹 연결 실패</div>';
+      function renderBasket() {
+        basketItems.innerHTML = "";
+        const entries = Object.entries(selection);
+        if (entries.length === 0) {
+          basketItems.innerHTML = "<span class=\"hint\">아직 비어 있어요.</span>";
           return;
         }
-        const cached = loadCachedLeaderboard();
-        if (cached.length) {
-          renderLeaderboardRows(cached);
-        } else if (playerName) {
-          renderLeaderboardRows([
-            {
-              playerId,
-              name: playerName,
-              totalScore: totalClaimedStars * 100
-            }
-          ]);
-        } else {
-          leaderboardList.innerHTML = '<div class="leaderboard-empty">랭킹 불러오는 중...</div>';
+        entries.forEach(([id, count]) => {
+          const tray = trays.find((item) => item.id === id);
+          const item = document.createElement("span");
+          item.className = "basket-item";
+          item.textContent = `${tray.emoji} x${count}`;
+          basketItems.appendChild(item);
+        });
+      }
+
+      function addSelection(id) {
+        selection[id] = (selection[id] || 0) + 1;
+        history.push(id);
+        feedback.textContent = "좋아요! 접시에 담겼어요.";
+        renderBasket();
+      }
+
+      function undoSelection() {
+        const last = history.pop();
+        if (!last) {
+          feedback.textContent = "되돌릴 게 없어요.";
+          return;
         }
-        try {
-          const leaderboardQuery = query(
-            collection(leaderboardDb, LEADERBOARD_COLLECTION),
-            orderBy("totalScore", "desc"),
-            limit(15)
+        selection[last] -= 1;
+        if (selection[last] <= 0) delete selection[last];
+        feedback.textContent = "마지막 선택을 되돌렸어요.";
+        renderBasket();
+      }
+
+      function clearSelection() {
+        selection = {};
+        history = [];
+        feedback.textContent = "접시를 비웠어요.";
+        renderBasket();
+      }
+
+      function totalLength() {
+        return Object.entries(selection).reduce((sum, [id, count]) => {
+          const tray = trays.find((item) => item.id === id);
+          return sum + tray.length * count;
+        }, 0);
+      }
+
+      function serveOrder() {
+        const order = orders[stageIndex];
+        const selectedTotal = totalLength();
+
+        if (Object.keys(selection).length === 0) {
+          feedback.textContent = "먼저 과일을 골라 주세요.";
+          return;
+        }
+
+        if (order.stage < 3) {
+          const correct = Object.keys(order.items).every(
+            (id) => selection[id] === order.items[id]
           );
-          const snapshot = await getDocs(leaderboardQuery);
-          const rows = [];
-          snapshot.forEach((docSnap) => {
-            const data = docSnap.data();
-            rows.push({
-              playerId: docSnap.id,
-              name: data.name,
-              totalScore: data.totalScore ?? 0
-            });
-          });
-          saveCachedLeaderboard(rows);
-          renderLeaderboardRows(rows);
-        } catch (error) {
-          console.warn("Leaderboard fetch failed:", error);
-          leaderboardList.innerHTML = '<div class="leaderboard-empty">랭킹을 불러올 수 없어요.</div>';
-        }
-      }
+          const extra = Object.keys(selection).some((id) => selection[id] !== order.items[id]);
 
-      async function syncLeaderboardScore() {
-        if (!leaderboardDb || !playerName) return;
-        ensurePlayerId();
-        const totalPoints = totalClaimedStars * 100;
-        try {
-          await setDoc(
-            doc(leaderboardDb, LEADERBOARD_COLLECTION, playerId),
-            {
-              name: playerName,
-              totalScore: totalPoints,
-              updatedAt: serverTimestamp()
-            },
-            { merge: true }
-          );
-          if (leaderboardStatus) {
-            leaderboardStatus.textContent = "랭킹에 반영됐어요!";
-          }
-          await refreshLeaderboard();
-        } catch (error) {
-          console.warn("Leaderboard update failed:", error);
-          if (leaderboardStatus) {
-            leaderboardStatus.textContent = "랭킹 저장에 실패했어요.";
-          }
-        }
-      }
-
-      function getPartIdForStage(stageId) {
-        return Math.ceil(stageId / 3);
-      }
-
-      function clampScore(score) {
-        return Math.max(0, score);
-      }
-
-      function computeScore({ oneStrokeClear, redLineCount, extraLineCount }) {
-        if (oneStrokeClear) return 100;
-        const base = 100;
-        const score = base - redLineCount * 20 - extraLineCount * 10;
-        return clampScore(score);
-      }
-
-      function scoreToStars(score) {
-        if (score >= 100) return 3;
-        if (score >= 70) return 2;
-        return 1;
-      }
-
-      function getRunStars(run) {
-        if (!run) return 0;
-        if (Number.isFinite(run.stars)) return run.stars;
-        if (Number.isFinite(run.score)) return scoreToStars(run.score);
-        return 0;
-      }
-
-      function isBetterRun(candidate, current) {
-        if (!current) return true;
-        if (candidate.stars !== current.stars) return candidate.stars > current.stars;
-        if (candidate.score !== current.score) return candidate.score > current.score;
-        return candidate.redLineCount < current.redLineCount;
-      }
-
-      function buildRunResult(stageId) {
-        const partId = getPartIdForStage(stageId);
-        const extraLineCount = Math.max(0, state.totalLines - currentStage.notes.length);
-        const score = computeScore({
-          oneStrokeClear: state.oneStrokeClear,
-          redLineCount: state.redLineCount,
-          extraLineCount
-        });
-        return {
-          stageId,
-          partId,
-          score,
-          stars: scoreToStars(score),
-          redLineCount: state.redLineCount,
-          extraLineCount,
-          oneStrokeClear: state.oneStrokeClear,
-          clearedAt: new Date().toISOString()
-        };
-      }
-
-      function updateBestRun(runResult) {
-        const current = bestRuns[runResult.stageId];
-        if (isBetterRun(runResult, current)) {
-          bestRuns[runResult.stageId] = runResult;
-          saveBestRuns();
-        }
-      }
-
-      function getTotalSummary() {
-        return { starsSum: totalClaimedStars };
-      }
-
-      function formatStars(stars) {
-        const on = "★".repeat(stars);
-        const off = "☆".repeat(3 - stars);
-        return `${on}${off}`;
-      }
-
-      function updateSummaryUI() {
-        bestRuns = loadBestRuns();
-        totalClaimedStars = loadClaimedStars();
-        const total = getTotalSummary();
-        const totalPoints = total.starsSum * 100;
-        document.getElementById("summaryTotalStars").textContent = String(totalPoints);
-        updateMyScoreDisplay();
-      }
-
-      function refreshClaimButton() {
-        if (!stageClaimButton) return;
-        const earned = lastRunResult?.stars ?? 0;
-        if (earned === 0) {
-          stageClaimButton.disabled = true;
-          stageClaimButton.textContent = "별 획득하기";
-          stageClaimButton.classList.remove("claimed");
-          return;
-        }
-        if (lastRunResult?.claimedThisRun) {
-          stageClaimButton.disabled = true;
-          stageClaimButton.textContent = "획득 완료!";
-          stageClaimButton.classList.add("claimed");
-          return;
-        }
-        stageClaimButton.disabled = false;
-        stageClaimButton.textContent = "별 획득하기";
-        stageClaimButton.classList.remove("claimed");
-      }
-
-      function getStageBestMarkup(stageId) {
-        return "";
-      }
-      let statusHintPersist = false;
-      let resetToken = 0;
-      const hoverPanel = document.getElementById("hoverPanel");
-      const hoverTitle = document.getElementById("hoverTitle");
-      const hoverSubtitle = document.getElementById("hoverSubtitle");
-      const hoverDetail = document.getElementById("hoverDetail");
-
-      const partDescriptions = {
-        1: {
-          title: "PART 1",
-          subtitle: "화음 연결하기",
-          detail: ""
-        },
-        2: {
-          title: "PART 2",
-          subtitle: "화음 진행 연결하기",
-          detail: ""
-        },
-        3: {
-          title: "PART 3",
-          subtitle: "화음 진행 연결하기 (심화)",
-          detail: ""
-        }
-      };
-
-      const stageDescriptions = {
-        1: {
-          title: "STAGE 1",
-          subtitle: "으뜸화음 (I) 연결하기",
-          detail: ""
-        },
-        2: {
-          title: "STAGE 2",
-          subtitle: "버금딸림화음 (IV) 연결하기",
-          detail: ""
-        },
-        3: {
-          title: "STAGE 3",
-          subtitle: "딸림화음 (V) 연결하기",
-          detail: ""
-        },
-        4: {
-          title: "STAGE 4",
-          subtitle: "으뜸화음 (I) - 버금딸림화음 (IV) 진행 연결하기",
-          detail: ""
-        },
-        5: {
-          title: "STAGE 5",
-          subtitle: "버금딸림화음 (IV) - 딸림화음 (V) 진행 연결하기",
-          detail: ""
-        },
-        6: {
-          title: "STAGE 6",
-          subtitle: "딸림화음 (V) - 으뜸화음 (I) 진행 연결하기",
-          detail: ""
-        },
-        7: {
-          title: "STAGE 7",
-          subtitle: "으뜸화음 (I) - 버금딸림화음 (IV) - 딸림화음 (V)\n진행 연결하기",
-          detail: ""
-        },
-        8: {
-          title: "STAGE 8",
-          subtitle: "버금딸림화음 (IV) - 딸림화음 (V) - 으뜸화음 (I)\n진행 연결하기",
-          detail: ""
-        },
-        9: {
-          title: "STAGE 9",
-          subtitle: "준비 중",
-          detail: ""
-        }
-      };
-
-      function showHoverPanel(payload) {
-        if (!hoverPanel || !payload) return;
-        hoverTitle.textContent = payload.title || "";
-        hoverSubtitle.textContent = payload.subtitle || "";
-        hoverDetail.textContent = payload.detail || "";
-        hoverPanel.classList.add("is-visible");
-      }
-
-      function hideHoverPanel() {
-        hoverPanel?.classList.remove("is-visible");
-      }
-
-      function populateKeys() {
-        keyNames.forEach((name) => {
-          const option = document.createElement("option");
-          option.value = name;
-          option.textContent = name;
-          keySelect.append(option);
-        });
-        keySelect.value = state.key;
-      }
-
-      function populateStages() {
-        if (!stageSelect) return;
-        stageSelect.innerHTML = "";
-        stageParts.forEach((part) => {
-          const group = document.createElement("optgroup");
-          group.label = part.label;
-          part.stageIds.forEach((stageId) => {
-            const index = stages.findIndex((stageData) => stageData.id === stageId);
-            if (index === -1) return;
-            const stageData = stages[index];
-            const option = document.createElement("option");
-            option.value = String(index);
-            option.textContent = stageData.title;
-            group.append(option);
-          });
-          stageSelect.append(group);
-        });
-        stageSelect.value = String(currentStageIndex);
-      }
-
-      function renderStagePicker(partNumber) {
-        const stagePicker = document.getElementById("stagePicker");
-        const stageButtons = document.getElementById("stageButtons");
-        if (!stagePicker || !stageButtons) return;
-        const isSamePart = stagePicker.dataset.activePart === partNumber;
-        if (isSamePart && !stagePicker.classList.contains("hidden")) {
-          stagePicker.classList.add("fade-out");
-          if (partNumber === "2") {
-            stagePicker.classList.add("center-collapse");
-          } else if (partNumber === "3") {
-            stagePicker.classList.add("right-collapse");
-          }
-          setTimeout(() => {
-            stagePicker.classList.add("hidden");
-            stagePicker.classList.remove("fade-out");
-            stagePicker.classList.remove("center-collapse");
-            stagePicker.classList.remove("right-collapse");
-            stageButtons.innerHTML = "";
-            stagePicker.dataset.activePart = "";
-          }, 250);
-          return;
-        }
-        const stageNameMap = {
-          1: "으뜸화음 (I) 만들기",
-          2: "버금딸림화음 (IV) 만들기",
-          3: "딸림화음 (V) 만들기",
-          4: "으뜸화음 (I) -> 버금딸림화음 (IV)\n진행 만들기",
-          5: "버금딸림화음 (IV) -> 딸림화음 (V)\n진행 만들기",
-          6: "딸림화음 (V) -> 으뜸화음 (I)\n진행 만들기",
-          7: "으뜸화음 (I) -> 버금딸림화음 (IV)\n-> 딸림화음 (V) 진행 만들기",
-          8: "버금딸림화음 (IV) -> 딸림화음 (V)\n-> 으뜸화음 (I) 진행 만들기",
-          9: "준비 중"
-        };
-        stageButtons.innerHTML = "";
-        const directionClass = partNumber === "3" ? "reverse" : "";
-        const alignClass = partNumber === "2" ? "justify-center" : "";
-        stagePicker.className = `stage-picker part-${partNumber}`;
-        stagePicker.dataset.activePart = partNumber;
-        stageButtons.className = `constellation-row is-visible ${directionClass} ${alignClass}`;
-        const part = stageParts.find((item) => String(item.label).startsWith(`Part ${partNumber}`));
-        const stageIds = part?.stageIds || [];
-        if (stageIds.length > 0 && partNumber !== "2") {
-          const startLine = document.createElement("span");
-          startLine.className = "constellation-line";
-          if (partNumber === "1") {
-            startLine.style.setProperty("--line-offset", "30px");
-            startLine.style.setProperty("--line-rotate", "14deg");
+          if (correct && !extra) {
+            success();
           } else {
-            startLine.style.setProperty("--line-offset", "-12px");
-            startLine.style.setProperty("--line-rotate", "-8deg");
+            failByCount(order.items);
           }
-          startLine.style.animationDelay = "0.05s";
-          stageButtons.append(startLine);
-        }
-        stageIds.forEach((stageId, idx) => {
-          const index = stages.findIndex((stageData) => stageData.id === stageId);
-          if (index === -1 && stageId < 8) return;
-          const button = document.createElement("button");
-          button.type = "button";
-          button.className = "stage-star animate-node";
-          let starOffset = idx % 2 === 0 ? 64 : -40;
-          if (partNumber === "1") {
-            starOffset = idx % 2 === 0 ? 40 : -40;
-          } else if (partNumber === "3") {
-            starOffset = stageId === 8 ? 90 : 20;
-          } else if (partNumber === "2" && stageId === 5) {
-            starOffset = -20;
-          } else if (stageId === 8) {
-            starOffset = 80;
-          }
-          button.style.setProperty("--star-offset", `${starOffset}px`);
-          button.style.animationDelay = `${(idx + 1) * 0.18}s`;
-          button.innerHTML = `<span class="stage-label">STAGE ${stageId}</span><span class="star-core"></span>${getStageBestMarkup(stageId)}`;
-          button.addEventListener("click", () => {
-            if (stageId >= 9) {
-              alert("Play 모드 준비중");
-              return;
-            }
-            currentStageIndex = index;
-            currentStage = stages[currentStageIndex];
-            if (stageSelect) {
-              stageSelect.value = String(currentStageIndex);
-            }
-            state.key = "C";
-            if (keySelect) keySelect.value = state.key;
-            document.getElementById("homeScreen").classList.add("hidden");
-            document.getElementById("gameScreen").classList.remove("hidden");
-            resetAll();
-            updateFrequencies();
-          });
-          button.addEventListener("mouseenter", () => {
-            showHoverPanel(stageDescriptions[stageId]);
-          });
-          button.addEventListener("mouseleave", hideHoverPanel);
-          stageButtons.append(button);
-          if (idx < stageIds.length - 1) {
-            const line = document.createElement("span");
-            line.className = "constellation-line";
-            let lineOffset = 0;
-            let lineRotate = 0;
-            if (partNumber === "1") {
-              const offsets = [40, -40, 40];
-              const nextOffset = offsets[idx + 1] ?? 0;
-              lineOffset = (starOffset + nextOffset) / 2;
-              lineRotate = idx % 2 === 0 ? -14 : 14;
-            } else if (partNumber === "3") {
-              lineOffset = stageId === 7 ? 34 : stageId === 8 ? 24 : 12;
-              lineRotate = stageId === 7 ? -8 : stageId === 8 ? 8 : 0;
-            } else if (partNumber === "2") {
-              const offsets = [64, -20, 64];
-              const nextOffset = offsets[idx + 1] ?? 0;
-              lineOffset = (starOffset + nextOffset) / 2;
-              lineRotate = idx % 2 === 0 ? -16 : 16;
-            } else {
-              const nextOffset = idx % 2 === 0 ? -40 : 64;
-              lineOffset = (starOffset + nextOffset) / 2;
-              lineRotate = starOffset > nextOffset ? 18 : -18;
-            }
-            line.style.setProperty("--line-offset", `${lineOffset}px`);
-            line.style.setProperty("--line-rotate", `${lineRotate}deg`);
-            line.style.animationDelay = `${(idx + 1) * 0.2}s`;
-            stageButtons.append(line);
-          }
-        });
-        stagePicker.classList.remove("hidden");
-      }
-
-      function getCellSize(gridSize) {
-        return 520 / gridSize;
-      }
-
-      function cellCenter(col, row, gridSize) {
-        const size = getCellSize(gridSize);
-        return {
-          x: (col + 0.5) * size,
-          y: (row + 0.5) * size
-        };
-      }
-
-      function viewBoxToPercent(point) {
-        return {
-          left: `${(point.x / 520) * 100}%`,
-          top: `${(point.y / 520) * 100}%`
-        };
-      }
-
-      function setGridBackground(gridSize) {
-        const size = 100 / gridSize;
-        board.style.backgroundSize = `${size}% ${size}%`;
-      }
-
-      function getPitchForNote(noteId) {
-        const keyIndex = keyNames.indexOf(state.key);
-        const interval = currentStage.intervals[noteId] ?? 0;
-        const pitchIndex = (keyIndex + interval) % 12;
-        return {
-          letter: keyNames[pitchIndex],
-          korean: pitchNames[pitchIndex]
-        };
-      }
-
-      function updateMissionText() {
-        const noteNames = getStageNoteNames();
-        const orderText = noteNames.map((note) => formatNoteLabel(note)).join(" → ");
-        missionOrder.textContent = orderText;
-        if (chordTitle) {
-          chordTitle.innerHTML = `<span class="block">${currentStage.chordName}</span><span class="block">${orderText} 연결</span>`;
-        }
-        if (stageTitle) {
-          stageTitle.textContent = currentStage.title;
-        }
-        if (missionSteps) {
-          missionSteps.innerHTML = currentStage.notes
-            .map((noteId, index) => {
-              const label = formatNoteLabel(getNoteNameForNoteId(noteId));
-              const prefix = index === 0 ? "시작" : index === currentStage.notes.length - 1 ? "마지막" : "다음";
-              const style = getNoteStyle(noteId);
-              return `<li>${prefix}: <span class="inline-flex items-center gap-2"><span class="inline-block h-3 w-3 ${style.shapeClass}" style="background:${style.color}"></span>${label}</span></li>`;
-            })
-            .join("");
-        }
-        const description = chordDescriptions[currentStage.id];
-        if (description && chordDescription) {
-          chordDescription.innerHTML = `<p class="text-base font-semibold text-slate-800">${description.title}</p>` +
-            description.lines.map((line, index) => {
-              const margin = index === 0 ? "mt-1" : "";
-              return `<p class="${margin} leading-relaxed">${line}</p>`;
-            }).join("");
+          return;
         }
 
-        const footnotes = getEnharmonicFootnotes(noteNames);
-        if (footnotes.length > 0) {
-          missionFootnote.textContent = footnotes.join("\n");
-          missionFootnote.classList.remove("hidden");
+        if (selectedTotal === order.target) {
+          success();
+        } else if (selectedTotal > order.target) {
+          feedback.textContent = "길이 초과! 접시에서 과일이 떨어졌어요.";
+          combo = 0;
         } else {
-          missionFootnote.textContent = "";
-          missionFootnote.classList.add("hidden");
+          feedback.textContent = "길이가 부족해요. 힌트를 다시 확인해 보세요.";
+          combo = 0;
         }
+        updateHud();
       }
 
-      function updateNodeLabels() {
-        currentStage.notes.forEach((noteId) => {
-          const noteName = getNoteNameForNoteId(noteId);
-          stage.nodes
-            .filter((node) => node.note === noteId)
-            .forEach((node) => {
-              const nodeData = nodeElements.get(node.id);
-              nodeData.element.textContent = formatNoteLabelMain(noteName);
-              nodeData.element.style.whiteSpace = "normal";
-              nodeData.element.style.lineHeight = "1";
-            });
-        });
-      }
-
-      const enharmonicKeyMap = {
-        "D#": "Eb",
-        "G#": "Ab",
-        "A#": "Bb"
-      };
-
-      const keySignatureMap = {
-        C: { sharps: [], flats: [] },
-        G: { sharps: ["F"], flats: [] },
-        D: { sharps: ["F", "C"], flats: [] },
-        A: { sharps: ["F", "C", "G"], flats: [] },
-        E: { sharps: ["F", "C", "G", "D"], flats: [] },
-        B: { sharps: ["F", "C", "G", "D", "A"], flats: [] },
-        "F#": { sharps: ["F", "C", "G", "D", "A", "E"], flats: [] },
-        "C#": { sharps: ["F", "C", "G", "D", "A", "E", "B"], flats: [] },
-        F: { sharps: [], flats: ["B"] },
-        Bb: { sharps: [], flats: ["B", "E"] },
-        Eb: { sharps: [], flats: ["B", "E", "A"] },
-        Ab: { sharps: [], flats: ["B", "E", "A", "D"] },
-        Db: { sharps: [], flats: ["B", "E", "A", "D", "G"] }
-      };
-
-      const sharpOrder = ["F", "C", "G", "D", "A", "E", "B"];
-      const flatOrder = ["B", "E", "A", "D", "G", "C", "F"];
-      const staffLayout = {
-        yTop: 18,
-        gap: 8,
-        step: 4,
-        yE4: 50,
-        chordX: 132,
-        chordXProgression: [140, 185, 230],
-        accidentalX: 172
-      };
-      const keySigPositionsSharps = [
-        { letter: "F", octave: 5 },
-        { letter: "C", octave: 5 },
-        { letter: "G", octave: 5 },
-        { letter: "D", octave: 5 },
-        { letter: "A", octave: 4 },
-        { letter: "E", octave: 5 },
-        { letter: "B", octave: 4 }
-      ];
-      const keySigPositionsFlats = [
-        { letter: "B", octave: 4 },
-        { letter: "E", octave: 5 },
-        { letter: "A", octave: 4 },
-        { letter: "D", octave: 5 },
-        { letter: "G", octave: 4 },
-        { letter: "C", octave: 5 },
-        { letter: "F", octave: 4 }
-      ];
-
-      function clearStaff() {
-        staffSvg.innerHTML = "";
-      }
-
-      function getKeySignatureInfo(key) {
-        const mappedKey = enharmonicKeyMap[key] || key;
-        return {
-          key: mappedKey,
-          sharps: keySignatureMap[mappedKey]?.sharps || [],
-          flats: keySignatureMap[mappedKey]?.flats || []
-        };
-      }
-
-      function buildMajorScale(key) {
-        const info = getKeySignatureInfo(key);
-        const rootLetter = info.key[0];
-        const rootIndex = diatonicLetters.indexOf(rootLetter);
-        const scale = [];
-        for (let i = 0; i < 7; i += 1) {
-          const letter = diatonicLetters[(rootIndex + i) % diatonicLetters.length];
-          let accidental = "";
-          if (info.sharps.includes(letter)) accidental = "#";
-          if (info.flats.includes(letter)) accidental = "b";
-          scale.push(`${letter}${accidental}`);
-        }
-        return scale;
-      }
-
-      function getNoteNameForNoteId(noteId) {
-        const scale = buildMajorScale(state.key);
-        const degreeIndex = degreeIndexByNote[noteId] ?? 0;
-        return scale[degreeIndex];
-      }
-
-      function getStageNoteNames() {
-        return currentStage.notes.map((noteId) => getNoteNameForNoteId(noteId));
-      }
-
-      function getChordTypeForIndex(index) {
-        const groupIndex = Math.floor(index / 3);
-        return currentStage.chordTypes?.[groupIndex] || "I";
-      }
-
-      function getNoteStyle(noteId) {
-        const index = currentStage.notes.indexOf(noteId);
-        const orderIndex = index >= 0 ? index % 3 : 0;
-        const colorStyle = noteOrderStyles[orderIndex] || noteOrderStyles[0];
-        const chordType = getChordTypeForIndex(index);
-        return {
-          ...colorStyle,
-          chordType,
-          shapeClass: chordShapeClassByType[chordType] || "note-shape-circle"
-        };
-      }
-
-      function formatNoteLabelMain(noteName) {
-        const letter = noteName[0];
-        const accidental = noteName.slice(1);
-        return `${solfegeMap[letter]}${accidental}`;
-      }
-
-      function formatNoteLabel(noteName) {
-        const mainLabel = formatNoteLabelMain(noteName);
-        const enharmonic = enharmonicMap[noteName];
-        if (!enharmonic) return mainLabel;
-        const enharmonicLabel = solfegeMap[enharmonic];
-        return `${mainLabel}(${enharmonicLabel})`;
-      }
-
-      function formatNoteLatinMain(noteName) {
-        const letter = noteName[0];
-        const accidental = noteName.slice(1);
-        return `${letter}${accidental}`;
-      }
-
-      function formatNoteLatin(noteName) {
-        const mainLabel = formatNoteLatinMain(noteName);
-        const enharmonic = enharmonicMap[noteName];
-        return enharmonic ? `${mainLabel}(${enharmonic})` : mainLabel;
-      }
-
-      function getEnharmonicFootnotes(noteNames) {
-        const footnotes = [];
-        if (noteNames.includes("E#")) footnotes.push("※ E# = F (피아노에서는 같은 건반)");
-        if (noteNames.includes("B#")) footnotes.push("※ B# = C (피아노에서는 같은 건반)");
-        return footnotes;
-      }
-
-      function getChordStack(noteNames) {
-        const chord = noteNames;
-        const stack = [];
-        let octave = 4;
-        let prevIndex = diatonicLetters.indexOf(chord[0][0]);
-        chord.forEach((note, idx) => {
-          const letter = note[0];
-          const index = diatonicLetters.indexOf(letter);
-          if (idx > 0 && index <= prevIndex) octave += 1;
-          stack.push({ note, letter, octave });
-          prevIndex = index;
-        });
-        return stack;
-      }
-
-      function noteY(letter, octave) {
-        const letterIndex = diatonicLetters.indexOf(letter);
-        const stepsFromE4 = (octave - 4) * 7 + (letterIndex - 2);
-        return staffLayout.yE4 - stepsFromE4 * staffLayout.step;
-      }
-
-      function drawLedgerLines(centerX, y) {
-        const lineSpacing = staffLayout.gap;
-        const bottomLine = staffLayout.yTop + staffLayout.gap * 4;
-        if (y > bottomLine) {
-          for (let ly = bottomLine + lineSpacing; ly <= y; ly += lineSpacing) {
-            const ledger = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            ledger.setAttribute("x1", String(centerX - 12));
-            ledger.setAttribute("x2", String(centerX + 12));
-            ledger.setAttribute("y1", String(ly));
-            ledger.setAttribute("y2", String(ly));
-            ledger.setAttribute("stroke", "#0f172a");
-            ledger.setAttribute("stroke-width", "1");
-            staffSvg.append(ledger);
-          }
-        }
-        if (y < staffLayout.yTop) {
-          for (let ly = staffLayout.yTop - lineSpacing; ly >= y; ly -= lineSpacing) {
-            const ledger = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            ledger.setAttribute("x1", String(centerX - 12));
-            ledger.setAttribute("x2", String(centerX + 12));
-            ledger.setAttribute("y1", String(ly));
-            ledger.setAttribute("y2", String(ly));
-            ledger.setAttribute("stroke", "#0f172a");
-            ledger.setAttribute("stroke-width", "1");
-            staffSvg.append(ledger);
-          }
-        }
-      }
-
-      function renderStaff() {
-        clearStaff();
-        for (let i = 0; i < 5; i += 1) {
-          const y = staffLayout.yTop + i * staffLayout.gap;
-          const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-          line.setAttribute("x1", "10");
-          line.setAttribute("x2", "230");
-          line.setAttribute("y1", String(y));
-          line.setAttribute("y2", String(y));
-          line.setAttribute("stroke", "#334155");
-          line.setAttribute("stroke-width", "1");
-          staffSvg.append(line);
-        }
-
-        const clef = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        clef.setAttribute("x", "18");
-        clef.setAttribute("y", "46");
-        clef.setAttribute("font-size", "44");
-        clef.setAttribute(
-          "font-family",
-          "\"Apple Symbols\", \"Noto Music\", \"Bravura\", \"Segoe UI Symbol\", serif"
-        );
-        clef.setAttribute("fill", "#0f172a");
-        clef.textContent = "𝄞";
-        staffSvg.append(clef);
-
-
-        const signature = getKeySignatureInfo(state.key);
-        const keySigStartX = 74;
-        signature.sharps.forEach((letter, index) => {
-          const position = keySigPositionsSharps[index];
-          if (!position || letter !== sharpOrder[index]) return;
-          const sharp = document.createElementNS("http://www.w3.org/2000/svg", "text");
-          const y = noteY(position.letter, position.octave);
-          sharp.setAttribute("x", String(keySigStartX + index * 10));
-          sharp.setAttribute("y", String(y));
-          sharp.setAttribute("font-size", "12");
-          sharp.setAttribute("fill", "#0f172a");
-          sharp.textContent = "#";
-          staffSvg.append(sharp);
-        });
-        signature.flats.forEach((letter, index) => {
-          const position = keySigPositionsFlats[index];
-          if (!position || letter !== flatOrder[index]) return;
-          const flat = document.createElementNS("http://www.w3.org/2000/svg", "text");
-          const y = noteY(position.letter, position.octave);
-          flat.setAttribute("x", String(keySigStartX + index * 10));
-          flat.setAttribute("y", String(y));
-          flat.setAttribute("font-size", "12");
-          flat.setAttribute("fill", "#0f172a");
-          flat.textContent = "♭";
-          staffSvg.append(flat);
-        });
-
-        function renderChordAt(noteNames, baseX, labelText) {
-          const chordStack = getChordStack(noteNames);
-          chordStack.forEach((noteInfo) => {
-            const y = noteY(noteInfo.letter, noteInfo.octave);
-            drawLedgerLines(baseX, y);
-            const noteHead = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
-            noteHead.setAttribute("cx", String(baseX));
-            noteHead.setAttribute("cy", String(y));
-            noteHead.setAttribute("rx", "6");
-            noteHead.setAttribute("ry", "4");
-            noteHead.setAttribute("fill", "none");
-            noteHead.setAttribute("stroke", "#0f172a");
-            noteHead.setAttribute("stroke-width", "1.8");
-            staffSvg.append(noteHead);
-
-            const accidental = noteInfo.note.slice(1);
-            const hasSharp = signature.sharps.includes(noteInfo.letter) && accidental === "#";
-            const hasFlat = signature.flats.includes(noteInfo.letter) && accidental === "b";
-            if (accidental && !hasSharp && !hasFlat) {
-              const acc = document.createElementNS("http://www.w3.org/2000/svg", "text");
-              acc.setAttribute("x", String(baseX - 18));
-              acc.setAttribute("y", String(y));
-              acc.setAttribute("font-size", "12");
-              acc.setAttribute("fill", "#0f172a");
-              acc.textContent = accidental === "b" ? "♭" : "#";
-              staffSvg.append(acc);
-            }
-          });
-
-          if (labelText) {
-            const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            label.setAttribute("x", String(baseX));
-            label.setAttribute("y", "78");
-            label.setAttribute("text-anchor", "middle");
-            label.setAttribute("font-size", "12");
-            label.setAttribute("font-family", "\"Times New Roman\", Times, serif");
-            label.setAttribute("font-weight", "600");
-            label.setAttribute("fill", "#475569");
-            label.textContent = labelText;
-            staffSvg.append(label);
-          }
-        }
-
-        if (currentStage.id === 4 || currentStage.id === 5 || currentStage.id === 6 || currentStage.id === 7 || currentStage.id === 8) {
-          const chordI = ["do", "mi", "sol"].map((noteId) => getNoteNameForNoteId(noteId));
-          const chordIV = ["fa", "la", "do2"].map((noteId) => getNoteNameForNoteId(noteId));
-          const chordV = ["sol", "ti", "re"].map((noteId) => getNoteNameForNoteId(noteId));
-          const chordVHigh = ["sol2", "ti", "re"].map((noteId) => getNoteNameForNoteId(noteId));
-          let progressionX = staffLayout.chordXProgression;
-          if (currentStage.id === 7 || currentStage.id === 8) {
-            progressionX = staffLayout.chordXProgression.map((x) => x - 37);
-          } else if (currentStage.id === 4 || currentStage.id === 5 || currentStage.id === 6) {
-            progressionX = staffLayout.chordXProgression.map((x) => x - 8);
-          }
-          if (currentStage.id === 4) {
-            renderChordAt(chordI, progressionX[0], "I");
-            renderChordAt(chordIV, progressionX[1], "IV");
-          } else if (currentStage.id === 5) {
-            renderChordAt(chordIV, progressionX[0], "IV");
-            renderChordAt(chordV, progressionX[1], "V");
-          } else if (currentStage.id === 6) {
-            const chordIStage6 = ["do", "mi", "sol2"].map((noteId) => getNoteNameForNoteId(noteId));
-            renderChordAt(chordV, progressionX[0], "V");
-            renderChordAt(chordIStage6, progressionX[1], "I");
-          } else if (currentStage.id === 7) {
-            renderChordAt(chordI, progressionX[0], "I");
-            renderChordAt(chordIV, progressionX[1], "IV");
-            renderChordAt(chordVHigh, progressionX[2], "V");
-          } else {
-            renderChordAt(chordIV, progressionX[0], "IV");
-            renderChordAt(chordVHigh, progressionX[1], "V");
-            renderChordAt(chordI, progressionX[2], "I");
-          }
-        } else {
-          renderChordAt(getStageNoteNames(), staffLayout.chordX, "I");
-        }
-      }
-
-      function updateRequiredNoteHighlight(noteId) {
-        nodeElements.forEach(({ element, glow, note }) => {
-          element.classList.remove("note-highlight");
-          element.style.removeProperty("--glow-color");
-          glow?.classList.remove("note-highlight");
-          glow?.style.removeProperty("--glow-color");
-          if (noteId && note === noteId) {
-            const style = getNoteStyle(noteId);
-            if (style.shapeClass === "note-shape-diamond") {
-              glow?.classList.add("note-highlight");
-              glow?.style.setProperty("--glow-color", style.color);
-            } else {
-              element.classList.add("note-highlight");
-              element.style.setProperty("--glow-color", style.color);
-            }
+      function failByCount(target) {
+        const messages = [];
+        Object.keys(target).forEach((id) => {
+          const expected = target[id] || 0;
+          const actual = selection[id] || 0;
+          if (actual < expected) {
+            messages.push(`${id} ${expected - actual}개 부족`);
+          } else if (actual > expected) {
+            messages.push(`${id} ${actual - expected}개 초과`);
           }
         });
+        feedback.textContent = messages.length ? messages.join(" / ") : "조합이 달라요.";
+        combo = 0;
+        updateHud();
       }
 
-      function getChordGroupNotes(groupIndex) {
-        const start = groupIndex * 3;
-        return currentStage.notes.slice(start, start + 3);
+      function success() {
+        feedback.textContent = "정답! 손님이 만족했어요 😀";
+        combo += 1;
+        coins += 20;
+        stageIndex = (stageIndex + 1) % orders.length;
+        clearSelection();
+        renderOrder();
+        updateHud();
       }
 
-      function getChordLabel(type) {
-        if (type === "I") return "으뜸화음";
-        if (type === "IV") return "버금딸림화음";
-        if (type === "V") return "딸림화음";
-        return "화음";
+      function updateHud() {
+        hudCombo.textContent = String(combo);
+        hudCoin.textContent = String(coins);
       }
 
-      function showChordToast(type) {
-        if (!chordCompleteOverlay || !chordCompleteMessage) return;
-        const label = getChordLabel(type);
-        chordCompleteMessage.textContent = `${label} 완성!`;
-        chordCompleteOverlay.classList.remove("hidden");
-        chordCompleteMessage.style.animation = "none";
-        void chordCompleteMessage.offsetHeight;
-        chordCompleteMessage.style.animation = "";
-        setTimeout(() => {
-          chordCompleteOverlay.classList.add("hidden");
-        }, 1200);
-      }
-
-      function showListenWarning() {
-        if (!listenWarningOverlay || !listenWarningMessage) return;
-        listenWarningMessage.textContent = "연결된 화음을 들어보세요!";
-        listenWarningOverlay.classList.remove("hidden");
-        listenWarningMessage.style.animation = "none";
-        void listenWarningMessage.offsetHeight;
-        listenWarningMessage.style.animation = "";
-        setTimeout(() => {
-          listenWarningOverlay.classList.add("hidden");
-        }, 1200);
-      }
-
-      function toggleListenNudge() {
-        return;
-      }
-
-      function checkChordCompletion() {
-        if (!currentStage.chordTypes) return;
-        currentStage.chordTypes.forEach((type, idx) => {
-          if (state.completedChordGroups.has(idx)) return;
-          const groupNotes = getChordGroupNotes(idx);
-          const isComplete = groupNotes.every((note) => state.completedPairs.has(note));
-          if (isComplete) {
-            state.completedChordGroups.add(idx);
-            showChordToast(type);
+      function startTimer() {
+        if (timerInterval) clearInterval(timerInterval);
+        timer = 100;
+        timerBar.style.width = `${timer}%`;
+        timerInterval = setInterval(() => {
+          if (!timerActive) return;
+          timer -= 1.2;
+          if (timer <= 0) {
+            timer = 0;
+            feedback.textContent = "시간 초과! 바로 다시 도전해요.";
+            combo = 0;
+            updateHud();
+            clearSelection();
+            timer = 100;
           }
-        });
+          timerBar.style.width = `${timer}%`;
+        }, 200);
       }
 
-      function showStageCompleteOverlay() {
-        if (!stageCompleteOverlay) return;
-        if (lastRunResult) {
-          if (stageCompleteStars) {
-            const count = lastRunResult.stars;
-            stageCompleteStars.innerHTML = Array.from({ length: count }, (_, idx) => {
-              const delay = (idx * 0.18).toFixed(2);
-              return `<span class="star-on" style="animation-delay:${delay}s, ${delay}s;"></span>`;
-            }).join("");
-          }
-          if (stageBonusText) {
-            const bonus = lastRunResult.bonusStars ?? 0;
-            if (bonus > 0) {
-              stageBonusText.textContent = `연속 보너스 +${bonus}★`;
-              stageBonusText.classList.remove("hidden");
-            } else {
-              stageBonusText.classList.add("hidden");
-            }
-          }
-          if (stageCompleteRibbon) {
-            const titleMap = {
-              3: "참 잘했어요!",
-              2: "훌륭해요!",
-              1: "좋아요!"
-            };
-            stageCompleteRibbon.textContent = titleMap[lastRunResult.stars] || "좋아요!";
-          }
-        }
-        refreshClaimButton();
-        stageCompleteOverlay.classList.remove("hidden");
-      }
-
-      function finalizeRun() {
-        stageStreakCount = stageStreakCount > 0 ? stageStreakCount + 1 : 1;
-        const bonusStars = stageStreakCount % 2 === 0 ? 1 : 0;
-        lastRunResult = buildRunResult(currentStage.id);
-        lastRunResult.bonusStars = bonusStars;
-        updateBestRun(lastRunResult);
-        updateSummaryUI();
-      }
-
-      function hideStageCompleteOverlay() {
-        stageCompleteOverlay?.classList.add("hidden");
-      }
-
-      function updateStatusText() {
-        const requiredNote = getNextRequiredNote();
-        if (state.completedPairs.size === currentStage.notes.length) {
-          const orderText = getStageNoteNames().map((note) => formatNoteLabel(note)).join("-");
-          statusText.innerHTML = `<span class="font-semibold text-slate-800">${currentStage.chordName} 완성!</span><span class="mt-2 block text-slate-500">(${orderText})</span>`;
-          statusHintPersist = false;
-          updateRequiredNoteHighlight(null);
-          if (!state.chordHeardThisRun) {
-            staffWrapper.classList.remove("hidden");
-            renderStaff();
-            statusText.innerHTML = `<span class="font-semibold text-slate-800">${currentStage.chordName} 완성!</span>`;
-            replayButton?.classList.add("replay-attention");
-            return;
-          }
-          replayButton?.classList.remove("replay-attention");
-          return;
-        }
-        replayButton?.classList.remove("replay-attention");
-        hideStageCompleteOverlay();
-        if (statusHintPersist) {
-          return;
-        }
-        staffWrapper.classList.add("hidden");
-        if (requiredNote) {
-          const noteName = getNoteNameForNoteId(requiredNote);
-          const style = getNoteStyle(requiredNote);
-          const icon = `<span class="mr-2 inline-block h-4 w-4 align-middle ${style.shapeClass}" style="background:${style.color}"></span>`;
-          statusText.innerHTML = `${icon}${formatNoteLabel(noteName)} 쌍을 연결하세요`;
-        }
-        updateRequiredNoteHighlight(requiredNote);
-      }
-
-      function showStatusHint(noteId) {
-        if (!statusText) return;
-        const noteName = getNoteNameForNoteId(noteId);
-        const style = getNoteStyle(noteId);
-        const prefix = style.name ? `${style.name} ` : "";
-        const icon = `<span class="mr-2 inline-block h-4 w-4 align-middle ${style.shapeClass}" style="background:${style.color}"></span>`;
-        statusText.innerHTML = `${icon}${prefix}${formatNoteLabel(noteName)}부터 연결하세요`;
-        statusHintPersist = true;
-        updateRequiredNoteHighlight(noteId);
-      }
-
-
-      function ensureAudioContext() {
-        if (!state.soundOn) return;
-        if (!audioContext) {
-          audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        }
-        if (audioContext.state === "suspended") {
-          audioContext.resume();
-        }
-      }
-
-      function playTone(freq, duration, gainLevel = 0.25) {
-        if (!state.soundOn) return;
-        ensureAudioContext();
-        if (!audioContext) return;
-        const now = audioContext.currentTime;
-        const osc = audioContext.createOscillator();
-        const gain = audioContext.createGain();
-        osc.type = "sine";
-        osc.frequency.value = freq;
-        gain.gain.value = 0;
-        osc.connect(gain);
-        gain.connect(audioContext.destination);
-        gain.gain.linearRampToValueAtTime(gainLevel, now + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
-        osc.start(now);
-        osc.stop(now + duration + 0.05);
-      }
-
-      function playChord() {
-        if (currentStage.id === 4 || currentStage.id === 5 || currentStage.id === 6 || currentStage.id === 7 || currentStage.id === 8) {
-          const chordI = ["do", "mi", "sol"].map((note) => noteFrequencies[note]).filter(Boolean);
-          const chordIV = ["fa", "la", "do2"].map((note) => noteFrequencies[note]).filter(Boolean);
-          const chordV = ["sol", "ti", "re"].map((note) => noteFrequencies[note]).filter(Boolean);
-          const chordVHigh = ["sol2", "ti", "re"].map((note) => noteFrequencies[note]).filter(Boolean);
-          if (currentStage.id === 4) {
-            chordI.forEach((freq) => playTone(freq, 0.4, 0.25));
-            setTimeout(() => {
-              chordIV.forEach((freq) => playTone(freq, 0.4, 0.25));
-            }, 800);
-          } else if (currentStage.id === 5) {
-            chordIV.forEach((freq) => playTone(freq, 0.4, 0.25));
-            setTimeout(() => {
-              chordV.forEach((freq) => playTone(freq, 0.4, 0.25));
-            }, 800);
-          } else if (currentStage.id === 6) {
-            const chordIStage6 = ["do", "mi", "sol2"].map((note) => noteFrequencies[note]).filter(Boolean);
-            chordV.forEach((freq) => playTone(freq, 0.4, 0.25));
-            setTimeout(() => {
-              chordIStage6.forEach((freq) => playTone(freq, 0.4, 0.25));
-            }, 800);
-          } else if (currentStage.id === 7) {
-            chordI.forEach((freq) => playTone(freq, 0.4, 0.25));
-            setTimeout(() => {
-              chordIV.forEach((freq) => playTone(freq, 0.4, 0.25));
-            }, 800);
-            setTimeout(() => {
-              chordVHigh.forEach((freq) => playTone(freq, 0.4, 0.25));
-            }, 1600);
-          } else {
-            chordIV.forEach((freq) => playTone(freq, 0.4, 0.25));
-            setTimeout(() => {
-              chordVHigh.forEach((freq) => playTone(freq, 0.4, 0.25));
-            }, 800);
-            setTimeout(() => {
-              chordI.forEach((freq) => playTone(freq, 0.4, 0.25));
-            }, 1600);
-          }
-          return;
-        }
-        const freqs = currentStage.notes.map((note) => noteFrequencies[note]).filter(Boolean);
-        freqs.forEach((freq) => playTone(freq, 0.4, 0.25));
-      }
-
-      function updateFrequencies() {
-        const keyIndex = keyNames.indexOf(state.key);
-        const baseMidi = 60 + keyIndex;
-        noteFrequencies = {};
-        currentStage.notes.forEach((note, index) => {
-          let octaveShift = 0;
-          if (note === "do2") {
-            octaveShift = 12;
-          }
-          if (currentStage.id === 5 && index === currentStage.notes.length - 1) {
-            octaveShift = 12;
-          }
-          if (currentStage.id === 6 && index === 2) {
-            octaveShift = 12;
-          }
-          if (currentStage.id === 6 && index === 5) {
-            octaveShift = 0;
-          }
-          if (currentStage.id === 2 && index === currentStage.notes.length - 1) {
-            octaveShift = 12;
-          }
-          if (currentStage.id === 3 && index === currentStage.notes.length - 1) {
-            octaveShift = 12;
-          }
-          if (currentStage.id === 7 && index === currentStage.notes.length - 1) {
-            octaveShift = 12;
-          }
-          if (currentStage.id === 8 && note === "re") {
-            octaveShift = 12;
-          }
-          const midi = baseMidi + currentStage.intervals[note] + octaveShift;
-          noteFrequencies[note] = 440 * Math.pow(2, (midi - 69) / 12);
-        });
-        updateMissionText();
-        updateNodeLabels();
-      }
-
-      function renderStage() {
-        board.style.maxWidth = `${stage.boardSize}px`;
-        if (controlButtons) {
-          controlButtons.style.maxWidth = `${stage.boardSize}px`;
-        }
-        setGridBackground(stage.gridSize);
-        nodesLayer.innerHTML = "";
-        nodeElements = new Map();
-        nodeByCell = new Map();
-        stage.nodes.forEach((node) => {
-          const center = cellCenter(node.col, node.row, stage.gridSize);
-          const pos = viewBoxToPercent(center);
-          const element = document.createElement("div");
-          const glow = document.createElement("div");
-          const isStage7 = currentStage.id === 7 || currentStage.id === 8;
-          const style = getNoteStyle(node.note);
-          const glowSizeClass = isStage7 ? "h-10 w-10" : "h-12 w-12";
-          const glowShapeClass = style.shapeClass === "note-shape-diamond" ? "note-glow-diamond" : "";
-          glow.className = `note-glow absolute ${glowSizeClass} ${glowShapeClass}`.trim();
-          element.className = isStage7
-            ? `note absolute flex h-10 w-10 items-center justify-center text-[10px] font-bold shadow ${style.shapeClass}`
-            : `note absolute flex h-12 w-12 items-center justify-center text-xs font-bold shadow ${style.shapeClass}`;
-          element.style.backgroundColor = style.color;
-          element.style.color = style.textColor;
-          element.style.transform = "translate(-50%, -50%)";
-          element.style.left = pos.left;
-          element.style.top = pos.top;
-          glow.style.left = pos.left;
-          glow.style.top = pos.top;
-          element.dataset.note = node.note;
-          element.dataset.nodeId = node.id;
-          nodesLayer.append(glow);
-          nodesLayer.append(element);
-          nodeElements.set(node.id, { element, glow, note: node.note, col: node.col, row: node.row });
-          nodeByCell.set(`${node.col},${node.row}`, node.id);
-        });
-        updateNodeLabels();
-        committedLines.innerHTML = "";
-        occupiedEdges = new Set();
-        occupiedCells = new Set();
-        state.completedPairs = new Set();
-        updateStatusText();
-        clearActiveLine();
-      }
-
-      function applyLayout(layout) {
-        stage.nodes = layout.map((node) => ({ ...node }));
-      }
-
-      function setActiveLine(points, color) {
-        activeLine.setAttribute("points", points.map((point) => `${point.x},${point.y}`).join(" "));
-        activeLine.setAttribute("stroke", color);
-      }
-
-      function clearActiveLine() {
-        activeLine.setAttribute("points", "");
-        state.pathCells = [];
-        state.startNodeId = null;
-        state.endNodeId = null;
-        state.invalidPath = false;
-      }
-
-      function resetAttemptStats() {
-        state.redLineCount = 0;
-        state.extraLineCount = 0;
-        state.totalLines = 0;
-        state.strokesUsed = 0;
-        state.oneStrokeClear = false;
-        state.completedChordGroups = new Set();
-        state.awaitingChordListen = false;
-        state.chordHeardThisRun = false;
-        lastRunResult = null;
-      }
-
-      function edgeKey(a, b) {
-        const keyA = `${a.col},${a.row}`;
-        const keyB = `${b.col},${b.row}`;
-        return keyA < keyB ? `${keyA}-${keyB}` : `${keyB}-${keyA}`;
-      }
-
-      function isOccupiedEdge(from, to) {
-        return occupiedEdges.has(edgeKey(from, to));
-      }
-
-      function addEdge(from, to) {
-        occupiedEdges.add(edgeKey(from, to));
-      }
-
-      function removeEdge(from, to) {
-        occupiedEdges.delete(edgeKey(from, to));
-      }
-
-      function markPathOccupied(path) {
-        path.forEach((cell, index) => {
-          if (index > 0) {
-            addEdge(path[index - 1], cell);
-          }
-          occupiedCells.add(`${cell.col},${cell.row}`);
-        });
-      }
-
-      function unmarkPathOccupied(path) {
-        path.forEach((cell, index) => {
-          if (index > 0) {
-            removeEdge(path[index - 1], cell);
-          }
-          occupiedCells.delete(`${cell.col},${cell.row}`);
-        });
-      }
-
-      function cellFromPointer(pointer, gridSize) {
-        const cellSize = getCellSize(gridSize);
-        return {
-          col: Math.min(gridSize - 1, Math.max(0, Math.floor(pointer.x / cellSize))),
-          row: Math.min(gridSize - 1, Math.max(0, Math.floor(pointer.y / cellSize)))
-        };
-      }
-
-      function cellCenterFor(cell, gridSize) {
-        return cellCenter(cell.col, cell.row, gridSize);
-      }
-
-      function buildPathPolyline(path, gridSize) {
-        return path.map((cell) => cellCenterFor(cell, gridSize));
-      }
-
-      function updateActivePathLine() {
-        const points = buildPathPolyline(state.pathCells, stage.gridSize);
-        let color = "#38bdf8";
-        if (state.startNodeId) {
-          const note = nodeElements.get(state.startNodeId)?.note;
-          if (note) {
-            color = getNoteStyle(note).color;
-          }
-        }
-        if (state.invalidPath) {
-          color = "#ef4444";
-        }
-        setActiveLine(points, color);
-      }
-
-      function manhattan(a, b) {
-        return Math.abs(a.col - b.col) + Math.abs(a.row - b.row);
-      }
-
-      function randomInt(max) {
-        return Math.floor(Math.random() * max);
-      }
-
-      function pickRandomCell(occupied) {
-        let cell;
-        let attempts = 0;
-        do {
-          cell = { col: randomInt(stage.gridSize), row: randomInt(stage.gridSize) };
-          attempts += 1;
-        } while (occupied.has(`${cell.col},${cell.row}`) && attempts < 200);
-        return cell;
-      }
-
-      function isValidPairPlacement(a, b) {
-        return manhattan(a, b) >= layoutConfig.minPairDistance;
-      }
-
-      function isLayoutComplex(layout) {
-        let invalidPairs = 0;
-        let diagonalPairs = 0;
-        currentStage.notes.forEach((note) => {
-          const pair = layout.filter((node) => node.note === note);
-          if (pair.length !== 2) return;
-          const dx = Math.abs(pair[0].col - pair[1].col);
-          const dy = Math.abs(pair[0].row - pair[1].row);
-          const isAdjacent = dx + dy === 1;
-          const isDiagonal = dx === 1 && dy === 1;
-          const isStraightLine = dx === 0 || dy === 0;
-          if (isDiagonal) {
-            diagonalPairs += 1;
-            if (currentStage.id === 7 || currentStage.id === 8) return;
-          }
-          if (isAdjacent || isStraightLine || (isDiagonal && currentStage.id !== 7 && currentStage.id !== 8)) {
-            invalidPairs += 1;
-          }
-        });
-        if (currentStage.id === 7 || currentStage.id === 8) {
-          invalidPairs += Math.max(0, diagonalPairs - 1);
-        }
-        if (invalidPairs > 1) return false;
-
-        const rowSet = new Set();
-        const colSet = new Set();
-        layout.forEach((node) => {
-          rowSet.add(node.row);
-          colSet.add(node.col);
-        });
-        const minSpread = stage.gridSize >= 6 ? 4 : 3;
-        if (rowSet.size < minSpread || colSet.size < minSpread) return false;
-        if (currentStage.id >= 6) return true;
-        let alignedPairs = 0;
-        currentStage.notes.forEach((note) => {
-          const pair = layout.filter((node) => node.note === note);
-          if (pair.length !== 2) return;
-          if (pair[0].col === pair[1].col || pair[0].row === pair[1].row) {
-            alignedPairs += 1;
-          }
-        });
-        return alignedPairs <= 1;
-      }
-
-      function generateRandomLayout() {
-        const layout = [];
-        const occupied = new Set();
-        const attemptsPerNote = currentStage.id >= 7 ? 400 : 200;
-        for (const note of currentStage.notes) {
-          let placed = false;
-          for (let attempt = 0; attempt < attemptsPerNote; attempt += 1) {
-            const first = pickRandomCell(occupied);
-            occupied.add(`${first.col},${first.row}`);
-            const second = pickRandomCell(occupied);
-            if (!isValidPairPlacement(first, second)) {
-              occupied.delete(`${first.col},${first.row}`);
-              continue;
-            }
-            occupied.add(`${second.col},${second.row}`);
-            layout.push({ id: `${note}-1`, note, col: first.col, row: first.row });
-            layout.push({ id: `${note}-2`, note, col: second.col, row: second.row });
-            placed = true;
-            break;
-          }
-          if (!placed) return null;
-        }
-        return isLayoutComplex(layout) ? layout : null;
-      }
-
-      function canUseDirection(dirState, step) {
-        if (step === 0) return dirState;
-        if (dirState === 0) return step;
-        if (dirState !== step) return null;
-        return dirState;
-      }
-
-      function isLayoutSolvable(layout) {
-        if (currentStage.id === 7 || currentStage.id === 8) {
-          return isLayoutSolvableFast(layout);
-        }
-        const nodesByNote = new Map();
-        layout.forEach((node) => {
-          if (!nodesByNote.has(node.note)) nodesByNote.set(node.note, []);
-          nodesByNote.get(node.note).push(node);
-        });
-
-        const pairs = currentStage.notes.map((note) => {
-          const [start, end] = nodesByNote.get(note);
-          return { note, start, end };
-        });
-
-        function solvePair(index, occupiedCells, occupiedEdges) {
-          if (index >= pairs.length) return true;
-          const pair = pairs[index];
-          const startKey = `${pair.start.col},${pair.start.row}`;
-          const endKey = `${pair.end.col},${pair.end.row}`;
-          const blocked = new Set(occupiedCells);
-          layout.forEach((node) => {
-            const key = `${node.col},${node.row}`;
-            if (node.note !== pair.note) blocked.add(key);
-          });
-
-          const visited = new Set([startKey]);
-          const path = [{ col: pair.start.col, row: pair.start.row }];
-
-          function dfs(cell, xDir, yDir) {
-            const cellKey = `${cell.col},${cell.row}`;
-            if (cellKey === endKey) {
-              const nextOccupiedCells = new Set(occupiedCells);
-              const nextOccupiedEdges = new Set(occupiedEdges);
-              path.forEach((point, idx) => {
-                const pointKey = `${point.col},${point.row}`;
-                nextOccupiedCells.add(pointKey);
-                if (idx > 0) {
-                  nextOccupiedEdges.add(edgeKey(path[idx - 1], point));
-                }
-              });
-              return solvePair(index + 1, nextOccupiedCells, nextOccupiedEdges);
-            }
-
-            if (path.length > stage.gridSize * stage.gridSize) return false;
-
-            const neighbors = [
-              { col: cell.col + 1, row: cell.row },
-              { col: cell.col - 1, row: cell.row },
-              { col: cell.col, row: cell.row + 1 },
-              { col: cell.col, row: cell.row - 1 }
-            ];
-
-            neighbors.sort((a, b) => manhattan(a, pair.end) - manhattan(b, pair.end));
-
-            for (const next of neighbors) {
-              if (next.col < 0 || next.col >= stage.gridSize || next.row < 0 || next.row >= stage.gridSize) {
-                continue;
-              }
-              const nextKey = `${next.col},${next.row}`;
-              if (visited.has(nextKey)) continue;
-              if (blocked.has(nextKey) && nextKey !== endKey) continue;
-              if (occupiedEdges.has(edgeKey(cell, next))) continue;
-
-              const stepX = Math.sign(next.col - cell.col);
-              const stepY = Math.sign(next.row - cell.row);
-              const nextXDir = canUseDirection(xDir, stepX);
-              const nextYDir = canUseDirection(yDir, stepY);
-              if (nextXDir === null || nextYDir === null) continue;
-
-              visited.add(nextKey);
-              path.push(next);
-              if (dfs(next, nextXDir, nextYDir)) return true;
-              path.pop();
-              visited.delete(nextKey);
-            }
-            return false;
-          }
-
-          return dfs(pair.start, 0, 0);
-        }
-
-        return solvePair(0, new Set(), new Set());
-      }
-
-      function isLayoutSolvableFast(layout) {
-        const nodesByNote = new Map();
-        layout.forEach((node) => {
-          if (!nodesByNote.has(node.note)) nodesByNote.set(node.note, []);
-          nodesByNote.get(node.note).push(node);
-        });
-
-        function canSolveWithOrder(noteOrder) {
-          const occupiedCells = new Set();
-          const occupiedEdges = new Set();
-
-          function bfs(start, end, blocked) {
-            const queue = [];
-            const visited = new Set();
-            const prev = new Map();
-            const startKey = `${start.col},${start.row}`;
-            const endKey = `${end.col},${end.row}`;
-            queue.push(start);
-            visited.add(startKey);
-
-            while (queue.length) {
-              const cell = queue.shift();
-              const cellKey = `${cell.col},${cell.row}`;
-              if (cellKey === endKey) break;
-              const neighbors = [
-                { col: cell.col + 1, row: cell.row },
-                { col: cell.col - 1, row: cell.row },
-                { col: cell.col, row: cell.row + 1 },
-                { col: cell.col, row: cell.row - 1 }
-              ];
-              neighbors.sort((a, b) => manhattan(a, end) - manhattan(b, end));
-              for (const next of neighbors) {
-                if (next.col < 0 || next.col >= stage.gridSize || next.row < 0 || next.row >= stage.gridSize) {
-                  continue;
-                }
-                const nextKey = `${next.col},${next.row}`;
-                if (visited.has(nextKey)) continue;
-                if (blocked.has(nextKey) && nextKey !== endKey) continue;
-                if (occupiedEdges.has(edgeKey(cell, next))) continue;
-                visited.add(nextKey);
-                prev.set(nextKey, cellKey);
-                queue.push(next);
-              }
-            }
-
-            if (!visited.has(endKey)) return null;
-            const path = [];
-            let key = endKey;
-            while (key) {
-              const [col, row] = key.split(",").map(Number);
-              path.push({ col, row });
-              if (key === startKey) break;
-              key = prev.get(key);
-            }
-            return path.reverse();
-          }
-
-          for (const note of noteOrder) {
-            const pair = nodesByNote.get(note);
-            if (!pair || pair.length !== 2) return false;
-            const [start, end] = pair;
-            const blocked = new Set(occupiedCells);
-            layout.forEach((node) => {
-              const key = `${node.col},${node.row}`;
-              if (node.note !== note) blocked.add(key);
-            });
-            const path = bfs(start, end, blocked);
-            if (!path) return false;
-            path.forEach((cell, index) => {
-              occupiedCells.add(`${cell.col},${cell.row}`);
-              if (index > 0) {
-                occupiedEdges.add(edgeKey(path[index - 1], cell));
-              }
-            });
-          }
-
-          return true;
-        }
-
-        const noteOrder = [...currentStage.notes];
-        for (let attempt = 0; attempt < 4; attempt += 1) {
-          if (attempt > 0) {
-            for (let i = noteOrder.length - 1; i > 0; i -= 1) {
-              const j = Math.floor(Math.random() * (i + 1));
-              [noteOrder[i], noteOrder[j]] = [noteOrder[j], noteOrder[i]];
-            }
-          }
-          if (canSolveWithOrder(noteOrder)) return true;
-        }
-        return false;
-      }
-
-      function generateLayout() {
-        if (currentStage.id === 7 || currentStage.id === 8) {
-          const original = layoutConfig.minPairDistance;
-          const tryGenerate = (minDistance, attempts) => {
-            layoutConfig.minPairDistance = minDistance;
-            for (let attempt = 0; attempt < attempts; attempt += 1) {
-              const layout = generateRandomLayout();
-              if (layout && isLayoutSolvableFast(layout)) {
-                return layout;
-              }
-            }
-            return null;
-          };
-
-          let layout = tryGenerate(original, 800);
-          if (!layout) layout = tryGenerate(2, 1400);
-          if (!layout) layout = tryGenerate(1, 2000);
-          layoutConfig.minPairDistance = original;
-
-          if (layout) {
-            currentLayout = layout;
-            return layout;
-          }
-          return currentLayout || [];
-        }
-
-        const attempts = layoutConfig.maxAttempts;
-        function attemptGenerateLayout(minDistance) {
-          const original = layoutConfig.minPairDistance;
-          layoutConfig.minPairDistance = minDistance;
-          for (let attempt = 0; attempt < attempts; attempt += 1) {
-            const layout = generateRandomLayout();
-            if (layout && isLayoutSolvable(layout)) {
-              layoutConfig.minPairDistance = original;
-              return layout;
-            }
-          }
-          layoutConfig.minPairDistance = original;
-          return null;
-        }
-
-        let layout = attemptGenerateLayout(layoutConfig.minPairDistance);
-        if (!layout) layout = attemptGenerateLayout(Math.max(2, layoutConfig.minPairDistance - 1));
-        if (!layout) layout = attemptGenerateLayout(2);
-
-        if (layout) {
-          currentLayout = layout;
-          return layout;
-        }
-
-        return currentLayout || [];
-      }
-
-      function updateDifficulty() {
-        const difficulty = [4, 5, 6, 5, 5, 2, 2, 2];
-        layoutConfig.minPairDistance = Math.max(difficulty[currentStageIndex] ?? 4, 2);
-      }
-
-      function updateBoardConfig() {
-        if (currentStage.id === 7 || currentStage.id === 8) {
-          stage.gridSize = 8;
-          stage.boardSize = 640;
-        } else if (currentStage.id <= 3) {
-          stage.gridSize = 4;
-          stage.boardSize = 280;
-        } else {
-          stage.gridSize = 6;
-          stage.boardSize = 360;
-        }
-      }
-
-      function getNextRequiredNote() {
-        const order = currentStage.notes;
-        for (const note of order) {
-          if (!state.completedPairs.has(note)) return note;
-        }
-        return null;
-      }
-
-      function canEnterCell(cell) {
-        if (cell.col < 0 || cell.col >= stage.gridSize || cell.row < 0 || cell.row >= stage.gridSize) return false;
-        if (occupiedCells.has(`${cell.col},${cell.row}`)) return false;
-        return true;
-      }
-
-      function isBlockingNode(cell) {
-        const nodeId = nodeByCell.get(`${cell.col},${cell.row}`);
-        if (!nodeId) return false;
-        if (nodeId === state.startNodeId) return false;
-        if (nodeId === state.endNodeId) return false;
-        return true;
-      }
-
-      function handlePointerStep(pointer) {
-        const lastCell = state.pathCells[state.pathCells.length - 1];
-        if (!lastCell) return;
-        if (state.endNodeId) return;
-
-        const lastCenter = cellCenterFor(lastCell, stage.gridSize);
-        const dx = pointer.x - lastCenter.x;
-        const dy = pointer.y - lastCenter.y;
-        const absX = Math.abs(dx);
-        const absY = Math.abs(dy);
-        const cellSize = getCellSize(stage.gridSize);
-
-        if (Math.max(absX, absY) < cellSize * 0.45) return;
-
-        const step = absX >= absY ? { col: Math.sign(dx), row: 0 } : { col: 0, row: Math.sign(dy) };
-        const nextCell = { col: lastCell.col + step.col, row: lastCell.row + step.row };
-
-        if (isOccupiedEdge(lastCell, nextCell)) {
-          state.invalidPath = true;
-          return;
-        }
-
-        const nodeId = nodeByCell.get(`${nextCell.col},${nextCell.row}`);
-        if (!canEnterCell(nextCell)) {
-          state.invalidPath = true;
-          return;
-        }
-        if (nodeId && nodeId !== state.startNodeId) {
-          const startNote = nodeElements.get(state.startNodeId).note;
-          const targetNote = nodeElements.get(nodeId).note;
-          if (startNote !== targetNote) {
-            state.invalidPath = true;
-            return;
-          }
-          state.endNodeId = nodeId;
-          playTone(noteFrequencies[targetNote], 0.12);
-        }
-        if (isBlockingNode(nextCell)) {
-          state.invalidPath = true;
-          return;
-        }
-
-        state.pathCells.push(nextCell);
-      }
-
-      function getPointerInViewBox(event) {
-        const rect = board.getBoundingClientRect();
-        return {
-          x: ((event.clientX - rect.left) / rect.width) * 520,
-          y: ((event.clientY - rect.top) / rect.height) * 520
-        };
-      }
-
-      function handleStart(event) {
-        const pointer = getPointerInViewBox(event);
-        const cell = cellFromPointer(pointer, stage.gridSize);
-        const nodeId = nodeByCell.get(`${cell.col},${cell.row}`);
-        if (!nodeId) return;
-        const note = nodeElements.get(nodeId).note;
-        const requiredNote = getNextRequiredNote();
-        if (requiredNote && note !== requiredNote) {
-          showStatusHint(requiredNote);
-          return;
-        }
-        if (statusHintPersist) {
-          statusHintPersist = false;
-          updateStatusText();
-        }
-        if (state.completedPairs.has(note)) return;
-
-        ensureAudioContext();
-        state.strokesUsed += 1;
-        state.isDrawing = true;
-        state.invalidPath = false;
-        state.startNodeId = nodeId;
-        state.endNodeId = null;
-        state.pathCells = [cell];
-        playTone(noteFrequencies[note], 0.12);
-        updateActivePathLine();
-        statusText.textContent = "연결 중...";
-      }
-
-      function handleMove(event) {
-        if (!state.isDrawing) return;
-        const pointer = getPointerInViewBox(event);
-
-        if (state.invalidPath) {
-          updateActivePathLine();
-          return;
-        }
-
-        for (let i = 0; i < 2; i += 1) {
-          handlePointerStep(pointer);
-          if (state.invalidPath) break;
-        }
-
-        updateActivePathLine();
-      }
-
-      function handleEnd() {
-        if (!state.isDrawing) return;
-        state.isDrawing = false;
-
-        if (state.invalidPath) {
-          state.redLineCount += 1;
-          setActiveLine([], "#ef4444");
-          clearActiveLine();
-          updateStatusText();
-          return;
-        }
-        if (!state.endNodeId) {
-          clearActiveLine();
-          updateStatusText();
-          return;
-        }
-
-        const note = nodeElements.get(state.startNodeId).note;
-        const lineColor = getNoteStyle(note).color;
-        const points = buildPathPolyline(state.pathCells, stage.gridSize);
-        const polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-        polyline.setAttribute("fill", "none");
-        polyline.setAttribute("stroke", lineColor);
-        polyline.setAttribute("stroke-width", "14");
-        polyline.setAttribute("stroke-linecap", "round");
-        polyline.setAttribute("stroke-linejoin", "round");
-        polyline.setAttribute("points", points.map((point) => `${point.x},${point.y}`).join(" "));
-        committedLines.append(polyline);
-
-        markPathOccupied(state.pathCells);
-        state.totalLines += 1;
-        state.extraLineCount = Math.max(0, state.totalLines - currentStage.notes.length);
-        state.completedPairs.add(note);
-        connectionHistory.push({
-          polyline,
-          path: [...state.pathCells],
-          note
-        });
-        checkChordCompletion();
-        if (state.completedPairs.size === currentStage.notes.length) {
-          state.oneStrokeClear = state.strokesUsed === 1;
-          state.awaitingChordListen = true;
-          state.chordHeardThisRun = false;
-        }
-        clearActiveLine();
-        updateStatusText();
-      }
-
-      function resetAll() {
-        updateDifficulty();
-        updateBoardConfig();
-        currentLayout = null;
-        resetAttemptStats();
-        resetToken += 1;
-        const token = resetToken;
-        stage.nodes = [];
-        renderStage();
-        if (layoutSpinner) layoutSpinner.classList.remove("hidden");
-        const attemptLayout = () => {
-          if (token !== resetToken) return;
-          const layout = generateLayout();
-          if (!layout || layout.length === 0) {
-            setTimeout(attemptLayout, 120);
-            return;
-          }
-          applyLayout(layout);
-          renderStage();
-          connectionHistory = [];
-          if (layoutSpinner) layoutSpinner.classList.add("hidden");
-        };
-        setTimeout(attemptLayout, 0);
-      }
-
-      function resetLinesOnly() {
-        committedLines.innerHTML = "";
-        occupiedEdges = new Set();
-        occupiedCells = new Set();
-        state.completedPairs = new Set();
-        connectionHistory = [];
-        clearActiveLine();
-        state.redLineCount += 1;
-        updateStatusText();
-      }
-
-      function breakStageStreak() {
-        stageStreakCount = 0;
-      }
-
-      board.addEventListener("pointerdown", (event) => {
-        board.setPointerCapture(event.pointerId);
-        handleStart(event);
+      document.getElementById("btn-prepare").addEventListener("click", () => {
+        document.getElementById("screen-counter").classList.remove("active");
+        document.getElementById("screen-kitchen").classList.add("active");
       });
 
-      board.addEventListener("pointermove", (event) => {
-        handleMove(event);
+      document.getElementById("btn-back").addEventListener("click", () => {
+        document.getElementById("screen-kitchen").classList.remove("active");
+        document.getElementById("screen-counter").classList.add("active");
       });
 
-      board.addEventListener("pointerup", () => {
-        handleEnd();
+      document.getElementById("btn-serve").addEventListener("click", serveOrder);
+      document.getElementById("btn-undo").addEventListener("click", undoSelection);
+      document.getElementById("btn-clear").addEventListener("click", clearSelection);
+      document.getElementById("btn-repeat").addEventListener("click", () => {
+        feedback.textContent = "주문을 다시 확인했어요.";
       });
 
-      board.addEventListener("pointerleave", () => {
-        handleEnd();
+      modeSwitch.addEventListener("click", () => {
+        timerActive = !timerActive;
+        modeSwitch.classList.toggle("on", !timerActive);
+        timerBar.style.opacity = timerActive ? 1 : 0.4;
       });
 
-      resetButton.addEventListener("click", () => {
-        breakStageStreak();
-        resetAll();
-      });
-      backButton.addEventListener("click", () => {
-        const last = connectionHistory.pop();
-        if (!last) return;
-        last.polyline.remove();
-        unmarkPathOccupied(last.path);
-        state.completedPairs.delete(last.note);
-        state.redLineCount += 1;
-        updateStatusText();
-      });
-      resetLinesButton.addEventListener("click", () => {
-        breakStageStreak();
-        resetLinesOnly();
-      });
-      stageRetryButton?.addEventListener("click", () => {
-        hideStageCompleteOverlay();
-        breakStageStreak();
-        resetAll();
-        updateFrequencies();
-      });
-      stageNextButton?.addEventListener("click", () => {
-        hideStageCompleteOverlay();
-        if (currentStageIndex < stages.length - 1) {
-          currentStageIndex += 1;
-          currentStage = stages[currentStageIndex];
-          state.key = "C";
-          if (keySelect) keySelect.value = state.key;
-          if (stageSelect) stageSelect.value = String(currentStageIndex);
-          resetAll();
-          updateFrequencies();
-        }
-      });
-      stageSelectButton?.addEventListener("click", () => {
-        hideStageCompleteOverlay();
-        breakStageStreak();
-        document.getElementById("gameScreen").classList.add("hidden");
-        document.getElementById("homeScreen").classList.remove("hidden");
-        updateSummaryUI();
-      });
-      stageListenButton?.addEventListener("click", () => {
-        hideStageCompleteOverlay();
-        staffWrapper.classList.remove("hidden");
-        renderStaff();
-        replayButton?.classList.add("replay-attention");
-      });
-      stageClaimButton?.addEventListener("click", () => {
-        if (!lastRunResult) return;
-        const earned = lastRunResult.stars + (lastRunResult.bonusStars ?? 0);
-        if (earned <= 0) return;
-        totalClaimedStars += earned;
-        saveClaimedStars();
-        updateSummaryUI();
-        syncLeaderboardScore();
-        lastRunResult.claimedThisRun = true;
-        refreshClaimButton();
-      });
-      stageCompleteOverlay?.addEventListener("click", (event) => {
-        if (event.target === stageCompleteOverlay) {
-          hideStageCompleteOverlay();
-        }
-      });
-      openRankingButton?.addEventListener("click", () => {
-        document.getElementById("homeScreen").classList.add("hidden");
-        rankingScreen?.classList.remove("hidden");
-        refreshLeaderboard();
-      });
-      closeRankingButton?.addEventListener("click", () => {
-        rankingScreen?.classList.add("hidden");
-        document.getElementById("homeScreen").classList.remove("hidden");
-      });
-      homeNameForm?.addEventListener("submit", (event) => {
-        event.preventDefault();
-        if (!homePlayerNameInput) return;
-        const nextName = sanitizePlayerName(homePlayerNameInput.value);
-        if (!nextName) {
-          if (leaderboardStatus) {
-            leaderboardStatus.textContent = "이름을 입력해주세요.";
-          }
-          homePlayerNameInput.focus();
-          return;
-        }
-        ensurePlayerId();
-        setPlayerName(nextName);
-        setSaveButtonState(true);
-        syncLeaderboardScore();
-      });
-      homePlayerNameInput?.addEventListener("input", () => {
-        setSaveButtonState(false);
-      });
-
-      soundToggle.addEventListener("click", () => {
-        state.soundOn = !state.soundOn;
-        soundToggle.textContent = state.soundOn ? "🔊 소리 켜기" : "🔇 소리 끄기";
-      });
-
-      replayButton?.addEventListener("click", () => {
-        playChord();
-        if (state.completedPairs.size === currentStage.notes.length && state.awaitingChordListen && !state.chordHeardThisRun) {
-          state.chordHeardThisRun = true;
-          state.awaitingChordListen = false;
-          replayButton.classList.remove("replay-attention");
-          updateStatusText();
-        }
-      });
-      scoreButton?.addEventListener("click", () => {
-        if (!state.chordHeardThisRun) {
-          showListenWarning();
-          return;
-        }
-        if (!lastRunResult) {
-          if (state.completedPairs.size === currentStage.notes.length) {
-            finalizeRun();
-          } else {
-            return;
-          }
-        }
-        showStageCompleteOverlay();
-      });
-
-      keySelect.addEventListener("change", (event) => {
-        state.key = event.target.value;
-        breakStageStreak();
-        resetAll();
-        updateFrequencies();
-      });
-
-      stageSelect?.addEventListener("change", (event) => {
-        currentStageIndex = Number(event.target.value);
-        currentStage = stages[currentStageIndex];
-        state.key = "C";
-        if (keySelect) keySelect.value = state.key;
-        breakStageStreak();
-        resetAll();
-        updateFrequencies();
-      });
-
-      window.addEventListener("resize", () => {
-        renderStage();
-      });
-
-      bestRuns = loadBestRuns();
-      updateSummaryUI();
-      setPlayerName(playerName);
-      setSaveButtonState(Boolean(playerName));
-      refreshLeaderboard();
-      populateStages();
-      populateKeys();
-      document.querySelectorAll(".part-card").forEach((card) => {
-        card.addEventListener("mouseenter", () => {
-          const partNumber = card.dataset.part;
-          showHoverPanel(partDescriptions[partNumber]);
-        });
-        card.addEventListener("mouseleave", hideHoverPanel);
-        card.addEventListener("click", () => {
-          renderStagePicker(card.dataset.part);
-        });
-      });
-      document.getElementById("homeButton")?.addEventListener("click", () => {
-        document.getElementById("gameScreen").classList.add("hidden");
-        document.getElementById("homeScreen").classList.remove("hidden");
-        breakStageStreak();
-        updateSummaryUI();
-      });
+      renderOrder();
+      renderTrays();
+      renderBasket();
+      renderMapping();
+      updateHud();
+      startTimer();
     </script>
   </body>
 </html>
