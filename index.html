@@ -3,28 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Fruit Note Cafe</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Gowun+Dodum&family=Space+Grotesk:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
+    <title>Fruit Order Counter</title>
     <style>
       :root {
-        color-scheme: only light;
-        --bg-1: #f3f1ff;
-        --bg-2: #ffecd2;
-        --bg-3: #e1f5ff;
-        --ink-1: #1c1b2a;
-        --ink-2: #4b4b61;
-        --accent-1: #ff7a59;
-        --accent-2: #3b82f6;
-        --accent-3: #ffd166;
-        --accent-4: #22c55e;
-        --panel: #ffffff;
-        --shadow: 0 24px 60px rgba(24, 24, 48, 0.15);
-        --radius-lg: 32px;
-        --radius-md: 20px;
-        --radius-sm: 14px;
+        --wood-1: #c79163;
+        --wood-2: #a56e45;
+        --wood-3: #8b5a37;
+        --cream: #fff6e8;
+        --ink: #3f2b1c;
+        --accent: #f6c38a;
+        --bubble: #ffffff;
       }
 
       * {
@@ -33,951 +21,259 @@
 
       body {
         margin: 0;
-        font-family: "Gowun Dodum", "Space Grotesk", sans-serif;
-        color: var(--ink-1);
         min-height: 100vh;
-        background:
-          radial-gradient(circle at 12% 15%, rgba(255, 214, 165, 0.6), transparent 40%),
-          radial-gradient(circle at 90% 10%, rgba(99, 102, 241, 0.2), transparent 45%),
-          linear-gradient(135deg, var(--bg-1), var(--bg-2) 45%, var(--bg-3));
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 28px;
-      }
-
-      .app-shell {
-        width: min(1100px, 100%);
-        background: rgba(255, 255, 255, 0.82);
-        border-radius: 40px;
-        padding: 28px;
-        box-shadow: var(--shadow);
-        border: 1px solid rgba(255, 255, 255, 0.6);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .app-shell::before,
-      .app-shell::after {
-        content: "";
-        position: absolute;
-        width: 320px;
-        height: 320px;
-        border-radius: 50%;
-        background: linear-gradient(160deg, rgba(255, 122, 89, 0.25), rgba(59, 130, 246, 0.2));
-        filter: blur(6px);
-        z-index: 0;
-      }
-
-      .app-shell::before {
-        top: -140px;
-        right: -120px;
-      }
-
-      .app-shell::after {
-        bottom: -180px;
-        left: -160px;
-      }
-
-      header.hud {
-        position: relative;
-        z-index: 1;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 14px;
-        margin-bottom: 24px;
-      }
-
-      .hud-card {
-        background: var(--panel);
-        border-radius: var(--radius-md);
-        padding: 16px 18px;
-        border: 1px solid rgba(28, 27, 42, 0.08);
-        box-shadow: 0 10px 24px rgba(24, 24, 48, 0.08);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-family: "Space Grotesk", sans-serif;
-      }
-
-      .hud-card span {
-        font-weight: 600;
-      }
-
-      .timer {
-        position: relative;
-        height: 12px;
-        background: rgba(59, 130, 246, 0.12);
-        border-radius: 999px;
-        overflow: hidden;
-      }
-
-      .timer-bar {
-        height: 100%;
-        width: 100%;
-        background: linear-gradient(90deg, #60a5fa, #34d399);
-        transition: width 0.4s ease;
-      }
-
-      main {
-        position: relative;
-        z-index: 1;
-        display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        gap: 24px;
-      }
-
-      .screen {
-        display: none;
-        flex-direction: column;
-        gap: 18px;
-      }
-
-      .screen.active {
-        display: flex;
-      }
-
-      .panel {
-        background: var(--panel);
-        border-radius: var(--radius-lg);
-        padding: 24px;
-        box-shadow: 0 20px 40px rgba(24, 24, 48, 0.08);
-        border: 1px solid rgba(28, 27, 42, 0.08);
-      }
-
-      .title {
-        font-family: "Fraunces", serif;
-        font-size: clamp(24px, 3vw, 32px);
-        margin: 0 0 8px;
-      }
-
-      .subtitle {
-        margin: 0;
-        color: var(--ink-2);
-        font-size: 15px;
-      }
-
-      .counter-scene {
-        padding: 0;
-        overflow: hidden;
-        background: #fff7e7;
-        position: relative;
-      }
-
-      .scene-sky {
-        background: linear-gradient(180deg, #bde5ff 0%, #e9f7ff 55%, #fef3c7 100%);
-        padding: 18px 20px 0;
-        position: relative;
-      }
-
-      .scene-sky::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-          radial-gradient(circle at 20% 35%, rgba(255, 255, 255, 0.85), transparent 42%),
-          radial-gradient(circle at 75% 25%, rgba(255, 255, 255, 0.9), transparent 40%),
-          radial-gradient(circle at 55% 55%, rgba(255, 255, 255, 0.7), transparent 45%);
-        opacity: 0.8;
-        pointer-events: none;
-      }
-
-      .scene-banner {
-        position: relative;
-        z-index: 1;
-        background: linear-gradient(90deg, #f5d89a, #f8c77d);
-        border: 2px solid rgba(92, 63, 29, 0.2);
-        border-radius: 18px;
-        padding: 10px 14px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-family: "Fraunces", serif;
-        box-shadow: 0 10px 24px rgba(93, 64, 25, 0.18);
-      }
-
-      .scene-title {
-        font-size: 20px;
-        letter-spacing: 0.4px;
-      }
-
-      .scene-sun {
-        width: 38px;
-        height: 38px;
-        border-radius: 50%;
-        background: radial-gradient(circle, #fff5b5, #f59e0b);
         display: grid;
         place-items: center;
-        font-size: 18px;
-        box-shadow: 0 8px 18px rgba(245, 158, 11, 0.35);
+        background: #f2e1d4;
+        font-family: "Gowun Dodum", "Comic Sans MS", "Trebuchet MS", sans-serif;
+        color: var(--ink);
       }
 
-      .scene-customers {
+      .scene {
+        width: min(960px, 94vw);
+        background: #f6e4d5;
+        border: 6px solid #d1a67c;
+        border-radius: 24px;
+        padding: 24px 24px 32px;
+        box-shadow: 0 20px 40px rgba(63, 43, 28, 0.25);
+      }
+
+      .customer-zone {
         position: relative;
-        z-index: 1;
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        gap: 12px;
-        padding: 22px 6px 30px;
-      }
-
-      .customer-card {
-        text-align: center;
-        width: 150px;
-        position: relative;
-      }
-
-      .customer-card .portrait {
-        width: 96px;
-        height: 96px;
-        border-radius: 28px;
-        background: linear-gradient(160deg, #ffffff, #ffe3d1);
         display: grid;
         place-items: center;
-        font-size: 48px;
-        margin: 0 auto 6px;
-        border: 3px solid rgba(92, 63, 29, 0.2);
-        box-shadow: 0 12px 22px rgba(24, 24, 48, 0.12);
-      }
-
-      .customer-card.active .portrait {
-        transform: translateY(-6px);
-        background: linear-gradient(160deg, #fff7ed, #fed7aa);
-      }
-
-      .customer-tag {
-        font-size: 12px;
-        color: var(--ink-2);
-        font-weight: 600;
+        padding: 18px 16px 42px;
       }
 
       .order-bubble {
         position: absolute;
-        left: 50%;
-        top: -6px;
-        transform: translate(-50%, -100%);
-        background: #ffffff;
+        top: 0;
+        transform: translateY(-100%);
+        background: var(--bubble);
+        border: 3px solid #d9b38d;
         border-radius: 18px;
-        padding: 12px 14px;
-        border: 2px solid rgba(92, 63, 29, 0.2);
+        padding: 12px 16px;
         min-width: 220px;
-        box-shadow: 0 14px 26px rgba(24, 24, 48, 0.12);
+        text-align: center;
+        box-shadow: 0 10px 20px rgba(63, 43, 28, 0.12);
       }
 
       .order-bubble::after {
         content: "";
         position: absolute;
         left: 50%;
-        bottom: -10px;
-        transform: translateX(-50%);
-        width: 18px;
-        height: 18px;
-        background: #ffffff;
-        border-right: 2px solid rgba(92, 63, 29, 0.2);
-        border-bottom: 2px solid rgba(92, 63, 29, 0.2);
-        transform-origin: center;
-        rotate: 45deg;
+        bottom: -12px;
+        width: 20px;
+        height: 20px;
+        background: var(--bubble);
+        border-right: 3px solid #d9b38d;
+        border-bottom: 3px solid #d9b38d;
+        transform: translateX(-50%) rotate(45deg);
       }
 
-      .order-bubble-title {
+      .order-title {
         font-weight: 700;
         font-size: 14px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
+        margin-bottom: 6px;
       }
 
-      .counter-bar {
+      .order-icons {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        font-size: 22px;
+      }
+
+      .customer {
+        display: grid;
+        place-items: center;
+        gap: 4px;
+      }
+
+      .head {
+        width: 120px;
+        height: 120px;
+        background: #f8d5b8;
+        border-radius: 50% 50% 46% 46%;
+        border: 4px solid #d7a27e;
+        position: relative;
+      }
+
+      .hair {
+        position: absolute;
+        inset: -6px -6px 40px -6px;
+        background: #5b3a2a;
+        border-radius: 60% 60% 40% 40%;
+      }
+
+      .face {
+        position: absolute;
+        inset: 18px 18px 20px 18px;
+        background: #f8d5b8;
+        border-radius: 46% 46% 40% 40%;
+      }
+
+      .eye {
+        position: absolute;
+        top: 40px;
+        width: 10px;
+        height: 10px;
+        background: #3f2b1c;
+        border-radius: 50%;
+      }
+
+      .eye.left {
+        left: 36px;
+      }
+
+      .eye.right {
+        right: 36px;
+      }
+
+      .mouth {
+        position: absolute;
+        bottom: 28px;
+        left: 50%;
+        width: 30px;
+        height: 16px;
+        border-bottom: 4px solid #3f2b1c;
+        border-radius: 0 0 40px 40px;
+        transform: translateX(-50%);
+      }
+
+      .body {
+        width: 160px;
+        height: 120px;
+        background: #f3a7a7;
+        border-radius: 20px 20px 30px 30px;
+        border: 4px solid #d18c8c;
+        position: relative;
+      }
+
+      .body::before,
+      .body::after {
+        content: "";
+        position: absolute;
+        top: 20px;
+        width: 28px;
+        height: 60px;
+        background: #f3a7a7;
+        border: 4px solid #d18c8c;
+        border-radius: 16px;
+      }
+
+      .body::before {
+        left: -20px;
+        transform: rotate(-12deg);
+      }
+
+      .body::after {
+        right: -20px;
+        transform: rotate(12deg);
+      }
+
+      .counter {
+        margin-top: -8px;
+        background: linear-gradient(180deg, var(--wood-1), var(--wood-2));
+        border: 6px solid var(--wood-3);
+        border-radius: 20px;
+        padding: 20px;
+      }
+
+      .counter-top {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 16px;
-        padding: 16px 20px;
-        background: linear-gradient(180deg, #c58b55, #b0703d);
-        border-top: 4px solid rgba(92, 63, 29, 0.25);
       }
 
-      .counter-plates {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-      }
-
-      .plate {
-        width: 70px;
+      .counter-top .plate {
+        width: 80px;
         height: 40px;
-        background: #ffffff;
+        background: var(--cream);
+        border: 3px solid #d9b38d;
         border-radius: 999px;
-        border: 2px solid rgba(92, 63, 29, 0.2);
         display: grid;
         place-items: center;
-        font-size: 20px;
-        box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.08);
-      }
-
-      .counter-score {
-        background: rgba(255, 255, 255, 0.7);
-        padding: 8px 14px;
-        border-radius: 999px;
-        font-weight: 600;
-        font-family: "Space Grotesk", sans-serif;
-      }
-
-      .counter-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        padding: 14px 20px 18px;
-        background: #fff3df;
-        border-top: 1px solid rgba(92, 63, 29, 0.12);
-      }
-
-      .order-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 10px;
-      }
-
-      .order-chip {
-        background: rgba(255, 122, 89, 0.15);
-        color: var(--ink-1);
-        padding: 6px 10px;
-        border-radius: 999px;
-        font-weight: 600;
-        font-size: 15px;
-      }
-
-      .cta-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-
-      button {
-        border: none;
-        border-radius: 999px;
-        padding: 12px 18px;
-        font-size: 15px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: transform 0.15s ease, box-shadow 0.2s ease;
-      }
-
-      button:active {
-        transform: scale(0.98);
-      }
-
-      .btn-primary {
-        background: linear-gradient(120deg, var(--accent-1), #ff9770);
-        color: #fff;
-        box-shadow: 0 16px 28px rgba(255, 122, 89, 0.4);
-      }
-
-      .btn-ghost {
-        background: rgba(59, 130, 246, 0.12);
-        color: var(--accent-2);
-      }
-
-      .btn-outline {
-        border: 1px solid rgba(28, 27, 42, 0.12);
-        background: #fff;
-        color: var(--ink-2);
-      }
-
-      .kitchen-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-      }
-
-      .mini-order {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        font-size: 14px;
-      }
-
-      .tray-scroll {
-        display: grid;
-        grid-auto-flow: column;
-        grid-auto-columns: minmax(170px, 1fr);
-        gap: 14px;
-        overflow-x: auto;
-        padding-bottom: 8px;
-      }
-
-      .tray {
-        background: linear-gradient(160deg, #ffffff, #f8fafc);
-        border-radius: 20px;
-        padding: 14px;
-        border: 1px solid rgba(28, 27, 42, 0.1);
-        display: grid;
-        gap: 12px;
-        position: relative;
-        transition: transform 0.2s ease;
-      }
-
-      .tray.active {
-        transform: translateY(-4px) scale(1.02);
-        box-shadow: 0 14px 28px rgba(59, 130, 246, 0.16);
-      }
-
-      .note-card {
-        background: #111827;
-        color: #fff;
-        border-radius: 14px;
-        padding: 8px 10px;
-        font-family: "Space Grotesk", sans-serif;
-        font-size: 13px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .note-card strong {
         font-size: 18px;
       }
 
-      .fruit-stack {
-        font-size: 32px;
-      }
-
-      .tray-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 13px;
-        color: var(--ink-2);
-      }
-
-      .badge {
-        background: rgba(34, 197, 94, 0.15);
-        color: #15803d;
-        padding: 4px 8px;
-        border-radius: 999px;
-        font-weight: 600;
-      }
-
-      .tray button {
-        width: 100%;
-        border-radius: 12px;
-        padding: 8px;
-        font-size: 13px;
-        background: rgba(59, 130, 246, 0.1);
-        color: var(--accent-2);
-      }
-
-      .basket {
-        background: #fff7ed;
-        border-radius: var(--radius-md);
-        padding: 14px;
-        display: grid;
-        gap: 10px;
-        border: 1px dashed rgba(255, 122, 89, 0.35);
-      }
-
-      .basket-items {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        min-height: 38px;
-      }
-
-      .basket-item {
-        padding: 6px 10px;
-        border-radius: 999px;
-        background: rgba(255, 122, 89, 0.15);
-        font-weight: 600;
-      }
-
-      .feedback {
-        min-height: 42px;
-        padding: 10px 14px;
+      .counter-top .register {
+        flex: 1;
+        background: #f9e3c7;
         border-radius: 14px;
-        background: rgba(59, 130, 246, 0.1);
-        color: var(--ink-1);
-        font-weight: 600;
+        padding: 8px 12px;
+        border: 3px solid #d9b38d;
+        font-weight: 700;
+        text-align: center;
       }
 
-      .side-panel {
+      .counter-bottom {
+        margin-top: 16px;
         display: grid;
-        gap: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
       }
 
-      .stage-card {
-        background: linear-gradient(140deg, #fff, #f8fafc);
-        border-radius: var(--radius-md);
-        padding: 16px;
-        border: 1px solid rgba(28, 27, 42, 0.08);
-      }
-
-      .stage-card h3 {
-        margin: 0 0 6px;
-        font-family: "Fraunces", serif;
-      }
-
-      .mode-toggle {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 14px;
-      }
-
-      .switch {
-        width: 44px;
-        height: 24px;
-        background: rgba(59, 130, 246, 0.15);
-        border-radius: 999px;
-        position: relative;
-      }
-
-      .switch::after {
-        content: "";
-        position: absolute;
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        background: #fff;
-        top: 3px;
-        left: 3px;
-        transition: transform 0.2s ease;
-      }
-
-      .switch.on {
-        background: rgba(34, 197, 94, 0.25);
-      }
-
-      .switch.on::after {
-        transform: translateX(20px);
-      }
-
-      .hint {
-        font-size: 13px;
-        color: var(--ink-2);
-      }
-
-      @media (max-width: 900px) {
-        main {
-          grid-template-columns: 1fr;
-        }
+      .bin {
+        background: #f0d2b0;
+        border: 3px solid #d0a67f;
+        border-radius: 12px;
+        padding: 10px;
+        text-align: center;
+        font-size: 20px;
       }
 
       @media (max-width: 700px) {
-        .scene-customers {
-          flex-direction: column;
-          align-items: center;
-          gap: 26px;
-          padding-bottom: 40px;
+        .head {
+          width: 90px;
+          height: 90px;
         }
 
-        .customer-card {
-          width: 100%;
+        .body {
+          width: 130px;
+          height: 100px;
         }
 
         .order-bubble {
-          position: relative;
-          transform: none;
-          left: auto;
-          top: auto;
-          margin-bottom: 10px;
-        }
-
-        .order-bubble::after {
-          display: none;
-        }
-
-        .counter-bar {
-          flex-direction: column;
-          align-items: flex-start;
+          min-width: 180px;
         }
       }
     </style>
   </head>
   <body>
-    <div class="app-shell">
-      <header class="hud">
-        <div class="hud-card">
-          <span>Stage</span>
-          <strong id="hud-stage">1</strong>
+    <div class="scene">
+      <div class="customer-zone">
+        <div class="order-bubble">
+          <div class="order-title">주문!</div>
+          <div class="order-icons">🍊 x1 🍎 x2</div>
         </div>
-        <div class="hud-card">
-          <span>Coin</span>
-          <strong id="hud-coin">120</strong>
-        </div>
-        <div class="hud-card">
-          <span>Combo</span>
-          <strong id="hud-combo">0</strong>
-        </div>
-        <div class="hud-card" style="flex-direction: column; align-items: flex-start; gap: 8px;">
-          <span>Timer</span>
-          <div class="timer"><div class="timer-bar" id="timer-bar"></div></div>
-        </div>
-      </header>
-
-      <main>
-        <div>
-          <section class="screen active" id="screen-counter">
-            <div class="panel counter-scene">
-              <div class="scene-sky">
-                <div class="scene-banner">
-                  <span class="scene-title">Fruit Note Cafe</span>
-                  <div class="scene-sun">☀️</div>
-                </div>
-                <div class="scene-customers">
-                  <div class="customer-card">
-                    <div class="portrait">🧑‍🎨</div>
-                    <div class="customer-tag">대기</div>
-                  </div>
-                  <div class="customer-card active">
-                    <div class="order-bubble">
-                      <div class="order-bubble-title">주문!</div>
-                      <div class="order-list" id="order-list"></div>
-                      <div class="hint" id="order-hint">총 길이: 1</div>
-                    </div>
-                    <div class="portrait">🧑‍🍳</div>
-                    <div class="customer-tag">손님</div>
-                  </div>
-                  <div class="customer-card">
-                    <div class="portrait">🧑‍🦱</div>
-                    <div class="customer-tag">대기</div>
-                  </div>
-                </div>
-              </div>
-              <div class="counter-bar">
-                <div class="counter-plates">
-                  <div class="plate">🍣</div>
-                  <div class="plate">🍙</div>
-                  <div class="plate">🥗</div>
-                </div>
-                <div class="counter-score">총 코인 <span id="counter-coins">120</span></div>
-              </div>
-              <div class="counter-actions">
-                <button class="btn-primary" id="btn-prepare">준비하기</button>
-                <button class="btn-ghost" id="btn-repeat">다시 묻기</button>
-              </div>
-            </div>
-
-            <div class="panel">
-              <h2 class="title" style="font-size: 22px;">게임 흐름</h2>
-              <p class="subtitle">음표와 과일이 1:1로 연결되고, 조합으로 같은 길이를 만드는 경험을 제공합니다.</p>
-              <div class="order-list" style="margin-top: 12px;">
-                <span class="order-chip">1단계: 1:1 매칭</span>
-                <span class="order-chip">2단계: 여러 개 선택</span>
-                <span class="order-chip">3단계: 길이 대체</span>
-              </div>
-            </div>
-          </section>
-
-          <section class="screen" id="screen-kitchen">
-            <div class="panel">
-              <div class="kitchen-header">
-                <div>
-                  <p class="subtitle">현재 주문</p>
-                  <div class="mini-order" id="mini-order"></div>
-                </div>
-                <div class="cta-row">
-                  <button class="btn-outline" id="btn-back">카운터로</button>
-                </div>
-              </div>
-              <div class="tray-scroll" id="tray-scroll"></div>
-            </div>
-
-            <div class="panel">
-              <div class="basket">
-                <strong>내가 고른 과일</strong>
-                <div class="basket-items" id="basket-items"></div>
-                <div class="cta-row">
-                  <button class="btn-primary" id="btn-serve">서빙하기</button>
-                  <button class="btn-ghost" id="btn-undo">되돌리기</button>
-                  <button class="btn-outline" id="btn-clear">비우기</button>
-                </div>
-              </div>
-              <div class="feedback" id="feedback">과일을 골라 접시에 담아 주세요.</div>
-            </div>
-          </section>
-        </div>
-
-        <aside class="side-panel">
-          <div class="stage-card">
-            <h3>음표 카드</h3>
-            <p class="subtitle">트레이 상단의 카드에서 리듬 길이를 확인할 수 있어요.</p>
-            <div class="hint" style="margin-top: 10px;">카드 힌트는 Stage 3부터 점점 줄어듭니다.</div>
-          </div>
-          <div class="stage-card">
-            <h3>교실 모드</h3>
-            <p class="subtitle">시간 제한을 끄고, 힌트를 항상 켤 수 있어요.</p>
-            <div class="mode-toggle">
-              <span>시간 제한 OFF</span>
-              <div class="switch" id="mode-switch"></div>
+        <div class="customer">
+          <div class="head">
+            <div class="hair"></div>
+            <div class="face">
+              <span class="eye left"></span>
+              <span class="eye right"></span>
+              <span class="mouth"></span>
             </div>
           </div>
-          <div class="stage-card">
-            <h3>매핑 규칙</h3>
-            <div class="hint" id="mapping-list"></div>
-          </div>
-        </aside>
-      </main>
+          <div class="body"></div>
+        </div>
+      </div>
+
+      <div class="counter">
+        <div class="counter-top">
+          <div class="plate">🍰</div>
+          <div class="register">오늘의 주문 접수중</div>
+          <div class="plate">🥞</div>
+        </div>
+        <div class="counter-bottom">
+          <div class="bin">🍋</div>
+          <div class="bin">🍓</div>
+          <div class="bin">🫐</div>
+          <div class="bin">🍈</div>
+        </div>
+      </div>
     </div>
-
-    <script>
-      const trays = [
-        { id: "orange", name: "귤", emoji: "🍊", length: 1, note: "1/4" },
-        { id: "apple", name: "사과", emoji: "🍎", length: 0.5, note: "1/8" },
-        { id: "pear", name: "배", emoji: "🍐", length: 2, note: "1/2" },
-        { id: "grape", name: "포도", emoji: "🍇", length: 0.25, note: "1/16" },
-        { id: "banana", name: "바나나", emoji: "🍌", length: 1.5, note: "점4" },
-        { id: "cherry", name: "체리", emoji: "🍒", length: 4, note: "1/1" }
-      ];
-
-      const orders = [
-        { stage: 1, items: { orange: 1 }, target: 1, message: "🍊 주세요!" },
-        { stage: 2, items: { orange: 1, apple: 2 }, target: 2, message: "🍊 + 🍎🍎 주세요!" },
-        { stage: 3, items: { pear: 1 }, target: 2, message: "🍐 주세요! (길이 2)" }
-      ];
-
-      let stageIndex = 0;
-      let selection = {};
-      let history = [];
-      let combo = 0;
-      let coins = 120;
-      let timer = 100;
-      let timerActive = true;
-      let timerInterval = null;
-
-      const orderList = document.getElementById("order-list");
-      const orderHint = document.getElementById("order-hint");
-      const miniOrder = document.getElementById("mini-order");
-      const trayScroll = document.getElementById("tray-scroll");
-      const basketItems = document.getElementById("basket-items");
-      const feedback = document.getElementById("feedback");
-      const hudStage = document.getElementById("hud-stage");
-      const hudCombo = document.getElementById("hud-combo");
-      const hudCoin = document.getElementById("hud-coin");
-      const counterCoins = document.getElementById("counter-coins");
-      const timerBar = document.getElementById("timer-bar");
-      const modeSwitch = document.getElementById("mode-switch");
-      const mappingList = document.getElementById("mapping-list");
-
-      function renderOrder() {
-        const order = orders[stageIndex];
-        orderList.innerHTML = "";
-        miniOrder.innerHTML = "";
-
-        Object.keys(order.items).forEach((id) => {
-          const tray = trays.find((item) => item.id === id);
-          const chip = document.createElement("span");
-          chip.className = "order-chip";
-          chip.textContent = `${tray.emoji} ${tray.name} x${order.items[id]}`;
-          orderList.appendChild(chip);
-
-          const mini = document.createElement("span");
-          mini.className = "order-chip";
-          mini.textContent = `${tray.emoji} x${order.items[id]}`;
-          miniOrder.appendChild(mini);
-        });
-
-        orderHint.textContent = `총 길이: ${order.target}`;
-        orderHint.style.display = order.stage >= 3 ? "block" : "none";
-        hudStage.textContent = String(order.stage);
-      }
-
-      function renderMapping() {
-        mappingList.innerHTML = trays
-          .map((tray) => `${tray.emoji} ${tray.name} = ${tray.note}`)
-          .join("<br />");
-      }
-
-      function renderTrays() {
-        trayScroll.innerHTML = "";
-        trays.forEach((tray) => {
-          const card = document.createElement("div");
-          card.className = "tray";
-          card.innerHTML = `
-            <div class="note-card">
-              <strong>${tray.note}</strong>
-              <span>${tray.emoji} ${tray.name}</span>
-            </div>
-            <div class="fruit-stack">${tray.emoji}${tray.emoji}</div>
-            <div class="tray-footer">
-              <span>길이 ${tray.length}</span>
-              <span class="badge">+1</span>
-            </div>
-            <button type="button">선택하기</button>
-          `;
-          card.querySelector("button").addEventListener("click", () => addSelection(tray.id));
-          trayScroll.appendChild(card);
-        });
-      }
-
-      function renderBasket() {
-        basketItems.innerHTML = "";
-        const entries = Object.entries(selection);
-        if (entries.length === 0) {
-          basketItems.innerHTML = "<span class=\"hint\">아직 비어 있어요.</span>";
-          return;
-        }
-        entries.forEach(([id, count]) => {
-          const tray = trays.find((item) => item.id === id);
-          const item = document.createElement("span");
-          item.className = "basket-item";
-          item.textContent = `${tray.emoji} x${count}`;
-          basketItems.appendChild(item);
-        });
-      }
-
-      function addSelection(id) {
-        selection[id] = (selection[id] || 0) + 1;
-        history.push(id);
-        feedback.textContent = "좋아요! 접시에 담겼어요.";
-        renderBasket();
-      }
-
-      function undoSelection() {
-        const last = history.pop();
-        if (!last) {
-          feedback.textContent = "되돌릴 게 없어요.";
-          return;
-        }
-        selection[last] -= 1;
-        if (selection[last] <= 0) delete selection[last];
-        feedback.textContent = "마지막 선택을 되돌렸어요.";
-        renderBasket();
-      }
-
-      function clearSelection() {
-        selection = {};
-        history = [];
-        feedback.textContent = "접시를 비웠어요.";
-        renderBasket();
-      }
-
-      function totalLength() {
-        return Object.entries(selection).reduce((sum, [id, count]) => {
-          const tray = trays.find((item) => item.id === id);
-          return sum + tray.length * count;
-        }, 0);
-      }
-
-      function serveOrder() {
-        const order = orders[stageIndex];
-        const selectedTotal = totalLength();
-
-        if (Object.keys(selection).length === 0) {
-          feedback.textContent = "먼저 과일을 골라 주세요.";
-          return;
-        }
-
-        if (order.stage < 3) {
-          const correct = Object.keys(order.items).every(
-            (id) => selection[id] === order.items[id]
-          );
-          const extra = Object.keys(selection).some((id) => selection[id] !== order.items[id]);
-
-          if (correct && !extra) {
-            success();
-          } else {
-            failByCount(order.items);
-          }
-          return;
-        }
-
-        if (selectedTotal === order.target) {
-          success();
-        } else if (selectedTotal > order.target) {
-          feedback.textContent = "길이 초과! 접시에서 과일이 떨어졌어요.";
-          combo = 0;
-        } else {
-          feedback.textContent = "길이가 부족해요. 힌트를 다시 확인해 보세요.";
-          combo = 0;
-        }
-        updateHud();
-      }
-
-      function failByCount(target) {
-        const messages = [];
-        Object.keys(target).forEach((id) => {
-          const expected = target[id] || 0;
-          const actual = selection[id] || 0;
-          const tray = trays.find((item) => item.id === id);
-          const label = tray ? `${tray.emoji} ${tray.name}` : id;
-          if (actual < expected) {
-            messages.push(`${label} ${expected - actual}개 부족`);
-          } else if (actual > expected) {
-            messages.push(`${label} ${actual - expected}개 초과`);
-          }
-        });
-        feedback.textContent = messages.length ? messages.join(" / ") : "조합이 달라요.";
-        combo = 0;
-        updateHud();
-      }
-
-      function success() {
-        feedback.textContent = "정답! 손님이 만족했어요 😀";
-        combo += 1;
-        coins += 20;
-        stageIndex = (stageIndex + 1) % orders.length;
-        clearSelection();
-        renderOrder();
-        updateHud();
-      }
-
-      function updateHud() {
-        hudCombo.textContent = String(combo);
-        hudCoin.textContent = String(coins);
-        if (counterCoins) counterCoins.textContent = String(coins);
-      }
-
-      function startTimer() {
-        if (timerInterval) clearInterval(timerInterval);
-        timer = 100;
-        timerBar.style.width = `${timer}%`;
-        timerInterval = setInterval(() => {
-          if (!timerActive) return;
-          timer -= 1.2;
-          if (timer <= 0) {
-            timer = 0;
-            feedback.textContent = "시간 초과! 바로 다시 도전해요.";
-            combo = 0;
-            updateHud();
-            clearSelection();
-            timer = 100;
-          }
-          timerBar.style.width = `${timer}%`;
-        }, 200);
-      }
-
-      document.getElementById("btn-prepare").addEventListener("click", () => {
-        document.getElementById("screen-counter").classList.remove("active");
-        document.getElementById("screen-kitchen").classList.add("active");
-      });
-
-      document.getElementById("btn-back").addEventListener("click", () => {
-        document.getElementById("screen-kitchen").classList.remove("active");
-        document.getElementById("screen-counter").classList.add("active");
-      });
-
-      document.getElementById("btn-serve").addEventListener("click", serveOrder);
-      document.getElementById("btn-undo").addEventListener("click", undoSelection);
-      document.getElementById("btn-clear").addEventListener("click", clearSelection);
-      document.getElementById("btn-repeat").addEventListener("click", () => {
-        feedback.textContent = "주문을 다시 확인했어요.";
-      });
-
-      modeSwitch.addEventListener("click", () => {
-        timerActive = !timerActive;
-        modeSwitch.classList.toggle("on", !timerActive);
-        timerBar.style.opacity = timerActive ? 1 : 0.4;
-      });
-
-      renderOrder();
-      renderTrays();
-      renderBasket();
-      renderMapping();
-      updateHud();
-      startTimer();
-    </script>
   </body>
 </html>
