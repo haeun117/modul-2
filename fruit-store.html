@@ -1145,7 +1145,9 @@
         plateBase.className = "plate-illustration";
         plateWrap.appendChild(plateItems);
         plateWrap.appendChild(plateBase);
-        toppingGrid.appendChild(noteStrip);
+        if (toppingGrid.parentElement) {
+          toppingGrid.parentElement.appendChild(noteStrip);
+        }
         toppingGrid.appendChild(plateWrap);
 
         plateWrap.addEventListener("dragover", (event) => {
