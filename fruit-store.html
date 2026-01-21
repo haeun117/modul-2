@@ -1360,34 +1360,23 @@
       let currentOrder = { stage: 1, items: [] };
       let currentStage = 0;
 
-      const toppings = [
-        { id: "grape", emoji: "🍇", name: "포도" },
-        { id: "kiwi", emoji: "🥝", name: "키위" },
-        { id: "strawberry", emoji: "🍓", name: "딸기" },
-        { id: "mango", emoji: "🥭", name: "망고" }
-      ];
-
-      const tools = [
-        { id: "basket", emoji: "🧺", name: "바구니" },
-        { id: "napkin", emoji: "🧻", name: "냅킨" },
-        { id: "plate", emoji: "🍽️", name: "접시" }
-      ];
-
-      const containers = [
-        { id: "tray", emoji: "🧺", name: "트레이" },
-        { id: "bowl", emoji: "🥣", name: "볼" }
-      ];
-
       const plate = [];
+      const stageDuration = 60;
+      let timeLeft = stageDuration;
+      let timerInterval = null;
 
       const fruitBins = document.getElementById("fruit-bins");
       const orderItems = document.getElementById("order-items");
       const customerImage = document.getElementById("customer-image");
-      const toolList = document.getElementById("tool-list");
-      const containerRow = document.getElementById("container-row");
       const toppingGrid = document.getElementById("topping-grid");
       const undoButton = document.getElementById("undo-button");
       const doneButton = document.getElementById("done-button");
+      const stageLabel = document.getElementById("stage-label");
+      const timerFill = document.getElementById("timer-fill");
+      const timerText = document.getElementById("timer-text");
+      const resultOverlay = document.getElementById("result-overlay");
+      const resultText = document.getElementById("result-text");
+      const resultButton = document.getElementById("result-button");
 
       function renderOrder() {
         orderItems.innerHTML = "";
