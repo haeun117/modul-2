@@ -412,24 +412,10 @@
         transform: translateX(-50%);
       }
 
-      .plate-fruit.pear {
+      .plate-fruit.grape {
         width: 22px;
-        height: 30px;
-        border-radius: 45% 45% 90% 90% / 60% 60% 110% 110%;
-        clip-path: polygon(
-          50% 2%,
-          60% 10%,
-          68% 24%,
-          74% 42%,
-          80% 66%,
-          74% 92%,
-          50% 100%,
-          26% 92%,
-          20% 66%,
-          26% 42%,
-          32% 24%,
-          40% 10%
-        );
+        height: 22px;
+        border-radius: 50%;
       }
 
       .plate-fruit.pineapple {
@@ -1004,51 +990,11 @@
         transform: translateX(-50%);
       }
 
-      .fruit-slot.pear .fruit-piece.pear-shape {
-        width: 36px;
-        height: 44px;
-        border-radius: 45% 45% 90% 90% / 60% 60% 110% 110%;
-        box-shadow: none;
-        clip-path: polygon(
-          50% 2%,
-          60% 10%,
-          68% 24%,
-          74% 42%,
-          80% 66%,
-          74% 92%,
-          50% 100%,
-          26% 92%,
-          20% 66%,
-          26% 42%,
-          32% 24%,
-          40% 10%
-        );
-        transform: scaleX(1.2);
-      }
-
-      .fruit-slot.pear .fruit-piece.pear-shape::before {
-        content: "";
-        position: absolute;
-        top: -18px;
-        left: 50%;
-        width: 4px;
-        height: 20px;
-        background: #6b4b3e;
-        border-radius: 999px;
-        transform: translateX(-50%);
-      }
-
-      .fruit-slot.pear .fruit-piece.pear-shape::after {
-        content: "";
-        position: absolute;
-        top: -16px;
-        right: -4px;
-        width: 18px;
-        height: 12px;
-        background: #77c36f;
-        border-radius: 6px 16px 6px 16px;
-        border: 2px solid var(--line);
-        transform: rotate(-18deg);
+      .fruit-slot.grape .fruit-piece {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        box-shadow: inset -2px -3px 0 rgba(0, 0, 0, 0.12);
       }
 
       .fruit-slot.pineapple .fruit-piece {
