@@ -408,23 +408,96 @@
 
       .crate-sticker {
         position: absolute;
-        right: 10px;
-        top: 30px;
+        right: 8px;
+        top: 28px;
         transform: none;
         background: #fff8f1;
         border: 3px solid var(--line);
         border-radius: 10px;
-        padding: 6px 8px;
+        padding: 4px 6px;
         text-align: center;
         font-weight: 700;
-        font-size: 12px;
-        min-width: 70px;
-        box-shadow: 0 3px 0 var(--line);
+        font-size: 11px;
+        min-width: 58px;
+        box-shadow: 0 2px 0 var(--line);
+        line-height: 1.2;
+        font-family: system-ui, sans-serif;
       }
 
       .crate-sticker span {
         display: block;
-        font-size: 16px;
+        font-size: 14px;
+      }
+
+      .note {
+        position: relative;
+        display: inline-block;
+        width: 20px;
+        height: 28px;
+        margin: 0 auto 2px;
+      }
+
+      .note .head {
+        position: absolute;
+        bottom: 4px;
+        left: 2px;
+        width: 12px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--line);
+        transform: rotate(-12deg);
+      }
+
+      .note.hollow .head {
+        background: transparent;
+        border: 2px solid var(--line);
+      }
+
+      .note .stem {
+        position: absolute;
+        right: 4px;
+        bottom: 10px;
+        width: 2px;
+        height: 18px;
+        background: var(--line);
+      }
+
+      .note .flag {
+        position: absolute;
+        right: -1px;
+        width: 8px;
+        height: 6px;
+        border-top: 2px solid var(--line);
+        border-right: 2px solid var(--line);
+        border-radius: 0 8px 0 0;
+      }
+
+      .note .flag.flag1 {
+        top: 4px;
+      }
+
+      .note .flag.flag2 {
+        top: 10px;
+      }
+
+      .note.whole .stem {
+        display: none;
+      }
+
+      .note.whole .head {
+        width: 14px;
+        height: 9px;
+        left: 1px;
+      }
+
+      .note .dot {
+        position: absolute;
+        bottom: 10px;
+        left: 16px;
+        width: 4px;
+        height: 4px;
+        background: var(--line);
+        border-radius: 50%;
       }
 
       .fruit-cluster {
