@@ -375,8 +375,7 @@
         height: 86px;
         border: 4px solid var(--line);
         border-radius: 12px;
-        background:
-          linear-gradient(180deg, #e8c8a2 0%, #d2a57b 100%);
+        background: #e2b98f;
         position: relative;
         overflow: hidden;
         z-index: 1;
@@ -384,36 +383,15 @@
       }
 
       .basket::before {
-        content: "";
-        position: absolute;
-        inset: 6px 6px auto 6px;
-        height: 18px;
-        border: 3px solid var(--line);
-        border-radius: 8px;
-        background: #e8c8a2;
+        content: none;
       }
 
       .basket::after {
-        content: "";
-        position: absolute;
-        inset: auto 0 0 0;
-        height: 12px;
-        background:
-          repeating-linear-gradient(
-            90deg,
-            rgba(0, 0, 0, 0.08) 0 8px,
-            transparent 8px 16px
-          );
+        content: none;
       }
 
       .crate-plank {
-        position: absolute;
-        left: 6px;
-        right: 6px;
-        height: 12px;
-        background: rgba(255, 255, 255, 0.2);
-        border: 2px solid rgba(107, 75, 62, 0.35);
-        border-radius: 6px;
+        display: none;
       }
 
       .crate-plank.top {
@@ -430,9 +408,9 @@
 
       .crate-sticker {
         position: absolute;
-        left: 50%;
-        top: 36px;
-        transform: translateX(-50%);
+        right: 10px;
+        top: 30px;
+        transform: none;
         background: #fff8f1;
         border: 3px solid var(--line);
         border-radius: 10px;
@@ -452,10 +430,10 @@
       .fruit-cluster {
         position: absolute;
         top: -8px;
-        left: 50%;
+        left: 14px;
         width: 150px;
         height: 88px;
-        transform: translateX(-50%);
+        transform: none;
         pointer-events: none;
         z-index: 2;
       }
