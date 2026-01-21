@@ -510,27 +510,28 @@
       .fruit-slot.banana .p6 { transform: rotate(8deg); }
       .fruit-slot.banana .p7 { transform: rotate(-12deg); }
 
-      .fruit-slot.pear .fruit-piece {
-        width: 32px;
-        height: 48px;
-        border-radius: 45% 45% 60% 60% / 60% 60% 95% 95%;
+      .fruit-slot.pear .fruit-piece.pear-shape {
+        width: 34px;
+        height: 52px;
+        border-radius: 45% 45% 75% 75% / 60% 60% 100% 100%;
         clip-path: polygon(
           50% 2%,
-          58% 10%,
-          68% 26%,
-          76% 48%,
-          78% 70%,
-          70% 88%,
+          60% 8%,
+          70% 22%,
+          78% 40%,
+          82% 60%,
+          74% 86%,
           50% 100%,
-          30% 88%,
-          22% 70%,
-          24% 48%,
-          32% 26%,
-          42% 10%
+          26% 86%,
+          18% 60%,
+          22% 40%,
+          30% 22%,
+          40% 8%
         );
+        transform: scaleX(1.1);
       }
 
-      .fruit-slot.pear .fruit-piece::before {
+      .fruit-slot.pear .fruit-piece.pear-shape::before {
         content: "";
         position: absolute;
         top: -8px;
