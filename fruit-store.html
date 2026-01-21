@@ -1476,13 +1476,28 @@
       }
 
       function nextOrder() {
-        currentStage = currentStage % 4 + 1;
         if (currentStage === 1) currentOrder = generateStage1();
         if (currentStage === 2) currentOrder = generateStage2();
         if (currentStage === 3) currentOrder = generateStage3();
         if (currentStage === 4) currentOrder = generateStage4();
         pickCustomer();
         renderOrder();
+      }
+
+      function startStage(stage) {
+        currentStage = stage;
+        nextOrder();
+        startStageTimer();
+      }
+
+      function advanceStage() {
+        plate.splice(0, plate.length);
+        renderPlateItems();
+        renderNoteStickers();
+        updateServeButton();
+        currentStage = currentStage % 4 + 1;
+        nextOrder();
+        startStageTimer();
       }
 
       function updateTimerUI() {
