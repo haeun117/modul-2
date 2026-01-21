@@ -551,9 +551,7 @@
         width: 38px;
         height: 38px;
         border-radius: 55% 55% 45% 45% / 58% 58% 45% 45%;
-        background:
-          radial-gradient(ellipse at 50% 18%, transparent 62%, var(--line) 63% 66%, transparent 67%),
-          radial-gradient(circle at 30% 30%, var(--fruit-light), var(--fruit-dark));
+        background: radial-gradient(circle at 30% 30%, var(--fruit-light), var(--fruit-dark));
       }
 
       .fruit-slot.apple .fruit-piece::before {
@@ -567,6 +565,19 @@
         border-radius: 999px;
         transform: translateX(-50%) rotate(-12deg);
         box-shadow: 0 0 0 1px var(--line);
+      }
+
+      .fruit-slot.apple .fruit-piece::after {
+        content: "";
+        position: absolute;
+        top: 6px;
+        left: 50%;
+        width: 10px;
+        height: 6px;
+        border-bottom: 3px solid var(--line);
+        border-radius: 0 0 999px 999px;
+        transform: translateX(-50%);
+        background: transparent;
       }
 
 
