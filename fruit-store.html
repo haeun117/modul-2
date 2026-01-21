@@ -1456,7 +1456,8 @@
           });
           const cluster = document.createElement("div");
           cluster.className = "fruit-cluster";
-          for (let i = 1; i <= 7; i += 1) {
+          const totalPieces = fruit.id === "blueberry" ? 12 : 7;
+          for (let i = 1; i <= totalPieces; i += 1) {
             const piece = document.createElement("span");
             const leafClass = fruit.id === "blueberry" ? "" : i % 2 === 0 ? "leaf" : "";
             const pearClass = fruit.id === "pear" ? "pear-shape" : "";
