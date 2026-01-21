@@ -1522,8 +1522,14 @@
         plateItems.id = "plate-items";
         const plateBase = document.createElement("div");
         plateBase.className = "plate-illustration";
+        const serveButton = document.createElement("button");
+        serveButton.className = "serve-button";
+        serveButton.type = "button";
+        serveButton.id = "serve-button";
+        serveButton.textContent = "서빙하기";
         plateWrap.appendChild(plateItems);
         plateWrap.appendChild(plateBase);
+        plateWrap.appendChild(serveButton);
         if (toppingGrid.parentElement) {
           toppingGrid.parentElement.appendChild(noteStrip);
         }
@@ -1539,6 +1545,7 @@
             plate.push(fruitId);
             renderPlateItems();
             renderNoteStickers();
+            updateServeButton();
           }
         });
       }
