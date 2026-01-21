@@ -511,21 +511,31 @@
       .fruit-slot.banana .p7 { transform: rotate(-12deg); }
 
       .fruit-slot.pear .fruit-piece {
-        width: 32px;
-        height: 40px;
-        border-radius: 55% 55% 60% 60%;
+        width: 30px;
+        height: 46px;
+        border-radius: 45% 45% 70% 70% / 55% 55% 75% 75%;
       }
 
       .fruit-slot.pear .fruit-piece::before {
         content: "";
         position: absolute;
-        top: -6px;
+        top: -8px;
         left: 50%;
         width: 6px;
-        height: 10px;
+        height: 12px;
         background: #6b4b3e;
         border-radius: 999px;
-        transform: translateX(-50%);
+        transform: translateX(-50%) rotate(-10deg);
+      }
+
+      .fruit-slot.pear .fruit-piece.leaf::after {
+        width: 16px;
+        height: 12px;
+        top: -8px;
+        right: -2px;
+        background: #77c36f;
+        border-radius: 6px 14px 6px 14px;
+        transform: rotate(-18deg);
       }
 
       .fruit-slot.pineapple .fruit-piece {
