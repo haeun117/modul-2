@@ -462,6 +462,33 @@
       .fruit-slot.apple .fruit-piece {
         width: 38px;
         height: 38px;
+        border-radius: 55% 55% 45% 45% / 58% 58% 45% 45%;
+        background:
+          radial-gradient(circle at 28% 30%, #ffd6d6 0 32%, transparent 33%),
+          radial-gradient(circle at 30% 30%, var(--fruit-light), var(--fruit-dark));
+      }
+
+      .fruit-slot.apple .fruit-piece::before {
+        content: "";
+        position: absolute;
+        top: -8px;
+        left: 50%;
+        width: 8px;
+        height: 14px;
+        background: #6b4b3e;
+        border-radius: 999px;
+        transform: translateX(-50%) rotate(-12deg);
+        box-shadow: 0 0 0 2px var(--line);
+      }
+
+      .fruit-slot.apple .fruit-piece.leaf::after {
+        width: 16px;
+        height: 12px;
+        top: -8px;
+        right: -2px;
+        background: #77c36f;
+        border-radius: 6px 14px 6px 14px;
+        transform: rotate(-18deg);
       }
 
       .fruit-slot.blueberry .fruit-piece {
