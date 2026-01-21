@@ -1269,6 +1269,11 @@
         const pineappleClass = fruitId === "pineapple" ? "pineapple" : "";
         const appleClass = fruitId === "apple" ? "apple" : "";
         chip.className = `plate-fruit ${leafClass} ${pearClass} ${peachClass} ${pineappleClass} ${appleClass} ${fruitId}`.trim();
+        if (fruitId === "peach") {
+          const line = document.createElement("span");
+          line.className = "peach-line";
+          chip.appendChild(line);
+        }
         const style = {
           orange: { light: "#ffb259", dark: "#f47c2a", leaf: "#73c06b" },
           apple: { light: "#ff6f6f", dark: "#c83232", leaf: "#6abf69" },
