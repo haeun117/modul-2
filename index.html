@@ -372,46 +372,81 @@
 
       .basket {
         width: 100%;
-        height: 78px;
+        height: 86px;
         border: 4px solid var(--line);
-        border-radius: 50% / 30%;
+        border-radius: 12px;
         background:
-          repeating-linear-gradient(
-            45deg,
-            #c58b61 0 6px,
-            #b07a52 6px 12px
-          ),
-          repeating-linear-gradient(
-            -45deg,
-            #cf986f 0 6px,
-            #b9825a 6px 12px
-          );
-        background-blend-mode: multiply;
+          linear-gradient(180deg, #e8c8a2 0%, #d2a57b 100%);
         position: relative;
         overflow: hidden;
         z-index: 1;
+        box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
       }
 
       .basket::before {
         content: "";
         position: absolute;
-        left: 8px;
-        right: 8px;
-        top: 10px;
-        height: 26px;
-        border: 4px solid var(--line);
-        border-radius: 50% / 70%;
-        background: #d7a67c;
-        box-shadow: inset 0 6px 0 rgba(0, 0, 0, 0.08);
+        inset: 6px 6px auto 6px;
+        height: 18px;
+        border: 3px solid var(--line);
+        border-radius: 8px;
+        background: #e8c8a2;
       }
 
       .basket::after {
         content: "";
         position: absolute;
-        inset: auto 10px 6px 10px;
+        inset: auto 0 0 0;
         height: 12px;
-        background: transparent;
-        border-radius: 999px;
+        background:
+          repeating-linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.08) 0 8px,
+            transparent 8px 16px
+          );
+      }
+
+      .crate-plank {
+        position: absolute;
+        left: 6px;
+        right: 6px;
+        height: 12px;
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid rgba(107, 75, 62, 0.35);
+        border-radius: 6px;
+      }
+
+      .crate-plank.top {
+        top: 30px;
+      }
+
+      .crate-plank.mid {
+        top: 48px;
+      }
+
+      .crate-plank.bottom {
+        top: 66px;
+      }
+
+      .crate-sticker {
+        position: absolute;
+        left: 50%;
+        top: 36px;
+        transform: translateX(-50%);
+        background: #fff8f1;
+        border: 3px solid var(--line);
+        border-radius: 10px;
+        padding: 6px 8px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 12px;
+        min-width: 70px;
+        box-shadow: 0 3px 0 var(--line);
+      }
+
+      .crate-sticker span {
+        display: block;
+        font-size: 16px;
       }
 
       .fruit-cluster {
