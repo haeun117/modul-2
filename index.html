@@ -187,6 +187,7 @@
         border: 4px solid #bdbdbd;
         position: relative;
         box-shadow: inset 0 -10px 0 rgba(0, 0, 0, 0.08);
+        z-index: 1;
       }
 
       .plate-illustration::before {
@@ -227,10 +228,89 @@
         gap: 4px;
         pointer-events: none;
         font-size: 20px;
+        z-index: 2;
       }
 
       .plate-items span {
         filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.15));
+      }
+
+      .plate-fruit {
+        position: relative;
+        width: 24px;
+        height: 24px;
+        border: 2px solid var(--line);
+        border-radius: 50%;
+        box-shadow: inset -2px -3px 0 rgba(0, 0, 0, 0.08);
+        background: radial-gradient(circle at 30% 30%, var(--fruit-light), var(--fruit-dark));
+      }
+
+      .plate-fruit.leaf::after {
+        content: "";
+        position: absolute;
+        top: -4px;
+        right: 0;
+        width: 8px;
+        height: 6px;
+        background: var(--leaf, #6abf69);
+        border-radius: 6px 10px 6px 10px;
+        border: 2px solid var(--line);
+        transform: rotate(-12deg);
+      }
+
+      .plate-fruit.banana {
+        width: 30px;
+        height: 12px;
+        border-radius: 999px;
+      }
+
+      .plate-fruit.pear {
+        width: 22px;
+        height: 30px;
+        border-radius: 45% 45% 90% 90% / 60% 60% 110% 110%;
+        clip-path: polygon(
+          50% 2%,
+          60% 10%,
+          68% 24%,
+          74% 42%,
+          80% 66%,
+          74% 92%,
+          50% 100%,
+          26% 92%,
+          20% 66%,
+          26% 42%,
+          32% 24%,
+          40% 10%
+        );
+      }
+
+      .plate-fruit.pineapple {
+        width: 22px;
+        height: 30px;
+        border-radius: 40% 40% 55% 55%;
+        background:
+          repeating-linear-gradient(
+            45deg,
+            rgba(255, 255, 255, 0.2) 0 3px,
+            rgba(0, 0, 0, 0.08) 3px 6px
+          ),
+          radial-gradient(circle at 30% 30%, var(--fruit-light), var(--fruit-dark));
+      }
+
+      .plate-fruit.apple {
+        border-radius: 55% 55% 45% 45% / 58% 58% 45% 45%;
+      }
+
+      .plate-fruit.apple::before {
+        content: "";
+        position: absolute;
+        top: -6px;
+        left: 50%;
+        width: 3px;
+        height: 8px;
+        background: #6b4b3e;
+        border-radius: 999px;
+        transform: translateX(-50%) rotate(-12deg);
       }
 
       .workbench {
