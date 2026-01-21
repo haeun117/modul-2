@@ -1495,7 +1495,7 @@
           const cluster = document.createElement("div");
           cluster.className = "fruit-cluster";
           const totalPieces =
-            fruit.id === "blueberry" ? 16 : fruit.id === "melon" ? 4 : 7;
+            fruit.id === "blueberry" ? 16 : fruit.id === "melon" ? 5 : 7;
           for (let i = 1; i <= totalPieces; i += 1) {
             const piece = document.createElement("span");
             const leafClass = fruit.id === "blueberry" ? "" : i % 2 === 0 ? "leaf" : "";
