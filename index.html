@@ -416,98 +416,24 @@
         position: absolute;
         top: -6px;
         left: 50%;
-        width: 140px;
-        height: 80px;
+        width: 150px;
+        height: 86px;
         transform: translateX(-50%);
         pointer-events: none;
         z-index: 2;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: 1fr;
+        gap: 4px;
+        align-items: end;
+        justify-items: center;
+        font-size: 26px;
+        line-height: 1;
+        text-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
       }
 
-      .fruit-piece {
-        position: absolute;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: radial-gradient(circle at 30% 30%, var(--fruit-light), var(--fruit-dark));
-        border: 3px solid var(--line);
-        box-shadow: inset -4px -6px 0 rgba(0, 0, 0, 0.08);
-      }
-
-      .fruit-piece.leaf::after {
-        content: "";
-        position: absolute;
-        top: -6px;
-        right: 2px;
-        width: 12px;
-        height: 8px;
-        background: var(--leaf, #6abf69);
-        border-radius: 8px 12px 8px 12px;
-        border: 2px solid var(--line);
-        transform: rotate(-12deg);
-      }
-
-      .p1 { left: 8px; top: 24px; }
-      .p2 { left: 38px; top: 10px; }
-      .p3 { left: 72px; top: 18px; }
-      .p4 { left: 22px; top: 40px; }
-      .p5 { left: 56px; top: 40px; }
-      .p6 { left: 92px; top: 34px; }
-      .p7 { left: 44px; top: 56px; }
-
-      .fruit-slot.banana .fruit-piece {
-        width: 44px;
-        height: 18px;
-        border-radius: 999px;
-        box-shadow: inset -3px -3px 0 rgba(0, 0, 0, 0.12);
-      }
-
-      .fruit-slot.banana .p1 { transform: rotate(-8deg); }
-      .fruit-slot.banana .p2 { transform: rotate(12deg); }
-      .fruit-slot.banana .p3 { transform: rotate(-14deg); }
-      .fruit-slot.banana .p4 { transform: rotate(10deg); }
-      .fruit-slot.banana .p5 { transform: rotate(-6deg); }
-      .fruit-slot.banana .p6 { transform: rotate(8deg); }
-      .fruit-slot.banana .p7 { transform: rotate(-12deg); }
-
-      .fruit-slot.pear .fruit-piece {
-        width: 34px;
-        height: 40px;
-        border-radius: 55% 55% 60% 60%;
-      }
-
-      .fruit-slot.pear .fruit-piece::before {
-        content: "";
-        position: absolute;
-        top: -6px;
-        left: 50%;
-        width: 6px;
-        height: 10px;
-        background: #6b4b3e;
-        border-radius: 999px;
-        transform: translateX(-50%);
-      }
-
-      .fruit-slot.pineapple .fruit-piece {
-        width: 34px;
-        height: 42px;
-        border-radius: 40% 40% 55% 55%;
-        background:
-          repeating-linear-gradient(
-            45deg,
-            rgba(255, 255, 255, 0.2) 0 4px,
-            rgba(0, 0, 0, 0.08) 4px 8px
-          ),
-          radial-gradient(circle at 30% 30%, var(--fruit-light), var(--fruit-dark));
-        border: 3px solid var(--line);
-      }
-
-      .fruit-slot.pineapple .fruit-piece.leaf::after {
-        width: 16px;
-        height: 14px;
-        top: -10px;
-        right: 0;
-        border-radius: 4px 14px 4px 14px;
-        transform: rotate(-18deg);
+      .fruit-emoji {
+        transform: translateY(6px);
       }
 
       .bottom-bar {
