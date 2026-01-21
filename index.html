@@ -134,6 +134,42 @@
         display: none;
       }
 
+      .timer-panel {
+        background: #fff1e3;
+        border: 3px solid var(--line);
+        border-radius: 16px;
+        padding: 14px;
+        display: grid;
+        gap: 10px;
+        text-align: center;
+        font-family: system-ui, sans-serif;
+      }
+
+      .timer-title {
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      .timer-bar {
+        height: 12px;
+        border-radius: 999px;
+        border: 2px solid var(--line);
+        background: #ffe5d0;
+        overflow: hidden;
+      }
+
+      .timer-fill {
+        height: 100%;
+        width: 100%;
+        background: #9cd3b3;
+        transition: width 0.3s ease;
+      }
+
+      .timer-text {
+        font-size: 16px;
+        font-weight: 700;
+      }
+
       .tool-list {
         display: grid;
         gap: 12px;
