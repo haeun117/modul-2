@@ -1457,7 +1457,7 @@
           for (let i = 1; i <= totalPieces; i += 1) {
             const piece = document.createElement("span");
             const leafClass = fruit.id === "blueberry" ? "" : i % 2 === 0 ? "leaf" : "";
-            const pearClass = fruit.id === "pear" ? "pear-shape" : "";
+            const pearClass = fruit.id === "grape" ? "" : "";
             piece.className = `fruit-piece p${i} ${leafClass} ${pearClass}`.trim();
             if (fruit.id === "peach") {
               const line = document.createElement("span");
