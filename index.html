@@ -1884,18 +1884,36 @@
       });
 
       doneButton.addEventListener("click", () => {
-        plate.splice(0, plate.length);
-        renderPlateItems();
-        renderNoteStickers();
-        nextOrder();
+        const success = validateOrder();
+        showResult(success);
       });
 
-      renderTools();
-      renderContainers();
       renderToppings();
       renderFruitBins();
       renderNoteStickers();
-      nextOrder();
+      startStage(1);
+      updateServeButton();
+
+      document.addEventListener("click", (event) => {
+        if (event.target && event.target.id === "serve-button") {
+          const success = validateOrder();
+          showResult(success);
+        }
+      });
+
+      if (resultButton) {
+        resultButton.addEventListener("click", () => {
+          const wasSuccess = resultText && resultText.textContent.includes("성공");
+          hideResult();
+          if (wasSuccess) {
+            plate.splice(0, plate.length);
+            renderPlateItems();
+            renderNoteStickers();
+            updateServeButton();
+            nextOrder();
+          }
+        });
+      }
     </script>
   </body>
 </html>
