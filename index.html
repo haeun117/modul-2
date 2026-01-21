@@ -349,10 +349,11 @@
         background: #fff8f1;
         border: 4px solid var(--line);
         border-radius: 18px;
-        padding: 10px;
+        padding: 14px 10px 12px;
         display: grid;
-        place-items: center;
+        place-items: end center;
         gap: 6px;
+        position: relative;
         cursor: default;
         box-shadow: 0 5px 0 var(--line);
         transition: transform 0.15s ease, box-shadow 0.15s ease;
@@ -367,19 +368,102 @@
         box-shadow: 0 3px 0 var(--line);
       }
 
-      .fruit-pile {
+      .basket {
         width: 100%;
-        min-height: 64px;
-        background: #ffe8d8;
-        border: 3px solid var(--line);
-        border-radius: 14px;
-        display: grid;
-        place-items: center;
-        padding: 6px;
-        font-size: 22px;
-        line-height: 1.2;
-        text-align: center;
+        height: 72px;
+        border: 4px solid var(--line);
+        border-radius: 0 0 18px 18px;
+        background:
+          repeating-linear-gradient(
+            45deg,
+            #c58b61 0 6px,
+            #b07a52 6px 12px
+          ),
+          repeating-linear-gradient(
+            -45deg,
+            #cf986f 0 6px,
+            #b9825a 6px 12px
+          );
+        background-blend-mode: multiply;
+        position: relative;
+        overflow: hidden;
       }
+
+      .basket::before {
+        content: "";
+        position: absolute;
+        inset: -16px 10px auto 10px;
+        height: 24px;
+        border: 4px solid var(--line);
+        border-bottom: none;
+        border-radius: 18px 18px 0 0;
+        background: #d7a67c;
+      }
+
+      .basket::after {
+        content: "";
+        position: absolute;
+        inset: auto 10px 6px 10px;
+        height: 12px;
+        background: rgba(0, 0, 0, 0.08);
+        border-radius: 999px;
+      }
+
+      .fruit-cluster {
+        position: absolute;
+        top: 6px;
+        left: 50%;
+        width: 140px;
+        height: 80px;
+        transform: translateX(-50%);
+        pointer-events: none;
+      }
+
+      .fruit-piece {
+        position: absolute;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, var(--fruit-light), var(--fruit-dark));
+        border: 3px solid var(--line);
+        box-shadow: inset -4px -6px 0 rgba(0, 0, 0, 0.08);
+      }
+
+      .fruit-piece.leaf::after {
+        content: "";
+        position: absolute;
+        top: -6px;
+        right: 2px;
+        width: 12px;
+        height: 8px;
+        background: var(--leaf, #6abf69);
+        border-radius: 8px 12px 8px 12px;
+        border: 2px solid var(--line);
+        transform: rotate(-12deg);
+      }
+
+      .p1 { left: 8px; top: 24px; }
+      .p2 { left: 38px; top: 10px; }
+      .p3 { left: 72px; top: 18px; }
+      .p4 { left: 22px; top: 40px; }
+      .p5 { left: 56px; top: 40px; }
+      .p6 { left: 92px; top: 34px; }
+      .p7 { left: 44px; top: 56px; }
+
+      .fruit-slot.banana .fruit-piece {
+        width: 44px;
+        height: 18px;
+        border-radius: 999px;
+        box-shadow: inset -3px -3px 0 rgba(0, 0, 0, 0.12);
+      }
+
+      .fruit-slot.banana .p1 { transform: rotate(-8deg); }
+      .fruit-slot.banana .p2 { transform: rotate(12deg); }
+      .fruit-slot.banana .p3 { transform: rotate(-14deg); }
+      .fruit-slot.banana .p4 { transform: rotate(10deg); }
+      .fruit-slot.banana .p5 { transform: rotate(-6deg); }
+      .fruit-slot.banana .p6 { transform: rotate(8deg); }
+      .fruit-slot.banana .p7 { transform: rotate(-12deg); }
 
       .bottom-bar {
         display: grid;
@@ -613,13 +697,38 @@
 
       function renderFruitBins() {
         fruitBins.innerHTML = "";
+        const fruitStyles = {
+          orange: { light: "#ffb259", dark: "#f47c2a", leaf: "#73c06b", klass: "" },
+          apple: { light: "#ff6f6f", dark: "#c83232", leaf: "#6abf69", klass: "" },
+          blueberry: { light: "#7f90ff", dark: "#4a5bd6", leaf: "#6abf69", klass: "" },
+          banana: { light: "#ffe88a", dark: "#f0c857", leaf: "#8ad27a", klass: "banana" },
+          pear: { light: "#c4e48c", dark: "#8ebf56", leaf: "#6abf69", klass: "" },
+          watermelon: { light: "#9cd66a", dark: "#5aa64a", leaf: "#3e8f3f", klass: "" }
+        };
         fruits.forEach((fruit) => {
+          const style = fruitStyles[fruit.id] || {
+            light: "#ffd4b8",
+            dark: "#f2a07b",
+            leaf: "#6abf69",
+            klass: ""
+          };
           const button = document.createElement("button");
-          button.className = "fruit-slot";
+          button.className = `fruit-slot ${style.klass}`.trim();
           button.type = "button";
-          button.innerHTML = `
-            <div class="fruit-pile">${fruit.emoji}${fruit.emoji}${fruit.emoji}<br>${fruit.emoji}${fruit.emoji}</div>
-          `;
+          button.style.setProperty("--fruit-light", style.light);
+          button.style.setProperty("--fruit-dark", style.dark);
+          button.style.setProperty("--leaf", style.leaf);
+          const cluster = document.createElement("div");
+          cluster.className = "fruit-cluster";
+          for (let i = 1; i <= 7; i += 1) {
+            const piece = document.createElement("span");
+            piece.className = `fruit-piece p${i} ${i % 2 === 0 ? "leaf" : ""}`.trim();
+            cluster.appendChild(piece);
+          }
+          const basket = document.createElement("div");
+          basket.className = "basket";
+          button.appendChild(cluster);
+          button.appendChild(basket);
           fruitBins.appendChild(button);
         });
       }
