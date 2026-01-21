@@ -1184,7 +1184,7 @@
         { id: "orange", emoji: "🍊", name: "귤", note: "♩", desc: "4분" },
         { id: "apple", emoji: "🍎", name: "사과", note: "♪", desc: "8분" },
         { id: "blueberry", emoji: "🫐", name: "블루베리", note: "𝅘𝅥𝅯", desc: "16분" },
-        { id: "pear", emoji: "🍐", name: "배", note: "𝅗𝅥", desc: "2분" },
+        { id: "grape", emoji: "🍇", name: "포도", note: "𝅗𝅥", desc: "2분" },
         { id: "peach", emoji: "🍑", name: "복숭아", note: "점", desc: "점2분" },
         { id: "pineapple", emoji: "🍍", name: "파인애플", note: "𝅝", desc: "온음표" }
       ];
@@ -1295,7 +1295,7 @@
         if (!fruit) return null;
         const chip = document.createElement("span");
         const leafClass = fruitId === "blueberry" ? "" : "leaf";
-        const pearClass = fruitId === "pear" ? "pear" : "";
+        const pearClass = fruitId === "grape" ? "grape" : "";
         const peachClass = fruitId === "peach" ? "peach" : "";
         const pineappleClass = fruitId === "pineapple" ? "pineapple" : "";
         const appleClass = fruitId === "apple" ? "apple" : "";
@@ -1309,7 +1309,7 @@
           orange: { light: "#ffb259", dark: "#f47c2a", leaf: "#73c06b" },
           apple: { light: "#ff6f6f", dark: "#c83232", leaf: "#6abf69" },
           blueberry: { light: "#8ea0ff", dark: "#3d4fd1", leaf: "#6abf69" },
-          pear: { light: "#c4e48c", dark: "#8ebf56", leaf: "#6abf69" },
+          grape: { light: "#a46bdc", dark: "#6a2ca2", leaf: "#5bbf6b" },
           peach: { light: "#ffb5a6", dark: "#e6766a", leaf: "#7ac06b" },
           pineapple: { light: "#ffd365", dark: "#f2a93f", leaf: "#5bbf6b" }
         };
@@ -1389,7 +1389,7 @@
           orange: { type: "quarter", label: "4분음표" },
           apple: { type: "eighth", label: "8분음표" },
           blueberry: { type: "sixteenth", label: "16분음표" },
-          pear: { type: "half", label: "2분음표" },
+          grape: { type: "half", label: "2분음표" },
           peach: { type: "dotted-half", label: "점2분음표" },
           pineapple: { type: "whole", label: "온음표" }
         };
@@ -1413,7 +1413,7 @@
           orange: { light: "#ffb259", dark: "#f47c2a", leaf: "#73c06b" },
           apple: { light: "#ff6f6f", dark: "#c83232", leaf: "#6abf69" },
           blueberry: { light: "#8ea0ff", dark: "#3d4fd1", leaf: "#6abf69" },
-          pear: { light: "#c4e48c", dark: "#8ebf56", leaf: "#6abf69" },
+          grape: { light: "#a46bdc", dark: "#6a2ca2", leaf: "#5bbf6b" },
           peach: { light: "#ffb5a6", dark: "#e6766a", leaf: "#7ac06b" },
           pineapple: { light: "#ffd365", dark: "#f2a93f", leaf: "#5bbf6b" }
         };
@@ -1421,7 +1421,7 @@
           orange: { type: "quarter", label: "4분음표" },
           apple: { type: "eighth", label: "8분음표" },
           blueberry: { type: "sixteenth", label: "16분음표" },
-          pear: { type: "half", label: "2분음표" },
+          grape: { type: "half", label: "2분음표" },
           peach: { type: "dotted-half", label: "점2분음표" },
           pineapple: { type: "whole", label: "온음표" }
         };
