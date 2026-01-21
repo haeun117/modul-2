@@ -668,32 +668,16 @@
 
       function renderFruitBins() {
         fruitBins.innerHTML = "";
-        const fruitStyles = {
-          orange: { light: "#ffb259", dark: "#f47c2a", leaf: "#73c06b", klass: "" },
-          apple: { light: "#ff6f6f", dark: "#c83232", leaf: "#6abf69", klass: "" },
-          blueberry: { light: "#7f90ff", dark: "#4a5bd6", leaf: "#6abf69", klass: "" },
-          pear: { light: "#c4e48c", dark: "#8ebf56", leaf: "#6abf69", klass: "pear" },
-          banana: { light: "#ffe88a", dark: "#f0c857", leaf: "#8ad27a", klass: "banana" },
-          pineapple: { light: "#ffd365", dark: "#f2a93f", leaf: "#5bbf6b", klass: "pineapple" }
-        };
         fruits.forEach((fruit) => {
-          const style = fruitStyles[fruit.id] || {
-            light: "#ffd4b8",
-            dark: "#f2a07b",
-            leaf: "#6abf69",
-            klass: ""
-          };
           const button = document.createElement("button");
-          button.className = `fruit-slot ${style.klass}`.trim();
+          button.className = "fruit-slot";
           button.type = "button";
-          button.style.setProperty("--fruit-light", style.light);
-          button.style.setProperty("--fruit-dark", style.dark);
-          button.style.setProperty("--leaf", style.leaf);
           const cluster = document.createElement("div");
           cluster.className = "fruit-cluster";
           for (let i = 1; i <= 7; i += 1) {
             const piece = document.createElement("span");
-            piece.className = `fruit-piece p${i} ${i % 2 === 0 ? "leaf" : ""}`.trim();
+            piece.className = "fruit-emoji";
+            piece.textContent = fruit.emoji;
             cluster.appendChild(piece);
           }
           const basket = document.createElement("div");
