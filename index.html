@@ -1035,7 +1035,16 @@
       }
 
       .fruit-slot.melon .fruit-piece::before {
-        content: none;
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        width: 16px;
+        height: 6px;
+        background: #8b8f57;
+        border-radius: 999px;
+        transform: translateX(-50%);
+        border: 2px solid var(--line);
       }
 
       .fruit-slot.pineapple .fruit-piece {
