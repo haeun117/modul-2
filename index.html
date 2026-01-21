@@ -1079,16 +1079,40 @@
         });
       }
 
+      function createFruitChip(fruitId) {
+        const fruit = fruits.find((item) => item.id === fruitId);
+        if (!fruit) return null;
+        const chip = document.createElement("span");
+        const leafClass = fruitId === "banana" ? "" : "leaf";
+        const pearClass = fruitId === "pear" ? "pear" : "";
+        const bananaClass = fruitId === "banana" ? "banana" : "";
+        const pineappleClass = fruitId === "pineapple" ? "pineapple" : "";
+        const appleClass = fruitId === "apple" ? "apple" : "";
+        chip.className = `plate-fruit ${leafClass} ${pearClass} ${bananaClass} ${pineappleClass} ${appleClass}`.trim();
+        const style = {
+          orange: { light: "#ffb259", dark: "#f47c2a", leaf: "#73c06b" },
+          apple: { light: "#ff6f6f", dark: "#c83232", leaf: "#6abf69" },
+          blueberry: { light: "#8ea0ff", dark: "#3d4fd1", leaf: "#6abf69" },
+          pear: { light: "#c4e48c", dark: "#8ebf56", leaf: "#6abf69" },
+          banana: { light: "#ffe88a", dark: "#f0c857", leaf: "#8ad27a" },
+          pineapple: { light: "#ffd365", dark: "#f2a93f", leaf: "#5bbf6b" }
+        };
+        const palette = style[fruitId];
+        if (palette) {
+          chip.style.setProperty("--fruit-light", palette.light);
+          chip.style.setProperty("--fruit-dark", palette.dark);
+          chip.style.setProperty("--leaf", palette.leaf);
+        }
+        return chip;
+      }
+
       function renderPlateItems() {
         const plateItems = document.getElementById("plate-items");
         if (!plateItems) return;
         plateItems.innerHTML = "";
         plate.forEach((id) => {
-          const fruit = fruits.find((item) => item.id === id);
-          if (!fruit) return;
-          const chip = document.createElement("span");
-          chip.textContent = fruit.emoji;
-          plateItems.appendChild(chip);
+          const chip = createFruitChip(id);
+          if (chip) plateItems.appendChild(chip);
         });
       }
 
@@ -1126,6 +1150,15 @@
           button.style.setProperty("--leaf", style.leaf);
           button.addEventListener("dragstart", (event) => {
             event.dataTransfer.setData("text/plain", fruit.id);
+            const dragChip = createFruitChip(fruit.id);
+            if (dragChip) {
+              dragChip.style.position = "absolute";
+              dragChip.style.top = "-9999px";
+              dragChip.style.left = "-9999px";
+              document.body.appendChild(dragChip);
+              event.dataTransfer.setDragImage(dragChip, 12, 12);
+              requestAnimationFrame(() => dragChip.remove());
+            }
           });
           const cluster = document.createElement("div");
           cluster.className = "fruit-cluster";
