@@ -1138,9 +1138,9 @@
         plateItems.id = "plate-items";
         const plateBase = document.createElement("div");
         plateBase.className = "plate-illustration";
-        plateWrap.appendChild(noteStrip);
         plateWrap.appendChild(plateItems);
         plateWrap.appendChild(plateBase);
+        toppingGrid.appendChild(noteStrip);
         toppingGrid.appendChild(plateWrap);
 
         plateWrap.addEventListener("dragover", (event) => {
