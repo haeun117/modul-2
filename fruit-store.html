@@ -1682,7 +1682,10 @@
       });
 
       doneButton.addEventListener("click", () => {
-        console.log("DONE");
+        plate.splice(0, plate.length);
+        renderPlateItems();
+        renderNoteStickers();
+        nextOrder();
       });
 
       renderOrder();
