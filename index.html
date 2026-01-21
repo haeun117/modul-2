@@ -522,11 +522,7 @@
       }
 
       .bear {
-        width: 140px;
-        height: 160px;
-        position: relative;
-        display: grid;
-        place-items: center;
+        display: none;
       }
 
       .bear .head {
@@ -1204,16 +1200,11 @@
         <section class="workbench">
           <div class="customer-panel">
             <div class="customer">
-              <div class="bear" aria-label="곰돌이 손님 캐릭터">
-                <div class="head">
-                  <span class="ear left"></span>
-                  <span class="ear right"></span>
-                  <span class="eye left"></span>
-                  <span class="eye right"></span>
-                  <span class="nose"></span>
-                  <span class="mouth"></span>
-                </div>
-              </div>
+              <img
+                class="customer-image"
+                src="assets/characters/girl.png"
+                alt="손님 캐릭터"
+              />
             </div>
             <div class="order-card">
               <div class="order-items" id="order-items"></div>
