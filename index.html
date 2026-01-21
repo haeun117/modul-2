@@ -330,6 +330,27 @@
         transform: rotate(-12deg);
       }
 
+      .plate-fruit.orange::after {
+        width: 10px;
+        height: 10px;
+        top: -6px;
+        right: 2px;
+        border-radius: 0;
+        clip-path: polygon(
+          50% 0%,
+          61% 36%,
+          98% 35%,
+          68% 58%,
+          79% 92%,
+          50% 72%,
+          21% 92%,
+          32% 58%,
+          2% 35%,
+          39% 36%
+        );
+        transform: rotate(0deg);
+      }
+
       .plate-fruit.peach {
         width: 28px;
         height: 24px;
@@ -798,6 +819,27 @@
         border-radius: 8px 12px 8px 12px;
         border: 2px solid var(--line);
         transform: rotate(-12deg);
+      }
+
+      .fruit-slot.orange .fruit-piece.leaf::after {
+        width: 14px;
+        height: 14px;
+        top: -8px;
+        right: 0;
+        border-radius: 0;
+        clip-path: polygon(
+          50% 0%,
+          61% 36%,
+          98% 35%,
+          68% 58%,
+          79% 92%,
+          50% 72%,
+          21% 92%,
+          32% 58%,
+          2% 35%,
+          39% 36%
+        );
+        transform: rotate(0deg);
       }
 
       .p1 { left: 8px; top: 26px; }
