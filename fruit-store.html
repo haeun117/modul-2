@@ -1344,7 +1344,7 @@
         const fruit = fruits.find((item) => item.id === fruitId);
         if (!fruit) return null;
         const chip = document.createElement("span");
-        const leafClass = fruitId === "blueberry" || fruitId === "melon" ? "" : "leaf";
+          const leafClass = fruitId === "blueberry" ? "" : "leaf";
           const pearClass = fruitId === "melon" ? "melon" : "";
         const peachClass = fruitId === "peach" ? "peach" : "";
         const pineappleClass = fruitId === "pineapple" ? "pineapple" : "";
@@ -1507,12 +1507,7 @@
             fruit.id === "blueberry" ? 16 : fruit.id === "melon" ? 5 : 7;
           for (let i = 1; i <= totalPieces; i += 1) {
             const piece = document.createElement("span");
-            const leafClass =
-              fruit.id === "blueberry" || fruit.id === "melon"
-                ? ""
-                : i % 2 === 0
-                  ? "leaf"
-                  : "";
+            const leafClass = fruit.id === "blueberry" ? "" : i % 2 === 0 ? "leaf" : "";
             piece.className = `fruit-piece p${i} ${leafClass}`.trim();
             if (fruit.id === "peach") {
               const line = document.createElement("span");
