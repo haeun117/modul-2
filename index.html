@@ -511,9 +511,21 @@
       .fruit-slot.banana .p7 { transform: rotate(-12deg); }
 
       .fruit-slot.pear .fruit-piece {
-        width: 30px;
-        height: 46px;
-        border-radius: 42% 42% 80% 80% / 50% 50% 90% 90%;
+        width: 32px;
+        height: 48px;
+        border-radius: 10px;
+        clip-path: polygon(
+          50% 0%,
+          68% 10%,
+          80% 30%,
+          84% 58%,
+          70% 88%,
+          50% 100%,
+          30% 88%,
+          16% 58%,
+          20% 30%,
+          32% 10%
+        );
       }
 
       .fruit-slot.pear .fruit-piece::before {
