@@ -349,12 +349,11 @@
         background: #fff8f1;
         border: 4px solid var(--line);
         border-radius: 18px;
-        padding: 10px 12px;
+        padding: 10px;
         display: grid;
-        grid-template-columns: 48px 1fr;
-        align-items: center;
-        gap: 8px;
-        cursor: pointer;
+        place-items: center;
+        gap: 6px;
+        cursor: default;
         box-shadow: 0 5px 0 var(--line);
         transition: transform 0.15s ease, box-shadow 0.15s ease;
       }
@@ -368,82 +367,18 @@
         box-shadow: 0 3px 0 var(--line);
       }
 
-      .slot-emoji {
-        font-size: 26px;
+      .fruit-pile {
+        width: 100%;
+        min-height: 64px;
         background: #ffe8d8;
         border: 3px solid var(--line);
         border-radius: 14px;
-        width: 48px;
-        height: 48px;
         display: grid;
         place-items: center;
-      }
-
-      .slot-info strong {
-        display: block;
-        font-size: 16px;
-      }
-
-      .slot-info span {
-        font-size: 13px;
-      }
-
-      .plate-area {
-        background: #fff6ef;
-        border: 4px dashed var(--line);
-        border-radius: 22px;
-        padding: 16px;
-        min-height: 180px;
-        display: grid;
-        gap: 12px;
-        justify-items: center;
-      }
-
-      .plate {
-        width: 120px;
-        height: 120px;
-        border: 4px solid var(--line);
-        border-radius: 50%;
-        background: #fff1e3;
-        display: grid;
-        place-items: center;
-        font-size: 40px;
-        box-shadow: inset 0 4px 0 rgba(255, 255, 255, 0.8);
-      }
-
-      .plate-items {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        justify-content: center;
-      }
-
-      .plate-empty {
-        font-size: 14px;
-        opacity: 0.7;
-      }
-
-      .plate-fruit {
-        background: #ffffff;
-        border: 3px solid var(--line);
-        border-radius: 12px;
-        width: 44px;
-        height: 44px;
-        display: grid;
-        place-items: center;
+        padding: 6px;
         font-size: 22px;
-        cursor: pointer;
-        box-shadow: 0 3px 0 var(--line);
-        transition: transform 0.15s ease, box-shadow 0.15s ease;
-      }
-
-      .plate-fruit:hover {
-        transform: translateY(-2px);
-      }
-
-      .plate-fruit:active {
-        transform: translateY(2px);
-        box-shadow: 0 1px 0 var(--line);
+        line-height: 1.2;
+        text-align: center;
       }
 
       .bottom-bar {
@@ -570,19 +505,11 @@
               </div>
             </div>
             <div class="order-card">
-              <p>주문!</p>
               <div class="order-items" id="order-items"></div>
             </div>
           </div>
 
           <div class="fruit-bins" id="fruit-bins"></div>
-
-          <div class="plate-area">
-            <div class="plate" role="button">
-              <span>🍽️</span>
-            </div>
-            <div class="plate-items" id="plate-items"></div>
-          </div>
         </section>
 
         <aside class="side-panel right">
@@ -633,10 +560,7 @@
         { id: "bowl", emoji: "🥣", name: "볼" }
       ];
 
-      let plate = [];
-
       const fruitBins = document.getElementById("fruit-bins");
-      const plateItems = document.getElementById("plate-items");
       const orderItems = document.getElementById("order-items");
       const toolList = document.getElementById("tool-list");
       const containerRow = document.getElementById("container-row");
@@ -694,62 +618,17 @@
           button.className = "fruit-slot";
           button.type = "button";
           button.innerHTML = `
-            <span class="slot-emoji">${fruit.emoji}</span>
-            <div class="slot-info">
-              <strong>${fruit.name}</strong>
-              <span>${fruit.note} ${fruit.desc}</span>
-            </div>
+            <div class="fruit-pile">${fruit.emoji}${fruit.emoji}${fruit.emoji}<br>${fruit.emoji}${fruit.emoji}</div>
           `;
-          button.addEventListener("click", () => addToPlate(fruit.id));
           fruitBins.appendChild(button);
         });
       }
-
-      function renderPlate() {
-        plateItems.innerHTML = "";
-        if (plate.length === 0) {
-          const empty = document.createElement("span");
-          empty.className = "plate-empty";
-          empty.textContent = "과일을 담아보세요";
-          plateItems.appendChild(empty);
-          doneButton.disabled = true;
-          return;
-        }
-
-        plate.forEach((id, index) => {
-          const fruit = fruits.find((item) => item.id === id);
-          const button = document.createElement("button");
-          button.className = "plate-fruit";
-          button.type = "button";
-          button.textContent = fruit ? fruit.emoji : "";
-          button.title = "클릭하면 1개 제거";
-          button.addEventListener("click", () => removeFromPlate(index));
-          plateItems.appendChild(button);
-        });
-        doneButton.disabled = false;
-      }
-
-      function addToPlate(id) {
-        plate.push(id);
-        renderPlate();
-      }
-
-      function removeFromPlate(index) {
-        plate.splice(index, 1);
-        renderPlate();
-      }
-
       undoButton.addEventListener("click", () => {
-        plate.pop();
-        renderPlate();
+        console.log("UNDO");
       });
 
       doneButton.addEventListener("click", () => {
-        const items = plate.map((id) => {
-          const fruit = fruits.find((item) => item.id === id);
-          return fruit ? fruit.emoji : "";
-        });
-        console.log("DONE", items.join(" "));
+        console.log("DONE");
       });
 
       renderOrder();
@@ -757,7 +636,6 @@
       renderContainers();
       renderToppings();
       renderFruitBins();
-      renderPlate();
     </script>
   </body>
 </html>
