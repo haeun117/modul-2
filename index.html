@@ -176,31 +176,39 @@
 
       .topping-grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+        place-items: center;
+        min-height: 220px;
       }
 
-      .topping {
-        border: 3px solid var(--line);
-        border-radius: 16px;
-        background: #fff1e3;
-        padding: 12px 10px;
-        display: grid;
-        gap: 6px;
-        justify-items: center;
-        font-weight: 700;
-        cursor: pointer;
-        box-shadow: 0 3px 0 var(--line);
-        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      .plate-illustration {
+        width: 160px;
+        height: 110px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 50% 38%, #ffffff 40%, #e6e6e6 100%);
+        border: 4px solid #bdbdbd;
+        position: relative;
+        box-shadow: inset 0 -10px 0 rgba(0, 0, 0, 0.08);
       }
 
-      .topping:hover {
-        transform: translateY(-2px);
+      .plate-illustration::before {
+        content: "";
+        position: absolute;
+        inset: 16px 22px 20px;
+        border-radius: 50%;
+        border: 3px solid #d5d5d5;
+        background: radial-gradient(circle at 50% 40%, #ffffff 35%, #f3f3f3 100%);
       }
 
-      .topping:active {
-        transform: translateY(2px);
-        box-shadow: 0 1px 0 var(--line);
+      .plate-illustration::after {
+        content: "";
+        position: absolute;
+        left: 10%;
+        right: 10%;
+        bottom: -8px;
+        height: 16px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.12);
+        filter: blur(2px);
       }
 
       .workbench {
