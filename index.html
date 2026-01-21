@@ -315,20 +315,31 @@
       .order-card {
         background: #ffffff;
         border: 4px solid var(--line);
-        border-radius: 18px;
-        padding: 14px;
-        box-shadow: 0 6px 0 var(--line);
+        border-radius: 16px;
+        padding: 8px 10px;
+        box-shadow: 0 4px 0 var(--line);
+        position: relative;
+        max-width: 140px;
       }
 
-      .order-card p {
-        margin: 0 0 8px;
-        font-weight: 700;
+      .order-card::after {
+        content: "";
+        position: absolute;
+        left: -8px;
+        top: 50%;
+        width: 14px;
+        height: 14px;
+        background: #ffffff;
+        border-left: 4px solid var(--line);
+        border-bottom: 4px solid var(--line);
+        transform: translateY(-50%) rotate(45deg);
       }
 
       .order-items {
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
+        justify-content: center;
       }
 
       .order-item {
