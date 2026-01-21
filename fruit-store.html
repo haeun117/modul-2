@@ -1791,6 +1791,79 @@
           fruitBins.appendChild(button);
         });
       }
+
+      function updateServeButton() {
+        const serveButton = document.getElementById("serve-button");
+        if (!serveButton) return;
+        serveButton.disabled = plate.length === 0;
+      }
+
+      function plateCounts() {
+        return plate.reduce((acc, id) => {
+          acc[id] = (acc[id] || 0) + 1;
+          return acc;
+        }, {});
+      }
+
+      function validateOrder() {
+        const counts = plateCounts();
+        if (plate.length === 0) return false;
+
+        if (currentStage === 1) {
+          const target = currentOrder.items[0];
+          return (
+            plate.length === 1 &&
+            target &&
+            plate[0] === target.id &&
+            target.qty === 1
+          );
+        }
+
+        if (currentStage === 2) {
+          const target = currentOrder.items[0];
+          if (!target) return false;
+          const keys = Object.keys(counts);
+          return keys.length === 1 && counts[target.id] === target.qty;
+        }
+
+        if (currentStage === 3) {
+          const expected = currentOrder.items.reduce((acc, item) => {
+            acc[item.id] = item.qty;
+            return acc;
+          }, {});
+          const keys = Object.keys(counts);
+          if (keys.length !== Object.keys(expected).length) return false;
+          return keys.every((id) => counts[id] === expected[id]);
+        }
+
+        if (currentStage === 4) {
+          const target = currentOrder.items[0];
+          if (!target) return false;
+          const targetFruit = fruits.find((fruit) => fruit.id === target.id);
+          if (!targetFruit) return false;
+          const total = plate.reduce((sum, id) => {
+            const fruit = fruits.find((item) => item.id === id);
+            return sum + (fruit ? fruit.length : 0);
+          }, 0);
+          const hasTarget = plate.includes(target.id);
+          return total === targetFruit.length && !hasTarget;
+        }
+        return false;
+      }
+
+      function showResult(success) {
+        if (!resultOverlay || !resultText || !resultButton) return;
+        resultText.textContent = success ? "서빙 성공!" : "다시 해볼까요?";
+        resultButton.textContent = success ? "다음 주문" : "다시 하기";
+        resultOverlay.classList.add("active");
+        resultOverlay.setAttribute("aria-hidden", "false");
+      }
+
+      function hideResult() {
+        if (!resultOverlay) return;
+        resultOverlay.classList.remove("active");
+        resultOverlay.setAttribute("aria-hidden", "true");
+      }
       undoButton.addEventListener("click", () => {
         console.log("UNDO");
       });
