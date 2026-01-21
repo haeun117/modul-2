@@ -951,13 +951,9 @@
 
       function renderToppings() {
         toppingGrid.innerHTML = "";
-        toppings.forEach((item) => {
-          const button = document.createElement("button");
-          button.className = "topping";
-          button.type = "button";
-          button.innerHTML = `<span>${item.emoji}</span><span>${item.name}</span>`;
-          toppingGrid.appendChild(button);
-        });
+        const plate = document.createElement("div");
+        plate.className = "plate-illustration";
+        toppingGrid.appendChild(plate);
       }
 
       function renderFruitBins() {
