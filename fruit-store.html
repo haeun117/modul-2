@@ -1553,7 +1553,9 @@
         if (timerInterval) clearInterval(timerInterval);
         timeLeft = stageDuration;
         updateTimerUI();
+        isPaused = false;
         timerInterval = setInterval(() => {
+          if (isPaused) return;
           timeLeft -= 1;
           if (timeLeft <= 0) {
             timeLeft = 0;
