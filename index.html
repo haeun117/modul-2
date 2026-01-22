@@ -1896,8 +1896,6 @@
       const orderItems = document.getElementById("order-items");
       const customerImage = document.getElementById("customer-image");
       const toppingGrid = document.getElementById("topping-grid");
-      const undoButton = document.getElementById("undo-button");
-      const doneButton = document.getElementById("done-button");
       const clockFill = document.getElementById("clock-fill");
       const clockHandle = document.querySelector(".clock-handle");
       const clockToggle = document.getElementById("clock-toggle");
@@ -2508,14 +2506,6 @@
         resultOverlay.classList.remove("active");
         resultOverlay.setAttribute("aria-hidden", "true");
       }
-      undoButton.addEventListener("click", () => {
-        console.log("UNDO");
-      });
-
-      doneButton.addEventListener("click", () => {
-        const success = validateOrder();
-        showResult(success);
-      });
 
       renderToppings();
       renderFruitBins();
