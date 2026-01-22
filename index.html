@@ -1720,72 +1720,126 @@
   </head>
   <body>
     <div class="app">
-      <div class="top-bar">
-        <div class="top-left">
-          <button class="pill-button home" type="button" aria-label="홈">
-            <span class="home-icon" aria-hidden="true"></span>
-          </button>
-          <button class="pill-button upgrade" type="button">Stage 1</button>
-        </div>
-        <div class="top-right">
-          <div class="resource">
-            <span>주문</span>
-            <strong>12</strong>
+      <div class="home-screen" id="home-screen" aria-hidden="true">
+        <div class="home-title">Fruit Order</div>
+        <div class="home-content">
+          <div class="home-panel">
+            <div class="home-customers">
+              <div class="home-customer" data-order="orange">
+                <div class="home-bubble">
+                  <div class="home-bubble-items"></div>
+                </div>
+                <img class="home-customer-image" src="assets/characters/boy.png" alt="손님" />
+              </div>
+              <div class="home-customer" data-order="apple,apple">
+                <div class="home-bubble">
+                  <div class="home-bubble-items"></div>
+                </div>
+                <img class="home-customer-image" src="assets/characters/girl.png" alt="손님" />
+              </div>
+              <div class="home-customer" data-order="blueberry,orange">
+                <div class="home-bubble">
+                  <div class="home-bubble-items"></div>
+                </div>
+                <img class="home-customer-image" src="assets/characters/grandfa.png" alt="손님" />
+              </div>
+              <div class="home-customer" data-order="melon,peach">
+                <div class="home-bubble">
+                  <div class="home-bubble-items"></div>
+                </div>
+                <img class="home-customer-image" src="assets/characters/grandma.png" alt="손님" />
+              </div>
+              <div class="home-customer" data-order="pineapple,apple">
+                <div class="home-bubble">
+                  <div class="home-bubble-items"></div>
+                </div>
+                <img class="home-customer-image" src="assets/characters/man.png" alt="손님" />
+              </div>
+              <div class="home-customer" data-order="orange,blueberry,blueberry">
+                <div class="home-bubble">
+                  <div class="home-bubble-items"></div>
+                </div>
+                <img class="home-customer-image" src="assets/characters/woman.png" alt="손님" />
+              </div>
+            </div>
           </div>
-          <div class="resource">
-            <span>코인</span>
-            <strong>3,784</strong>
-          </div>
-          <div class="resource">
-            <span>보석</span>
-            <strong>24</strong>
+          <div class="home-stages">
+            <button class="stage-button" type="button" data-stage-button="1">Stage 1</button>
+            <button class="stage-button" type="button" data-stage-button="2">Stage 2</button>
+            <button class="stage-button" type="button" data-stage-button="3">Stage 3</button>
+            <button class="stage-button" type="button" data-stage-button="4">Stage 4</button>
           </div>
         </div>
       </div>
 
-      <div class="main-grid">
-        <aside class="side-panel left">
-          <div class="clock-timer">
-            <div class="clock-face">
-              <div class="clock-fill" id="clock-fill"></div>
-              <span class="clock-top-button"></span>
-              <span class="clock-handle"></span>
-              <div class="clock-center"></div>
-            </div>
-            <button class="clock-toggle" id="clock-toggle" data-state="paused" aria-label="재생">
-              <span class="icon-play"></span>
-              <span class="icon-pause"></span>
+      <div class="game-screen" id="game-screen">
+        <div class="top-bar">
+          <div class="top-left">
+            <button class="pill-button home" type="button" aria-label="홈" id="home-button">
+              <span class="home-icon" aria-hidden="true"></span>
             </button>
+            <button class="pill-button upgrade" type="button" id="stage-label">Stage 1</button>
           </div>
-        </aside>
-
-        <section class="workbench">
-          <div class="customer-panel">
-            <div class="customer">
-              <img
-                class="customer-image"
-                id="customer-image"
-                src="assets/characters/girl.png"
-                alt="손님 캐릭터"
-              />
+          <div class="top-right">
+            <div class="resource">
+              <span>주문</span>
+              <strong>12</strong>
             </div>
-            <div class="order-card">
-              <div class="order-items" id="order-items"></div>
+            <div class="resource">
+              <span>코인</span>
+              <strong>3,784</strong>
+            </div>
+            <div class="resource">
+              <span>보석</span>
+              <strong>24</strong>
             </div>
           </div>
+        </div>
 
-          <div class="fruit-bins" id="fruit-bins"></div>
-        </section>
+        <div class="main-grid">
+          <aside class="side-panel left">
+            <div class="clock-timer">
+              <div class="clock-face">
+                <div class="clock-fill" id="clock-fill"></div>
+                <span class="clock-top-button"></span>
+                <span class="clock-handle"></span>
+                <div class="clock-center"></div>
+              </div>
+              <button class="clock-toggle" id="clock-toggle" data-state="paused" aria-label="재생">
+                <span class="icon-play"></span>
+                <span class="icon-pause"></span>
+              </button>
+            </div>
+          </aside>
 
-        <aside class="side-panel right">
-          <div class="topping-grid" id="topping-grid"></div>
-        </aside>
-      </div>
+          <section class="workbench">
+            <div class="customer-panel">
+              <div class="customer">
+                <img
+                  class="customer-image"
+                  id="customer-image"
+                  src="assets/characters/girl.png"
+                  alt="손님 캐릭터"
+                />
+              </div>
+              <div class="order-card">
+                <div class="order-items" id="order-items"></div>
+              </div>
+            </div>
 
-      <div class="bottom-bar">
-        <button class="pill-button" type="button" id="undo-button">↩ 되돌리기</button>
-        <button class="done-button" type="button" id="done-button">DONE</button>
-        <div class="ghost-button" aria-hidden="true"></div>
+            <div class="fruit-bins" id="fruit-bins"></div>
+          </section>
+
+          <aside class="side-panel right">
+            <div class="topping-grid" id="topping-grid"></div>
+          </aside>
+        </div>
+
+        <div class="bottom-bar">
+          <button class="pill-button" type="button" id="undo-button">↩ 되돌리기</button>
+          <button class="done-button" type="button" id="done-button">DONE</button>
+          <div class="ghost-button" aria-hidden="true"></div>
+        </div>
       </div>
     </div>
 
