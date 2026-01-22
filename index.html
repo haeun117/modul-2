@@ -1642,7 +1642,7 @@
         const ratio = Math.max(timeLeft, 0) / stageDuration;
         timerFill.style.width = `${ratio * 100}%`;
         timerText.textContent = `${timeLeft}s`;
-        stageLabel.textContent = `Stage ${currentStage}`;
+        stageLabel.textContent = currentStage === 0 ? "" : `Stage ${currentStage}`;
       }
 
       function startStageTimer() {
