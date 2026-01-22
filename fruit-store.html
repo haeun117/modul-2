@@ -2524,6 +2524,9 @@
 
       if (clockToggle) {
         clockToggle.addEventListener("click", () => {
+          if (!isStarted) {
+            isStarted = true;
+          }
           isPaused = !isPaused;
           updateClockToggle();
         });
@@ -2545,7 +2548,7 @@
 
       renderHomeBubbles();
       updateServeButton();
-      isStarted = true;
+      isStarted = false;
       startStage(1);
       showHome();
 
