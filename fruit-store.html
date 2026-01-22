@@ -2478,9 +2478,26 @@
           updateClockToggle();
         });
       }
+
+      if (homeButton) {
+        homeButton.addEventListener("click", () => {
+          showHome();
+        });
+      }
+
+      stageButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const stage = Number(button.dataset.stageButton || 1);
+          startStage(stage);
+          showGame();
+        });
+      });
+
+      renderHomeBubbles();
       updateServeButton();
       isStarted = true;
       startStage(1);
+      showHome();
 
       document.addEventListener("click", (event) => {
         if (event.target && event.target.id === "serve-button") {
