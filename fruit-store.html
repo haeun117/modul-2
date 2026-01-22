@@ -288,7 +288,7 @@
 
       .main-grid {
         display: grid;
-        grid-template-columns: 160px 1fr 180px;
+        grid-template-columns: 1fr 180px;
         gap: 18px;
         align-items: stretch;
       }
@@ -1038,10 +1038,17 @@
         background: var(--panel-2);
         border: 4px solid var(--line);
         border-radius: 24px;
-        padding: 18px;
+        padding: 70px 18px 18px;
         display: grid;
         gap: 18px;
         box-shadow: 0 8px 0 var(--line);
+        position: relative;
+      }
+
+      .workbench .clock-timer {
+        position: absolute;
+        top: 12px;
+        left: 12px;
       }
 
       .customer-panel {
