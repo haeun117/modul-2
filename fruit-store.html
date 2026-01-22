@@ -282,15 +282,14 @@
       }
 
       .clock-timer {
-        display: grid;
-        justify-items: center;
-        align-items: start;
-        gap: 4px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
       }
 
       .clock-face {
-        width: 64px;
-        height: 64px;
+        width: 42px;
+        height: 42px;
         border-radius: 50%;
         border: 4px solid var(--line);
         background: #fff8f1;
@@ -302,18 +301,18 @@
       .clock-face::before {
         content: "";
         position: absolute;
-        inset: -8px;
-        border: 3px solid var(--line);
+        inset: -6px;
+        border: 2px solid var(--line);
         border-radius: 50%;
         transform: scale(0.85);
       }
 
       .clock-top-button {
         position: absolute;
-        top: -10px;
+        top: -8px;
         left: 50%;
-        width: 26px;
-        height: 10px;
+        width: 20px;
+        height: 8px;
         background: var(--line);
         border-radius: 6px;
         transform: translateX(-50%);
@@ -324,8 +323,8 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 4px;
-        height: 18px;
+        width: 3px;
+        height: 12px;
         background: var(--line);
         border-radius: 999px;
         transform: translate(-50%, -100%) rotate(20deg);
@@ -335,7 +334,7 @@
 
       .clock-fill {
         position: absolute;
-        inset: 6px;
+        inset: 4px;
         border-radius: 50%;
         background: conic-gradient(#4aa6d6 360deg, transparent 0deg);
         transition: background 0.2s linear;
@@ -343,8 +342,8 @@
 
       .clock-center {
         position: absolute;
-        width: 10px;
-        height: 10px;
+        width: 7px;
+        height: 7px;
         border-radius: 50%;
         background: var(--line);
         top: 50%;
@@ -354,8 +353,8 @@
       }
 
       .clock-toggle {
-        width: 42px;
-        height: 42px;
+        width: 38px;
+        height: 38px;
         border-radius: 50%;
         background: radial-gradient(circle at 30% 30%, #ffe38a, #f2a833);
         border: 4px solid #a44a2b;
@@ -379,25 +378,25 @@
       .clock-toggle .icon-play {
         width: 0;
         height: 0;
-        border-top: 9px solid transparent;
-        border-bottom: 9px solid transparent;
-        border-left: 15px solid #9b3b2c;
-        margin-left: 3px;
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid transparent;
+        border-left: 12px solid #9b3b2c;
+        margin-left: 2px;
       }
 
       .clock-toggle .icon-pause {
-        width: 16px;
-        height: 18px;
+        width: 14px;
+        height: 16px;
         display: grid;
-        grid-template-columns: repeat(2, 5px);
-        gap: 4px;
+        grid-template-columns: repeat(2, 4px);
+        gap: 3px;
       }
 
       .clock-toggle .icon-pause::before,
       .clock-toggle .icon-pause::after {
         content: "";
-        width: 5px;
-        height: 18px;
+        width: 4px;
+        height: 16px;
         background: #9b3b2c;
         border-radius: 2px;
         display: block;
