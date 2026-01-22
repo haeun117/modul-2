@@ -134,6 +134,164 @@
         gap: 10px;
       }
 
+      .home-screen {
+        display: none;
+        padding: 16px 0 28px;
+      }
+
+      .home-screen.is-visible {
+        display: block;
+      }
+
+      .game-screen.is-hidden {
+        display: none;
+      }
+
+      .home-title {
+        text-align: center;
+        font-size: 40px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        margin: 12px 0 18px;
+      }
+
+      .home-content {
+        display: grid;
+        grid-template-columns: 1fr 170px;
+        gap: 18px;
+        align-items: start;
+      }
+
+      .home-panel {
+        background: var(--panel);
+        border: 4px solid var(--line);
+        border-radius: 20px;
+        padding: 16px;
+        box-shadow: 0 4px 0 var(--line);
+      }
+
+      .home-customers {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .home-customer {
+        position: relative;
+        background: #fff8f1;
+        border: 4px solid var(--line);
+        border-radius: 18px;
+        padding: 14px 12px 18px;
+        display: grid;
+        gap: 10px;
+        justify-items: center;
+        box-shadow: 0 4px 0 var(--line);
+      }
+
+      .home-customer-image {
+        width: 86px;
+        height: auto;
+      }
+
+      .home-bubble {
+        background: #fff;
+        border: 3px solid var(--line);
+        border-radius: 16px;
+        padding: 6px 10px;
+        position: relative;
+        min-height: 34px;
+        display: grid;
+        align-items: center;
+        box-shadow: 0 3px 0 var(--line);
+      }
+
+      .home-bubble::after {
+        content: "";
+        position: absolute;
+        left: 16px;
+        bottom: -10px;
+        width: 16px;
+        height: 16px;
+        background: #fff;
+        border-left: 3px solid var(--line);
+        border-bottom: 3px solid var(--line);
+        transform: rotate(-45deg);
+      }
+
+      .home-bubble-items {
+        display: flex;
+        gap: 6px;
+      }
+
+      .home-fruit {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 2px solid var(--line);
+        background: #ffc56d;
+        position: relative;
+        box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.08);
+      }
+
+      .home-fruit-orange {
+        background: #ffad3f;
+      }
+
+      .home-fruit-apple {
+        background: #ff6b6b;
+      }
+
+      .home-fruit-apple::after {
+        content: "";
+        position: absolute;
+        top: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 6px;
+        height: 4px;
+        background: #2e7d32;
+        border-radius: 0 0 6px 6px;
+      }
+
+      .home-fruit-blueberry {
+        background: #6c6bf1;
+        width: 14px;
+        height: 14px;
+      }
+
+      .home-fruit-melon {
+        background: #a8d46b;
+      }
+
+      .home-fruit-peach {
+        background: #ff9aa2;
+      }
+
+      .home-fruit-pineapple {
+        background: #ffd166;
+      }
+
+      .home-stages {
+        display: grid;
+        gap: 12px;
+      }
+
+      .stage-button {
+        border: 4px solid var(--line);
+        border-radius: 16px;
+        padding: 12px 10px;
+        font-weight: 800;
+        background: #fff3e8;
+        box-shadow: 0 4px 0 var(--line);
+        cursor: pointer;
+        text-align: center;
+      }
+
+      .stage-button:active {
+        transform: translateY(2px);
+        box-shadow: 0 2px 0 var(--line);
+      }
+
       .resource {
         background: var(--panel);
         border: 4px solid var(--line);
