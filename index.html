@@ -1987,11 +1987,20 @@
         if (isStage4 && target) {
           const fruit = fruits.find((item) => item.id === target.id);
           const name = fruit ? fruit.name : "과일";
-          stage4Note.textContent = `${name}이 다 떨어졌어요! 똑같은 음표 길이의 과일을 조합해주세요!`;
+          const particle = getSubjectParticle(name);
+          stage4Note.textContent = `${name}${particle} 다 떨어졌어요! 똑같은 음표 길이의 과일을 조합해주세요!`;
           stage4Note.classList.add("is-visible");
         } else {
           stage4Note.classList.remove("is-visible");
         }
+      }
+
+      function getSubjectParticle(word) {
+        if (!word) return "이";
+        const lastChar = word[word.length - 1];
+        const code = lastChar.charCodeAt(0);
+        if (code < 0xac00 || code > 0xd7a3) return "이";
+        return (code - 0xac00) % 28 === 0 ? "가" : "이";
       }
 
       function renderHomeBubbles() {
