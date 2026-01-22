@@ -2040,6 +2040,7 @@
         currentStage = stage;
         nextOrder();
         startStageTimer();
+        updateStageLabel();
       }
 
       function advanceStage() {
@@ -2050,6 +2051,7 @@
         currentStage = currentStage % 4 + 1;
         nextOrder();
         startStageTimer();
+        updateStageLabel();
       }
 
       function updateTimerUI() {
