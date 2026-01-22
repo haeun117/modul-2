@@ -307,6 +307,29 @@
         transform: scale(0.85);
       }
 
+      .clock-top-button {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        width: 26px;
+        height: 10px;
+        background: var(--line);
+        border-radius: 6px;
+        transform: translateX(-50%);
+      }
+
+      .clock-handle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 4px;
+        height: 18px;
+        background: var(--line);
+        border-radius: 999px;
+        transform: translate(-50%, -100%) rotate(20deg);
+        transform-origin: bottom;
+      }
+
       .clock-fill {
         position: absolute;
         inset: 6px;
