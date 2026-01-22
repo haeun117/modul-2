@@ -1654,7 +1654,7 @@
       const stageDuration = 60;
       let timeLeft = stageDuration;
       let timerInterval = null;
-      let isPaused = false;
+      let isPaused = true;
       let isStarted = false;
 
       const fruitBins = document.getElementById("fruit-bins");
@@ -1815,7 +1815,7 @@
         if (timerInterval) clearInterval(timerInterval);
         timeLeft = stageDuration;
         updateTimerUI();
-        isPaused = false;
+        isPaused = true;
         updateClockToggle();
         timerInterval = setInterval(() => {
           if (isPaused) return;
