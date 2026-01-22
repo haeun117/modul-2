@@ -1627,6 +1627,7 @@
       const doneButton = document.getElementById("done-button");
       const clockFill = document.getElementById("clock-fill");
       const clockHandle = document.querySelector(".clock-handle");
+      const clockToggle = document.getElementById("clock-toggle");
       const resultOverlay = document.getElementById("result-overlay");
       const resultText = document.getElementById("result-text");
       const resultButton = document.getElementById("result-button");
@@ -1765,11 +1766,19 @@
         }
       }
 
+      function updateClockToggle() {
+        if (!clockToggle) return;
+        const state = isPaused ? "paused" : "playing";
+        clockToggle.dataset.state = state;
+        clockToggle.setAttribute("aria-label", isPaused ? "재생" : "일시정지");
+      }
+
       function startStageTimer() {
         if (timerInterval) clearInterval(timerInterval);
         timeLeft = stageDuration;
         updateTimerUI();
         isPaused = false;
+        updateClockToggle();
         timerInterval = setInterval(() => {
           if (isPaused) return;
           timeLeft -= 1;
@@ -2161,6 +2170,14 @@
       renderFruitBins();
       renderNoteStickers();
       updateTimerUI();
+      updateClockToggle();
+
+      if (clockToggle) {
+        clockToggle.addEventListener("click", () => {
+          isPaused = !isPaused;
+          updateClockToggle();
+        });
+      }
       updateServeButton();
       isStarted = true;
       startStage(1);
