@@ -1883,9 +1883,10 @@
           if (!bubble) return;
           bubble.innerHTML = "";
           list.forEach((id) => {
-            const piece = document.createElement("span");
-            piece.className = `home-fruit home-fruit-${id}`;
-            bubble.appendChild(piece);
+            const chip = createFruitChip(id);
+            if (!chip) return;
+            chip.classList.add("home-fruit-chip");
+            bubble.appendChild(chip);
           });
         });
       }
