@@ -802,7 +802,14 @@
       }
 
       .note-stickers {
-        display: none;
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 6px;
+        z-index: 5;
+        pointer-events: none;
       }
 
       .note-chip {
