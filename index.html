@@ -1919,7 +1919,12 @@
       if (resultButton) {
         resultButton.addEventListener("click", () => {
           const wasSuccess = resultText && resultText.textContent.includes("성공");
+          const wasStage = resultText && resultText.textContent.includes("Stage");
           hideResult();
+          if (wasStage) {
+            advanceStage();
+            return;
+          }
           if (wasSuccess) {
             plate.splice(0, plate.length);
             renderPlateItems();
