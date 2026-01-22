@@ -2155,6 +2155,10 @@
         });
         plateWrap.addEventListener("drop", (event) => {
           event.preventDefault();
+          if (!isStarted) {
+            showStartPrompt();
+            return;
+          }
           const fruitId = event.dataTransfer.getData("text/plain");
           if (fruitId) {
             plate.push(fruitId);
@@ -2317,6 +2321,11 @@
           button.style.setProperty("--fruit-dark", style.dark);
           button.style.setProperty("--leaf", style.leaf);
           button.addEventListener("dragstart", (event) => {
+            if (!isStarted) {
+              event.preventDefault();
+              showStartPrompt();
+              return;
+            }
             event.dataTransfer.setData("text/plain", fruit.id);
             const dragChip = createFruitChip(fruit.id);
             if (dragChip) {
