@@ -2531,6 +2531,10 @@
           if (!target) return false;
           const targetFruit = fruits.find((fruit) => fruit.id === target.id);
           if (!targetFruit) return false;
+          if (target.id === "melon") {
+            if (plate.length !== 2) return false;
+            return plate.every((id) => id === "orange");
+          }
           const total = plate.reduce((sum, id) => {
             const fruit = fruits.find((item) => item.id === id);
             return sum + (fruit ? fruit.length : 0);
