@@ -806,10 +806,12 @@
         top: 10px;
         left: 50%;
         transform: translateX(-50%);
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(3, auto);
         gap: 6px;
         z-index: 5;
         pointer-events: none;
+        justify-items: center;
       }
 
       .note-chip {
