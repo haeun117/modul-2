@@ -1954,6 +1954,7 @@
       const stageLabel = document.getElementById("stage-label");
       const stageButtons = document.querySelectorAll("[data-stage-button]");
       const homeCustomers = document.querySelectorAll(".home-customer");
+      const stage4Note = document.getElementById("stage4-note");
 
       function renderOrder() {
         orderItems.innerHTML = "";
@@ -1975,6 +1976,20 @@
           wrapper.appendChild(qty);
           orderItems.appendChild(wrapper);
         });
+        updateStageNotice();
+      }
+
+      function updateStageNotice() {
+        if (!stage4Note) return;
+        const isStage4 = currentStage === 4;
+        const hasMelon =
+          currentOrder.items &&
+          currentOrder.items.some((item) => item.id === "melon");
+        if (isStage4 && hasMelon) {
+          stage4Note.classList.add("is-visible");
+        } else {
+          stage4Note.classList.remove("is-visible");
+        }
       }
 
       function renderHomeBubbles() {
