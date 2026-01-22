@@ -2541,6 +2541,10 @@
       stageButtons.forEach((button) => {
         button.addEventListener("click", () => {
           const stage = Number(button.dataset.stageButton || 1);
+          plate.splice(0, plate.length);
+          renderPlateItems();
+          renderNoteStickers();
+          updateServeButton();
           startStage(stage);
           showGame();
         });
