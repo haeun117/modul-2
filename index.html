@@ -1944,8 +1944,26 @@
       renderToppings();
       renderFruitBins();
       renderNoteStickers();
-      startStage(1);
+      updateTimerUI();
       updateServeButton();
+
+      if (startButton) {
+        startButton.addEventListener("click", () => {
+          if (!isStarted) {
+            isStarted = true;
+            startStage(1);
+            return;
+          }
+          isPaused = false;
+        });
+      }
+
+      if (pauseButton) {
+        pauseButton.addEventListener("click", () => {
+          if (!isStarted) return;
+          isPaused = !isPaused;
+        });
+      }
 
       document.addEventListener("click", (event) => {
         if (event.target && event.target.id === "serve-button") {
