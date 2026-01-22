@@ -1982,10 +1982,11 @@
       function updateStageNotice() {
         if (!stage4Note) return;
         const isStage4 = currentStage === 4;
-        const hasMelon =
-          currentOrder.items &&
-          currentOrder.items.some((item) => item.id === "melon");
-        if (isStage4 && hasMelon) {
+        const target = currentOrder.items && currentOrder.items[0];
+        if (isStage4 && target) {
+          const fruit = fruits.find((item) => item.id === target.id);
+          const name = fruit ? fruit.name : "과일";
+          stage4Note.textContent = `${name}이 다 떨어졌어요! 똑같은 음표 길이의 과일을 조합해주세요!`;
           stage4Note.classList.add("is-visible");
         } else {
           stage4Note.classList.remove("is-visible");
