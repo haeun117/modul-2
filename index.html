@@ -871,7 +871,8 @@
         width: 10px;
         height: 10px;
         top: -6px;
-        right: 2px;
+        left: 50%;
+        right: auto;
         border-radius: 0;
         clip-path: polygon(
           50% 0%,
@@ -885,14 +886,15 @@
           2% 35%,
           39% 36%
         );
-        transform: rotate(0deg);
+        transform: translateX(-50%);
       }
 
       .plate-fruit.pineapple::after {
         width: 16px;
         height: 16px;
         top: -10px;
-        right: 4px;
+        left: 50%;
+        right: auto;
         border-radius: 0;
         clip-path: polygon(
           50% 0%,
@@ -906,7 +908,7 @@
           0% 40%,
           35% 32%
         );
-        transform: rotate(-10deg);
+        transform: translateX(-50%) rotate(-10deg);
       }
 
       .plate-fruit.peach {
