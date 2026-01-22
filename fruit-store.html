@@ -2280,8 +2280,7 @@
           peach: { type: "dotted-half", label: "점2분음표" },
           pineapple: { type: "whole", label: "온음표" }
         };
-        const unique = [...new Set(plate)];
-        unique.forEach((id) => {
+        plate.forEach((id) => {
           const note = noteLabels[id];
           if (!note) return;
           const chip = document.createElement("div");
