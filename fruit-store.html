@@ -318,6 +318,17 @@
         transform: translateX(-50%);
       }
 
+      .clock-top-cap {
+        position: absolute;
+        top: -18px;
+        left: 50%;
+        width: 22px;
+        height: 10px;
+        background: var(--line);
+        border-radius: 999px;
+        transform: translateX(-50%);
+      }
+
       .clock-handle {
         position: absolute;
         top: 50%;
@@ -1489,6 +1500,7 @@
           <div class="clock-timer">
             <div class="clock-face">
               <div class="clock-fill" id="clock-fill"></div>
+              <span class="clock-top-cap"></span>
               <span class="clock-top-button"></span>
               <span class="clock-handle"></span>
               <div class="clock-center"></div>
