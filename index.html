@@ -2484,6 +2484,15 @@
         resultOverlay.querySelector(".result-card")?.classList.add("stage");
       }
 
+      function showStartPrompt() {
+        if (!resultOverlay || !resultText || !resultButton) return;
+        resultText.textContent = "재생 버튼을 누른 후 시작해주세요!";
+        resultButton.textContent = "확인";
+        resultOverlay.classList.add("active");
+        resultOverlay.setAttribute("aria-hidden", "false");
+        resultOverlay.querySelector(".result-card")?.classList.remove("stage");
+      }
+
       function hideResult() {
         if (!resultOverlay) return;
         resultOverlay.classList.remove("active");
