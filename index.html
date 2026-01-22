@@ -190,8 +190,9 @@
       }
 
       .home-customer-image {
-        width: 86px;
-        height: auto;
+        width: 84px;
+        height: 92px;
+        object-fit: contain;
       }
 
       .home-bubble {
@@ -224,52 +225,26 @@
         gap: 6px;
       }
 
-      .home-fruit {
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        border: 2px solid var(--line);
-        background: #ffc56d;
-        position: relative;
-        box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.08);
+      .home-bubble .home-fruit-chip {
+        transform: scale(0.88);
+        transform-origin: center;
       }
 
-      .home-fruit-orange {
-        background: #ffad3f;
+      .home-bubble .plate-fruit {
+        width: 22px;
+        height: 22px;
+        margin: 0;
       }
 
-      .home-fruit-apple {
-        background: #ff6b6b;
+      .home-bubble .plate-fruit.blueberry {
+        width: 22px;
+        height: 22px;
+        box-shadow: inset -1px -2px 0 rgba(0, 0, 0, 0.12);
       }
 
-      .home-fruit-apple::after {
-        content: "";
-        position: absolute;
-        top: -4px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 6px;
-        height: 4px;
-        background: #2e7d32;
-        border-radius: 0 0 6px 6px;
-      }
-
-      .home-fruit-blueberry {
-        background: #6c6bf1;
-        width: 14px;
-        height: 14px;
-      }
-
-      .home-fruit-melon {
-        background: #a8d46b;
-      }
-
-      .home-fruit-peach {
-        background: #ff9aa2;
-      }
-
-      .home-fruit-pineapple {
-        background: #ffd166;
+      .home-bubble .plate-fruit.pineapple {
+        width: 20px;
+        height: 26px;
       }
 
       .home-stages {
