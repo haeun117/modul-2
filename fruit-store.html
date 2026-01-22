@@ -281,6 +281,51 @@
         box-shadow: 0 1px 0 var(--line);
       }
 
+      .clock-timer {
+        display: grid;
+        justify-items: center;
+        align-items: start;
+      }
+
+      .clock-face {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        border: 4px solid var(--line);
+        background: #fff8f1;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 0 var(--line);
+      }
+
+      .clock-face::before {
+        content: "";
+        position: absolute;
+        inset: -8px;
+        border: 3px solid var(--line);
+        border-radius: 50%;
+        transform: scale(0.85);
+      }
+
+      .clock-fill {
+        position: absolute;
+        inset: 6px;
+        border-radius: 50%;
+        background: conic-gradient(#4aa6d6 360deg, transparent 0deg);
+        transition: background 0.2s linear;
+      }
+
+      .clock-center {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--line);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
       .tool-list {
         display: grid;
         gap: 12px;
