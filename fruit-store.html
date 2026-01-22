@@ -1534,11 +1534,6 @@
       const toppingGrid = document.getElementById("topping-grid");
       const undoButton = document.getElementById("undo-button");
       const doneButton = document.getElementById("done-button");
-      const stageLabel = document.getElementById("stage-label");
-      const timerFill = document.getElementById("timer-fill");
-      const timerText = document.getElementById("timer-text");
-      const startButton = document.getElementById("start-button");
-      const pauseButton = document.getElementById("pause-button");
       const clockFill = document.getElementById("clock-fill");
       const resultOverlay = document.getElementById("result-overlay");
       const resultText = document.getElementById("result-text");
@@ -1667,11 +1662,7 @@
       }
 
       function updateTimerUI() {
-        if (!timerFill || !timerText || !stageLabel) return;
         const ratio = Math.max(timeLeft, 0) / stageDuration;
-        timerFill.style.width = `${ratio * 100}%`;
-        timerText.textContent = `${timeLeft}s`;
-        stageLabel.textContent = currentStage === 0 ? "" : `Stage ${currentStage}`;
         if (clockFill) {
           const degrees = Math.max(0, ratio) * 360;
           clockFill.style.background = `conic-gradient(#4aa6d6 ${degrees}deg, transparent 0deg)`;
@@ -2075,24 +2066,8 @@
       renderNoteStickers();
       updateTimerUI();
       updateServeButton();
-
-      if (startButton) {
-        startButton.addEventListener("click", () => {
-          if (!isStarted) {
-            isStarted = true;
-            startStage(1);
-            return;
-          }
-          isPaused = false;
-        });
-      }
-
-      if (pauseButton) {
-        pauseButton.addEventListener("click", () => {
-          if (!isStarted) return;
-          isPaused = !isPaused;
-        });
-      }
+      isStarted = true;
+      startStage(1);
 
       document.addEventListener("click", (event) => {
         if (event.target && event.target.id === "serve-button") {
