@@ -1882,6 +1882,12 @@
       const resultOverlay = document.getElementById("result-overlay");
       const resultText = document.getElementById("result-text");
       const resultButton = document.getElementById("result-button");
+      const homeScreen = document.getElementById("home-screen");
+      const gameScreen = document.getElementById("game-screen");
+      const homeButton = document.getElementById("home-button");
+      const stageLabel = document.getElementById("stage-label");
+      const stageButtons = document.querySelectorAll("[data-stage-button]");
+      const homeCustomers = document.querySelectorAll(".home-customer");
 
       function renderOrder() {
         orderItems.innerHTML = "";
@@ -1892,6 +1898,47 @@
           wrapper.innerHTML = `<span>${fruit ? fruit.emoji : ""}</span><span>x${item.qty}</span>`;
           orderItems.appendChild(wrapper);
         });
+      }
+
+      function renderHomeBubbles() {
+        homeCustomers.forEach((card) => {
+          const list = card.dataset.order ? card.dataset.order.split(",") : [];
+          const bubble = card.querySelector(".home-bubble-items");
+          if (!bubble) return;
+          bubble.innerHTML = "";
+          list.forEach((id) => {
+            const piece = document.createElement("span");
+            piece.className = `home-fruit home-fruit-${id}`;
+            bubble.appendChild(piece);
+          });
+        });
+      }
+
+      function updateStageLabel() {
+        if (!stageLabel) return;
+        stageLabel.textContent = `Stage ${currentStage}`;
+      }
+
+      function showHome() {
+        if (homeScreen) {
+          homeScreen.classList.add("is-visible");
+          homeScreen.setAttribute("aria-hidden", "false");
+        }
+        if (gameScreen) {
+          gameScreen.classList.add("is-hidden");
+          gameScreen.setAttribute("aria-hidden", "true");
+        }
+      }
+
+      function showGame() {
+        if (homeScreen) {
+          homeScreen.classList.remove("is-visible");
+          homeScreen.setAttribute("aria-hidden", "true");
+        }
+        if (gameScreen) {
+          gameScreen.classList.remove("is-hidden");
+          gameScreen.setAttribute("aria-hidden", "false");
+        }
       }
 
       const customers = [
