@@ -1572,6 +1572,7 @@
       const undoButton = document.getElementById("undo-button");
       const doneButton = document.getElementById("done-button");
       const clockFill = document.getElementById("clock-fill");
+      const clockHandle = document.querySelector(".clock-handle");
       const resultOverlay = document.getElementById("result-overlay");
       const resultText = document.getElementById("result-text");
       const resultButton = document.getElementById("result-button");
@@ -1703,6 +1704,10 @@
         if (clockFill) {
           const degrees = Math.max(0, ratio) * 360;
           clockFill.style.background = `conic-gradient(#4aa6d6 ${degrees}deg, transparent 0deg)`;
+        }
+        if (clockHandle) {
+          const angle = Math.max(0, ratio) * 360 - 90;
+          clockHandle.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
         }
       }
 
