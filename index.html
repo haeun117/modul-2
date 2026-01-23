@@ -2402,6 +2402,7 @@
       const gameScreen = document.getElementById("game-screen");
       const homeButton = document.getElementById("home-button");
       const stageLabel = document.getElementById("stage-label");
+      const modeLabel = document.getElementById("mode-label");
       const stageButtons = document.querySelectorAll("[data-stage-button]");
       const homeCustomers = document.querySelectorAll(".home-customer");
       const stage4Note = document.getElementById("stage4-note");
@@ -2487,6 +2488,11 @@
       function updateStageLabel() {
         if (!stageLabel) return;
         stageLabel.textContent = `${currentStage}단계`;
+      }
+
+      function updateModeLabel() {
+        if (!modeLabel) return;
+        modeLabel.textContent = isRestMode ? "쉼표 학습" : "음표 학습";
       }
 
       function showHome() {
@@ -3141,6 +3147,7 @@
           renderFruitBins();
           updateServeButton();
           startStage(stage);
+          updateModeLabel();
           showGame();
         });
       });
@@ -3149,6 +3156,7 @@
       updateServeButton();
       isStarted = false;
       startStage(1);
+      updateModeLabel();
       showHome();
 
       document.addEventListener("click", (event) => {
