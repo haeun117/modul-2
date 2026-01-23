@@ -2893,6 +2893,14 @@
           peach: { type: "dotted-half", label: "점2분쉼표" },
           pineapple: { type: "whole", label: "온쉼표" }
         };
+        const rhythmMarks = {
+          orange: "V",
+          apple: "따",
+          blueberry: "따따",
+          melon: "VV",
+          peach: "VVV",
+          pineapple: "VVVV"
+        };
         plate.forEach((id) => {
           const note = (isRestMode ? restLabels : noteLabels)[id];
           if (!note) return;
@@ -2902,6 +2910,10 @@
           const label = document.createElement("span");
           label.textContent = note.label;
           chip.appendChild(label);
+          const rhythm = document.createElement("span");
+          rhythm.className = "rhythm";
+          rhythm.textContent = rhythmMarks[id] || "";
+          chip.appendChild(rhythm);
           noteStrip.appendChild(chip);
         });
       }
