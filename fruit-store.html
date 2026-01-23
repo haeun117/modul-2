@@ -2515,6 +2515,7 @@
           gameScreen.classList.add("is-hidden");
           gameScreen.setAttribute("aria-hidden", "true");
         }
+        stopStageTimer();
         hideResult();
       }
 
@@ -2659,6 +2660,15 @@
           }
           updateTimerUI();
         }, 1000);
+      }
+
+      function stopStageTimer() {
+        if (timerInterval) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+        }
+        isPaused = true;
+        updateClockToggle();
       }
 
       function renderToppings() {
@@ -3088,6 +3098,7 @@
         resultOverlay.querySelector(".result-card")?.classList.add("stage");
         if (retryButton) retryButton.style.display = "block";
         if (homeOverlayButton) homeOverlayButton.style.display = "block";
+        stopStageTimer();
       }
 
       function showStartPrompt() {
