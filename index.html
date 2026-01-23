@@ -3086,12 +3086,14 @@
         button.addEventListener("click", () => {
           const stage = Number(button.dataset.stageButton || 1);
           const mode = button.dataset.mode === "rest" ? "rest" : "note";
+          isRestMode = mode === "rest";
           if (countingPanel) {
             countingPanel.classList.toggle("rest", mode === "rest");
           }
           plate.splice(0, plate.length);
           renderPlateItems();
           renderNoteStickers();
+          renderFruitBins();
           updateServeButton();
           startStage(stage);
           showGame();
