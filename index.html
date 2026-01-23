@@ -2601,6 +2601,17 @@
         const rows = document.querySelectorAll(".counting-row[data-fruit]");
         if (!rows.length) return;
         const active = new Set(plate);
+        if (currentStage === 2 && plate.length > 0) {
+          const totalLength = plate.reduce((sum, id) => {
+            const fruit = fruits.find((item) => item.id === id);
+            return sum + (fruit ? fruit.length : 0);
+          }, 0);
+          fruits.forEach((fruit) => {
+            if (fruit.length === totalLength) {
+              active.add(fruit.id);
+            }
+          });
+        }
         rows.forEach((row) => {
           const fruitId = row.dataset.fruit;
           if (fruitId && active.has(fruitId)) {
