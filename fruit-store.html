@@ -219,6 +219,7 @@
         display: grid;
         align-items: center;
         box-shadow: 0 3px 0 var(--line);
+        z-index: 2;
       }
 
       .home-bubble::after {
@@ -237,6 +238,8 @@
       .home-bubble-items {
         display: flex;
         gap: 6px;
+        position: relative;
+        z-index: 3;
       }
 
       .home-bubble .home-fruit-chip {
