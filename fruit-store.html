@@ -1786,6 +1786,31 @@
           0 10px 16px rgba(255, 174, 84, 0.3);
         transform: scale(1.06);
         animation: sparkle 0.9s ease-in-out infinite;
+        position: relative;
+        overflow: visible;
+      }
+
+      .counting-row.is-active::before,
+      .counting-row.is-active::after {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #fff3c4 0 45%, transparent 50%);
+        animation: sparkleFloat 1.4s ease-in-out infinite;
+      }
+
+      .counting-row.is-active::before {
+        top: -6px;
+        left: -6px;
+        animation-delay: 0.1s;
+      }
+
+      .counting-row.is-active::after {
+        bottom: -6px;
+        right: -6px;
+        animation-delay: 0.5s;
       }
 
       @keyframes sparkle {
@@ -1800,6 +1825,18 @@
         100% {
           box-shadow: 0 0 0 3px rgba(255, 174, 84, 0.6),
             0 8px 12px rgba(255, 174, 84, 0.25);
+        }
+      }
+
+      @keyframes sparkleFloat {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(0.9);
+          opacity: 0.6;
+        }
+        50% {
+          transform: translate(2px, -2px) scale(1.2);
+          opacity: 1;
         }
       }
 
