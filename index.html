@@ -1846,27 +1846,17 @@
       }
 
       .count-mark.v-left-split {
-        width: 16px;
+        width: 2px;
         height: 16px;
         position: absolute;
         left: 50%;
         bottom: 0;
         transform: translateX(-50%) rotate(-35deg);
-        background: linear-gradient(to bottom, var(--line) 0 45%, transparent 45% 100%);
-      }
-
-      .count-mark.v-left-split::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        top: 45%;
-        width: 2px;
-        height: 55%;
-        transform: translateX(-50%);
         background: repeating-linear-gradient(
           to bottom,
-          var(--line) 0 3px,
-          transparent 3px 6px
+          var(--line) 0 7px,
+          transparent 7px 10px,
+          var(--line) 10px 16px
         );
         border-radius: 999px;
       }
