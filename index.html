@@ -3029,7 +3029,7 @@
           return keys.length === 1 && counts[target.id] === target.qty;
         }
 
-        if (currentStage === 3) {
+        if (currentStage === 3 || currentStage === 4) {
           const target = currentOrder.items[0];
           if (!target) return false;
           const targetFruit = fruits.find((fruit) => fruit.id === target.id);
@@ -3039,17 +3039,8 @@
             return sum + (fruit ? fruit.length : 0);
           }, 0);
           const hasTarget = plate.includes(target.id);
-          return total === targetFruit.length && !hasTarget;
-        }
-        
-        if (currentStage === 4) {
-          const expected = currentOrder.items.reduce((acc, item) => {
-            acc[item.id] = item.qty;
-            return acc;
-          }, {});
-          const keys = Object.keys(counts);
-          if (keys.length !== Object.keys(expected).length) return false;
-          return keys.every((id) => counts[id] === expected[id]);
+          const requiredLength = targetFruit.length * target.qty;
+          return total === requiredLength && !hasTarget;
         }
         return false;
       }
