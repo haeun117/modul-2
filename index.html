@@ -711,6 +711,13 @@
         box-shadow: 0 2px 0 var(--line);
       }
 
+      .clear-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: 0 4px 0 var(--line);
+      }
+
       .serve-button:hover {
         transform: translateY(-2px);
       }
@@ -2778,8 +2785,13 @@
 
       function updateServeButton() {
         const serveButton = document.getElementById("serve-button");
-        if (!serveButton) return;
-        serveButton.disabled = plate.length === 0;
+        const clearButton = document.getElementById("clear-button");
+        if (serveButton) {
+          serveButton.disabled = plate.length === 0;
+        }
+        if (clearButton) {
+          clearButton.disabled = plate.length === 0;
+        }
       }
 
       function plateCounts() {
