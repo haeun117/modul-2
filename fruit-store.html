@@ -3072,7 +3072,17 @@
 
       function showResult(success) {
         if (!resultOverlay || !resultText || !resultButton) return;
-        resultText.textContent = success ? "서빙 성공!" : "다시 해볼까요?";
+        if (success) {
+          resultText.textContent = "서빙 성공!";
+        } else if (currentStage === 3) {
+          const target = currentOrder.items && currentOrder.items[0];
+          const usedTarget = target ? plate.includes(target.id) : false;
+          resultText.textContent = usedTarget
+            ? "해당 과일과 같은 길이의 다른 과일을 조합해볼까요?"
+            : "다시 해볼까요?";
+        } else {
+          resultText.textContent = "다시 해볼까요?";
+        }
         resultButton.textContent = success ? "다음 주문" : "다시 하기";
         resultOverlay.classList.add("active");
         resultOverlay.setAttribute("aria-hidden", "false");
