@@ -2795,6 +2795,27 @@
         return noteIcon;
       }
 
+      function buildRestIcon(type) {
+        const restMap = {
+          sixteenth: "𝄿",
+          eighth: "𝄾",
+          quarter: "𝄽",
+          half: "𝄼",
+          dotted-half: "𝄼",
+          whole: "𝄻"
+        };
+        const icon = document.createElement("span");
+        icon.className = "rest-icon";
+        icon.textContent = restMap[type] || "";
+        if (type === "dotted-half") {
+          icon.classList.add("dotted");
+          const dot = document.createElement("span");
+          dot.className = "rest-dot";
+          icon.appendChild(dot);
+        }
+        return icon;
+      }
+
       function renderNoteStickers() {
         const noteStrip = document.getElementById("note-stickers");
         if (!noteStrip) return;
@@ -2807,12 +2828,20 @@
           peach: { type: "dotted-half", label: "점2분음표" },
           pineapple: { type: "whole", label: "온음표" }
         };
+        const restLabels = {
+          orange: { type: "quarter", label: "4분쉼표" },
+          apple: { type: "eighth", label: "8분쉼표" },
+          blueberry: { type: "sixteenth", label: "16분쉼표" },
+          melon: { type: "half", label: "2분쉼표" },
+          peach: { type: "dotted-half", label: "점2분쉼표" },
+          pineapple: { type: "whole", label: "온쉼표" }
+        };
         plate.forEach((id) => {
-          const note = noteLabels[id];
+          const note = (isRestMode ? restLabels : noteLabels)[id];
           if (!note) return;
           const chip = document.createElement("div");
           chip.className = "note-chip";
-          chip.appendChild(buildNoteIcon(note.type));
+          chip.appendChild(isRestMode ? buildRestIcon(note.type) : buildNoteIcon(note.type));
           const label = document.createElement("span");
           label.textContent = note.label;
           chip.appendChild(label);
@@ -2838,13 +2867,25 @@
           peach: { type: "dotted-half", label: "점2분음표" },
           pineapple: { type: "whole", label: "온음표" }
         };
+        const restLabels = {
+          orange: { type: "quarter", label: "4분쉼표" },
+          apple: { type: "eighth", label: "8분쉼표" },
+          blueberry: { type: "sixteenth", label: "16분쉼표" },
+          melon: { type: "half", label: "2분쉼표" },
+          peach: { type: "dotted-half", label: "점2분쉼표" },
+          pineapple: { type: "whole", label: "온쉼표" }
+        };
         fruits.forEach((fruit) => {
           const style = fruitStyles[fruit.id] || {
             light: "#ffd4b8",
             dark: "#f2a07b",
             leaf: "#6abf69"
           };
-          const note = noteLabels[fruit.id] || { type: "quarter", label: "" };
+          const note =
+            (isRestMode ? restLabels : noteLabels)[fruit.id] || {
+              type: "quarter",
+              label: ""
+            };
           const button = document.createElement("button");
           button.className = `fruit-slot ${fruit.id}`.trim();
           button.type = "button";
@@ -2902,37 +2943,7 @@
           plankBottom.className = "crate-plank bottom";
           const sticker = document.createElement("div");
           sticker.className = "crate-sticker";
-          const noteIcon = document.createElement("span");
-          noteIcon.className = `note ${note.type}`;
-          const head = document.createElement("span");
-          head.className = "head";
-          noteIcon.appendChild(head);
-          if (note.type !== "whole") {
-            const stem = document.createElement("span");
-            stem.className = "stem";
-            noteIcon.appendChild(stem);
-          }
-          if (note.type === "eighth" || note.type === "sixteenth") {
-            const flag1 = document.createElement("span");
-            flag1.className = "flag flag1";
-            noteIcon.appendChild(flag1);
-          }
-          if (note.type === "sixteenth") {
-            const flag2 = document.createElement("span");
-            flag2.className = "flag flag2";
-            noteIcon.appendChild(flag2);
-          }
-          if (note.type === "half" || note.type === "whole" || note.type === "dotted-half") {
-            noteIcon.classList.add("hollow");
-          }
-          if (note.type === "whole") {
-            noteIcon.classList.add("whole");
-          }
-          if (note.type === "dotted-half") {
-            const dot = document.createElement("span");
-            dot.className = "dot";
-            noteIcon.appendChild(dot);
-          }
+          const noteIcon = isRestMode ? buildRestIcon(note.type) : buildNoteIcon(note.type);
           const noteLabel = document.createElement("div");
           noteLabel.textContent = note.label;
           sticker.appendChild(noteIcon);
