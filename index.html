@@ -2553,6 +2553,21 @@
           wrapper.appendChild(remove);
           plateItems.appendChild(wrapper);
         });
+        updateCountingHighlight();
+      }
+
+      function updateCountingHighlight() {
+        const rows = document.querySelectorAll(".counting-row[data-fruit]");
+        if (!rows.length) return;
+        const active = new Set(plate);
+        rows.forEach((row) => {
+          const fruitId = row.dataset.fruit;
+          if (fruitId && active.has(fruitId)) {
+            row.classList.add("is-active");
+          } else {
+            row.classList.remove("is-active");
+          }
+        });
       }
 
       function buildNoteIcon(type) {
