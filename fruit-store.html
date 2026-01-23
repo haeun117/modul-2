@@ -2552,63 +2552,44 @@
       }
 
       function generateStage3() {
-        const count = 2 + Math.floor(Math.random() * 2);
-        const shuffled = [...fruits].sort(() => Math.random() - 0.5).slice(0, count);
-        const items = shuffled.map((fruit) => ({
-          id: fruit.id,
-          qty: 1 + Math.floor(Math.random() * 2)
-        }));
-        return { stage: 3, items };
+        const eligible = fruits.filter((fruit) => fruit.id !== "blueberry");
+        let target = randomItem(eligible);
+        let attempts = 0;
+        while (attempts < 12 && !canMakeLength(target.length, target.id)) {
+          target = randomItem(eligible);
+          attempts += 1;
+        }
+        return { stage: 3, items: [{ id: target.id, qty: 1 }] };
       }
 
-      function findReplacement(targetId) {
-        const target = fruits.find((fruit) => fruit.id === targetId);
-        if (!target) return null;
-        const others = fruits.filter((fruit) => fruit.id !== targetId);
-        const targetLength = target.length;
-
-        for (let attempt = 0; attempt < 200; attempt += 1) {
-          const counts = {};
-          let total = 0;
-          let totalItems = 0;
-          others.forEach((fruit) => {
-            const qty = Math.floor(Math.random() * 5);
-            if (qty > 0) {
-              counts[fruit.id] = qty;
-              total += fruit.length * qty;
-              totalItems += qty;
-            }
-          });
-          if (totalItems >= 2 && total === targetLength) {
-            return buildItemsFromCounts(counts);
-          }
+      function canMakeLength(totalLength, excludeId) {
+        const options = fruits.filter((fruit) => fruit.id !== excludeId);
+        const dp = Array(totalLength + 1).fill(false);
+        dp[0] = true;
+        for (let i = 1; i <= totalLength; i += 1) {
+          dp[i] = options.some((fruit) => i - fruit.length >= 0 && dp[i - fruit.length]);
         }
-
-        const fallback = {
-          melon: [{ id: "orange", qty: 2 }],
-          peach: [{ id: "melon", qty: 1 }, { id: "orange", qty: 1 }],
-          pineapple: [{ id: "melon", qty: 2 }],
-          orange: [{ id: "apple", qty: 2 }],
-          apple: [{ id: "blueberry", qty: 2 }]
-        };
-        return fallback[targetId] || null;
+        return dp[totalLength];
       }
 
       function generateStage4() {
         const eligible = fruits.filter((fruit) => fruit.id !== "blueberry");
-        const target = randomItem(eligible);
-        const replacement = findReplacement(target.id);
-        if (!replacement) {
-          return generateStage3();
+        let target = randomItem(eligible);
+        let qty = Math.floor(Math.random() * 2) + 2;
+        let attempts = 0;
+        while (attempts < 12 && !canMakeLength(target.length * qty, target.id)) {
+          target = randomItem(eligible);
+          qty = Math.floor(Math.random() * 2) + 2;
+          attempts += 1;
         }
-        return { stage: 4, items: [{ id: target.id, qty: 1 }] };
+        return { stage: 4, items: [{ id: target.id, qty }] };
       }
 
       function nextOrder() {
         if (currentStage === 1) currentOrder = generateStage1();
         if (currentStage === 2) currentOrder = generateStage2();
-        if (currentStage === 3) currentOrder = generateStage4();
-        if (currentStage === 4) currentOrder = generateStage3();
+        if (currentStage === 3) currentOrder = generateStage3();
+        if (currentStage === 4) currentOrder = generateStage4();
         pickCustomer();
         renderOrder();
       }
