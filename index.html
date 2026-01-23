@@ -167,12 +167,63 @@
       }
 
       .home-title {
-        text-align: center;
-        font-size: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        font-size: 36px;
         font-weight: 800;
         letter-spacing: 1px;
         margin: 12px 0 18px;
-        font-family: "Baloo 2", "Nanum Pen Script", "Trebuchet MS", sans-serif;
+        font-family: "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif;
+      }
+
+      .home-title .note-swarm {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+
+      .note-icon {
+        position: relative;
+        width: 18px;
+        height: 24px;
+      }
+
+      .note-icon .head {
+        position: absolute;
+        bottom: 2px;
+        left: 2px;
+        width: 10px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--line);
+        transform: rotate(-12deg);
+      }
+
+      .note-icon .stem {
+        position: absolute;
+        right: 2px;
+        bottom: 8px;
+        width: 2px;
+        height: 14px;
+        background: var(--line);
+      }
+
+      .note-icon .flag {
+        position: absolute;
+        right: -1px;
+        top: 4px;
+        width: 6px;
+        height: 5px;
+        border-top: 2px solid var(--line);
+        border-right: 2px solid var(--line);
+        border-radius: 0 8px 0 0;
+      }
+
+      .note-icon.hollow .head {
+        background: transparent;
+        border: 2px solid var(--line);
       }
 
       .home-content {
@@ -2151,7 +2202,24 @@
   <body>
     <div class="app">
       <div class="home-screen" id="home-screen" aria-hidden="true">
-        <div class="home-title">Fruit Order</div>
+        <div class="home-title">
+          <span class="note-swarm" aria-hidden="true">
+            <span class="note-icon">
+              <span class="head"></span>
+              <span class="stem"></span>
+              <span class="flag"></span>
+            </span>
+            <span class="note-icon hollow">
+              <span class="head"></span>
+              <span class="stem"></span>
+            </span>
+            <span class="note-icon">
+              <span class="head"></span>
+              <span class="stem"></span>
+            </span>
+          </span>
+          <span>음표 과일가게</span>
+        </div>
         <div class="home-content">
           <div class="home-panel">
             <div class="home-customers">
