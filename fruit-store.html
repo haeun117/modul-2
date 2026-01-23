@@ -2257,17 +2257,22 @@
 
       function updateStageNotice() {
         if (!stage4Note) return;
-        const isStage4 = currentStage === 4;
         const target = currentOrder.items && currentOrder.items[0];
-        if (isStage4 && target) {
+        if (currentStage === 1) {
+          stage4Note.textContent =
+            "손님이 주문한 과일을 접시에 드래그 하여, 서빙해보세요!";
+          stage4Note.classList.add("is-visible");
+          return;
+        }
+        if (currentStage === 4 && target) {
           const fruit = fruits.find((item) => item.id === target.id);
           const name = fruit ? fruit.name : "과일";
           const particle = getSubjectParticle(name);
           stage4Note.innerHTML = `${name}${particle} 다 떨어졌어요!<br>똑같은 음표 길이의 과일을 조합해주세요!`;
           stage4Note.classList.add("is-visible");
-        } else {
-          stage4Note.classList.remove("is-visible");
+          return;
         }
+        stage4Note.classList.remove("is-visible");
       }
 
       function getSubjectParticle(word) {
