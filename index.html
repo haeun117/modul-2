@@ -2279,7 +2279,7 @@
           stage4NoteSecondary.classList.add("is-visible");
           return;
         }
-        if (currentStage === 4 && target) {
+        if (currentStage === 3 && target) {
           const fruit = fruits.find((item) => item.id === target.id);
           const name = fruit ? fruit.name : "과일";
           const particle = getSubjectParticle(name);
@@ -2431,8 +2431,8 @@
       function nextOrder() {
         if (currentStage === 1) currentOrder = generateStage1();
         if (currentStage === 2) currentOrder = generateStage2();
-        if (currentStage === 3) currentOrder = generateStage3();
-        if (currentStage === 4) currentOrder = generateStage4();
+        if (currentStage === 3) currentOrder = generateStage4();
+        if (currentStage === 4) currentOrder = generateStage3();
         pickCustomer();
         renderOrder();
       }
@@ -2856,16 +2856,6 @@
         }
 
         if (currentStage === 3) {
-          const expected = currentOrder.items.reduce((acc, item) => {
-            acc[item.id] = item.qty;
-            return acc;
-          }, {});
-          const keys = Object.keys(counts);
-          if (keys.length !== Object.keys(expected).length) return false;
-          return keys.every((id) => counts[id] === expected[id]);
-        }
-
-        if (currentStage === 4) {
           const target = currentOrder.items[0];
           if (!target) return false;
           const targetFruit = fruits.find((fruit) => fruit.id === target.id);
@@ -2876,6 +2866,16 @@
           }, 0);
           const hasTarget = plate.includes(target.id);
           return total === targetFruit.length && !hasTarget;
+        }
+        
+        if (currentStage === 4) {
+          const expected = currentOrder.items.reduce((acc, item) => {
+            acc[item.id] = item.qty;
+            return acc;
+          }, {});
+          const keys = Object.keys(counts);
+          if (keys.length !== Object.keys(expected).length) return false;
+          return keys.every((id) => counts[id] === expected[id]);
         }
         return false;
       }
