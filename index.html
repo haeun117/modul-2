@@ -1821,9 +1821,22 @@
         width: 16px;
         height: 2px;
         background: var(--line);
-        transform: rotate(55deg);
         border-radius: 999px;
+      }
+
+      .count-mark.v-left {
+        transform: rotate(55deg);
         margin-top: 3px;
+      }
+
+      .count-mark.v-right {
+        transform: rotate(-55deg);
+        margin-top: -2px;
+        background: repeating-linear-gradient(
+          90deg,
+          var(--line) 0 3px,
+          transparent 3px 6px
+        );
       }
 
       @media (max-width: 1100px) {
