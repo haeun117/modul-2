@@ -1800,6 +1800,12 @@
         animation: pulse 0.9s ease-in-out infinite;
       }
 
+      .counting-row.is-related {
+        box-shadow: 0 0 0 3px rgba(155, 123, 255, 0.7),
+          0 10px 16px rgba(155, 123, 255, 0.28);
+        animation: pulsePurple 0.9s ease-in-out infinite;
+      }
+
       @keyframes pulse {
         0% {
           box-shadow: 0 0 0 3px rgba(255, 174, 84, 0.6),
@@ -1814,6 +1820,24 @@
         100% {
           box-shadow: 0 0 0 3px rgba(255, 174, 84, 0.6),
             0 8px 12px rgba(255, 174, 84, 0.25);
+          transform: scale(1);
+        }
+      }
+
+      @keyframes pulsePurple {
+        0% {
+          box-shadow: 0 0 0 3px rgba(155, 123, 255, 0.6),
+            0 8px 12px rgba(155, 123, 255, 0.22);
+          transform: scale(1);
+        }
+        50% {
+          box-shadow: 0 0 0 4px rgba(191, 162, 255, 0.9),
+            0 12px 18px rgba(191, 162, 255, 0.35);
+          transform: scale(1.06);
+        }
+        100% {
+          box-shadow: 0 0 0 3px rgba(155, 123, 255, 0.6),
+            0 8px 12px rgba(155, 123, 255, 0.22);
           transform: scale(1);
         }
       }
