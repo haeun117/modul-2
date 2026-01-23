@@ -2515,6 +2515,7 @@
           gameScreen.classList.add("is-hidden");
           gameScreen.setAttribute("aria-hidden", "true");
         }
+        hideResult();
       }
 
       function showGame() {
@@ -3059,7 +3060,7 @@
         if (!resultOverlay || !resultText || !resultButton) return;
         if (success) {
           resultText.textContent = "서빙 성공!";
-        } else if (currentStage === 3) {
+        } else if (currentStage === 3 || currentStage === 4) {
           const target = currentOrder.items && currentOrder.items[0];
           const usedTarget = target ? plate.includes(target.id) : false;
           resultText.textContent = usedTarget
