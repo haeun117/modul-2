@@ -2266,7 +2266,7 @@
       function updateStageNotice() {
         if (!stage4Note || !stage4NoteSecondary) return;
         const target = currentOrder.items && currentOrder.items[0];
-        if (currentStage === 1) {
+        if (currentStage === 1 || currentStage === 2) {
           stage4Note.textContent =
             "손님이 주문한 과일을 접시에 드래그 하여, 서빙해보세요!";
           stage4Note.classList.add("is-visible");
