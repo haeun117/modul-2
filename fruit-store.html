@@ -86,6 +86,12 @@
         box-shadow: 0 2px 0 var(--line);
       }
 
+      .pill-button.static:hover,
+      .pill-button.static:active {
+        transform: none;
+        box-shadow: 0 4px 0 var(--line);
+      }
+
       .pill-button.home {
         width: 44px;
         height: 44px;
@@ -322,6 +328,10 @@
       .stage-button:active {
         transform: translateY(2px);
         box-shadow: 0 2px 0 var(--line);
+      }
+
+      .home-screen .stage-button:hover {
+        transform: translateY(-2px);
       }
 
       .resource {
@@ -2194,8 +2204,8 @@
             <button class="pill-button home" type="button" aria-label="홈" id="home-button">
               <span class="home-icon" aria-hidden="true"></span>
             </button>
-            <button class="pill-button mode-label" type="button" id="mode-label">음표 학습</button>
-            <button class="pill-button upgrade" type="button" id="stage-label">1단계</button>
+            <button class="pill-button mode-label static" type="button" id="mode-label">음표 학습</button>
+            <button class="pill-button upgrade static" type="button" id="stage-label">1단계</button>
           </div>
         </div>
 
