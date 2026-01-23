@@ -1895,6 +1895,41 @@
         letter-spacing: 1px;
       }
 
+      .rest-icon {
+        display: none;
+        font-size: 22px;
+        line-height: 1;
+        font-family: "Segoe UI Symbol", "Apple Symbols", "Noto Music", "Noto Sans Symbols2",
+          "Malgun Gothic", sans-serif;
+      }
+
+      .rest-icon.dotted {
+        position: relative;
+        display: none;
+      }
+
+      .rest-icon.dotted .rest-dot {
+        position: absolute;
+        right: -6px;
+        top: 6px;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--line);
+      }
+
+      .counting-panel.rest .note {
+        display: none;
+      }
+
+      .counting-panel.rest .rest-icon {
+        display: block;
+      }
+
+      .counting-panel.rest .rest-icon.dotted {
+        display: inline-block;
+      }
+
       .counting-fruit .plate-fruit {
         width: 22px;
         height: 22px;
