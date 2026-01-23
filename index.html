@@ -2270,6 +2270,10 @@
           stage4Note.textContent =
             "손님이 주문한 과일을 접시에 드래그 하여, 서빙해보세요!";
           stage4Note.classList.add("is-visible");
+          stage4NoteSecondary.textContent =
+            currentStage === 2
+              ? "같은 길이의 과일을 하단에서 확인해보세요!"
+              : "과일에 해당되는 음표를 익혀보세요!";
           stage4NoteSecondary.classList.add("is-visible");
           return;
         }
