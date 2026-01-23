@@ -3051,8 +3051,8 @@
 
       function showStageComplete() {
         if (!resultOverlay || !resultText || !resultButton) return;
-        resultText.textContent = `Stage ${currentStage} 완료!`;
-        resultButton.textContent = "다음 Stage";
+        resultText.textContent = `${currentStage}단계 완료!`;
+        resultButton.textContent = "다음 단계";
         resultOverlay.classList.add("active");
         resultOverlay.setAttribute("aria-hidden", "false");
         resultOverlay.querySelector(".result-card")?.classList.add("stage");
