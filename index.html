@@ -2448,7 +2448,7 @@
           stage4NoteSecondary.classList.add("is-visible");
           return;
         }
-        if (currentStage === 3 && target) {
+        if ((currentStage === 3 || currentStage === 4) && target) {
           const fruit = fruits.find((item) => item.id === target.id);
           const name = fruit ? fruit.name : "과일";
           const particle = getSubjectParticle(name);
