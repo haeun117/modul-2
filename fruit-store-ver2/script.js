@@ -103,7 +103,7 @@
       const fruit = FRUITS.find((item) => item.id === target.id);
       const name = fruit ? fruit.name : "과일";
       const particle = getSubjectParticle(name);
-      dom.stage4Note.innerHTML = `${name}${particle} 다 떨어졌어요.<br>${name} 대신 다른 과일로 주문한 것과 똑같은 ${term} 길이를 만들어봅시다.`;
+      dom.stage4Note.innerHTML = `${name}${particle} 다 떨어졌어요.<br>${name} 대신 다른 과일로, 주문한 과일과 같은 ${term} 길이를 만들어봅시다.`;
       dom.stage4Note.classList.add("is-visible");
       dom.stage4NoteSecondary.innerHTML =
         "주문한 과일과 같은 길이의 과일을<br>하단의 보라색 블록으로 확인해봅시다.";
