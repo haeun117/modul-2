@@ -781,7 +781,7 @@
   function getStage34SecondHints(totalLength, excludeId, firstHintId) {
     const firstFruit = FRUITS.find((fruit) => fruit.id === firstHintId);
     if (!firstFruit) return [];
-    return FRUITS.filter((fruit) => fruit.id !== excludeId)
+    return FRUITS.filter((fruit) => fruit.id !== excludeId && fruit.id !== firstHintId)
       .filter((fruit) => {
         const remaining = totalLength - firstFruit.length - fruit.length;
         return remaining >= 0 && canMakeLength(remaining, excludeId);
