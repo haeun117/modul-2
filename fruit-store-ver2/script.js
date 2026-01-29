@@ -710,12 +710,60 @@
     slots.forEach((slot) => slot.classList.remove("is-hint"));
     const target = state.currentOrder.items && state.currentOrder.items[0];
     if (!target) return;
-    if (state.currentStage !== 1 && state.currentStage !== 2) return;
-    if (state.timeLeft > state.stageDuration / 2) return;
-    const slot = dom.fruitBins.querySelector(`.fruit-slot.${target.id}`);
-    if (slot) {
-      slot.classList.add("is-hint");
+
+    if (state.currentStage === 1 || state.currentStage === 2) {
+      if (state.timeLeft > state.stageDuration / 2) return;
+      const slot = dom.fruitBins.querySelector(`.fruit-slot.${target.id}`);
+      if (slot) {
+        slot.classList.add("is-hint");
+      }
+      return;
     }
+
+    if (state.currentStage !== 3 && state.currentStage !== 4) return;
+    const totalLength = target.length * target.qty;
+    const hintStart = state.stageDuration - 15;
+    const hintExpand = state.stageDuration - 30;
+    if (state.timeLeft > hintStart) return;
+
+    const firstHints = getStage34HintFruits(totalLength, target.id);
+    let hintIds = firstHints;
+    if (state.timeLeft <= hintExpand) {
+      const secondHints = getStage34SecondHints(totalLength, target.id, firstHints);
+      hintIds = Array.from(new Set([...firstHints, ...secondHints]));
+    }
+    hintIds.forEach((id) => {
+      const slot = dom.fruitBins.querySelector(`.fruit-slot.${id}`);
+      if (slot) {
+        slot.classList.add("is-hint");
+      }
+    });
+  }
+
+  function getStage34HintFruits(totalLength, excludeId) {
+    return FRUITS.filter((fruit) => fruit.id !== excludeId)
+      .filter((fruit) => {
+        const remaining = totalLength - fruit.length;
+        return remaining >= 0 && canMakeLength(remaining, excludeId);
+      })
+      .map((fruit) => fruit.id);
+  }
+
+  function getStage34SecondHints(totalLength, excludeId, firstHints) {
+    const firstSet = new Set(firstHints);
+    return FRUITS.filter((fruit) => fruit.id !== excludeId)
+      .filter((fruit) => {
+        for (const firstId of firstSet) {
+          const firstFruit = FRUITS.find((item) => item.id === firstId);
+          if (!firstFruit) continue;
+          const remaining = totalLength - firstFruit.length - fruit.length;
+          if (remaining >= 0 && canMakeLength(remaining, excludeId)) {
+            return true;
+          }
+        }
+        return false;
+      })
+      .map((fruit) => fruit.id);
   }
 
   function updateServeButton() {
