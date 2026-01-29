@@ -22,7 +22,9 @@
     timerInterval: null,
     isPaused: true,
     isStarted: false,
-    isRestMode: false
+    isRestMode: false,
+    hintFirstId: null,
+    hintSecondId: null
   };
 
   const dom = {};
@@ -244,6 +246,8 @@
     if (state.currentStage === 2) state.currentOrder = generateStage2();
     if (state.currentStage === 3) state.currentOrder = generateStage3();
     if (state.currentStage === 4) state.currentOrder = generateStage4();
+    state.hintFirstId = null;
+    state.hintSecondId = null;
     pickCustomer();
     renderOrder();
     if (state.currentStage === 3 || state.currentStage === 4) {
@@ -729,11 +733,22 @@
     if (state.timeLeft > hintStart) return;
 
     const firstHints = getStage34HintFruits(totalLength, target.id);
-    let hintIds = firstHints;
-    if (state.timeLeft <= hintExpand && firstHints.length > 0) {
-      const secondHints = getStage34SecondHints(totalLength, target.id, firstHints[0]);
-      const picked = secondHints.length > 0 ? randomItem(secondHints) : null;
-      hintIds = Array.from(new Set([...firstHints, ...(picked ? [picked] : [])]));
+    if (!state.hintFirstId && firstHints.length > 0) {
+      state.hintFirstId = firstHints[0];
+    }
+    let hintIds = state.hintFirstId ? [state.hintFirstId] : [];
+    if (state.timeLeft <= hintExpand && state.hintFirstId) {
+      if (!state.hintSecondId) {
+        const secondHints = getStage34SecondHints(
+          totalLength,
+          target.id,
+          state.hintFirstId
+        );
+        state.hintSecondId = secondHints.length > 0 ? randomItem(secondHints) : null;
+      }
+      if (state.hintSecondId) {
+        hintIds = Array.from(new Set([...hintIds, state.hintSecondId]));
+      }
     }
     hintIds.forEach((id) => {
       const slot = dom.fruitBins.querySelector(`.fruit-slot.${id}`);
