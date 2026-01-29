@@ -279,6 +279,7 @@
       const angle = Math.max(0, ratio) * 360;
       dom.clockHandle.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
     }
+    updateHintState();
   }
 
   function updateClockToggle() {
@@ -700,6 +701,21 @@
       button.appendChild(basket);
       dom.fruitBins.appendChild(button);
     });
+    updateHintState();
+  }
+
+  function updateHintState() {
+    if (!dom.fruitBins) return;
+    const slots = dom.fruitBins.querySelectorAll(".fruit-slot");
+    slots.forEach((slot) => slot.classList.remove("is-hint"));
+    const target = state.currentOrder.items && state.currentOrder.items[0];
+    if (!target) return;
+    if (state.currentStage !== 1 && state.currentStage !== 2) return;
+    if (state.timeLeft > state.stageDuration / 2) return;
+    const slot = dom.fruitBins.querySelector(`.fruit-slot.${target.id}`);
+    if (slot) {
+      slot.classList.add("is-hint");
+    }
   }
 
   function updateServeButton() {
