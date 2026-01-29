@@ -730,8 +730,8 @@
 
     const firstHints = getStage34HintFruits(totalLength, target.id);
     let hintIds = firstHints;
-    if (state.timeLeft <= hintExpand) {
-      const secondHints = getStage34SecondHints(totalLength, target.id, firstHints);
+    if (state.timeLeft <= hintExpand && firstHints.length > 0) {
+      const secondHints = getStage34SecondHints(totalLength, target.id, firstHints[0]);
       hintIds = Array.from(new Set([...firstHints, ...secondHints]));
     }
     hintIds.forEach((id) => {
@@ -743,27 +743,30 @@
   }
 
   function getStage34HintFruits(totalLength, excludeId) {
-    return FRUITS.filter((fruit) => fruit.id !== excludeId)
+    const candidates = FRUITS.filter((fruit) => fruit.id !== excludeId)
       .filter((fruit) => {
         const remaining = totalLength - fruit.length;
         return remaining >= 0 && canMakeLength(remaining, excludeId);
-      })
-      .map((fruit) => fruit.id);
+      });
+    if (candidates.length === 0) return [];
+    let maxLength = -1;
+    let selectedId = null;
+    candidates.forEach((fruit) => {
+      if (fruit.length > maxLength) {
+        maxLength = fruit.length;
+        selectedId = fruit.id;
+      }
+    });
+    return selectedId ? [selectedId] : [];
   }
 
-  function getStage34SecondHints(totalLength, excludeId, firstHints) {
-    const firstSet = new Set(firstHints);
+  function getStage34SecondHints(totalLength, excludeId, firstHintId) {
+    const firstFruit = FRUITS.find((fruit) => fruit.id === firstHintId);
+    if (!firstFruit) return [];
     return FRUITS.filter((fruit) => fruit.id !== excludeId)
       .filter((fruit) => {
-        for (const firstId of firstSet) {
-          const firstFruit = FRUITS.find((item) => item.id === firstId);
-          if (!firstFruit) continue;
-          const remaining = totalLength - firstFruit.length - fruit.length;
-          if (remaining >= 0 && canMakeLength(remaining, excludeId)) {
-            return true;
-          }
-        }
-        return false;
+        const remaining = totalLength - firstFruit.length - fruit.length;
+        return remaining >= 0 && canMakeLength(remaining, excludeId);
       })
       .map((fruit) => fruit.id);
   }
