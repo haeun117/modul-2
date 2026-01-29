@@ -721,7 +721,9 @@
     }
 
     if (state.currentStage !== 3 && state.currentStage !== 4) return;
-    const totalLength = target.length * target.qty;
+    const targetFruit = FRUITS.find((fruit) => fruit.id === target.id);
+    if (!targetFruit) return;
+    const totalLength = targetFruit.length * target.qty;
     const hintStart = state.stageDuration - 15;
     const hintExpand = state.stageDuration - 30;
     if (state.timeLeft > hintStart) return;
