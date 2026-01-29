@@ -732,7 +732,8 @@
     let hintIds = firstHints;
     if (state.timeLeft <= hintExpand && firstHints.length > 0) {
       const secondHints = getStage34SecondHints(totalLength, target.id, firstHints[0]);
-      hintIds = Array.from(new Set([...firstHints, ...secondHints]));
+      const picked = secondHints.length > 0 ? randomItem(secondHints) : null;
+      hintIds = Array.from(new Set([...firstHints, ...(picked ? [picked] : [])]));
     }
     hintIds.forEach((id) => {
       const slot = dom.fruitBins.querySelector(`.fruit-slot.${id}`);
