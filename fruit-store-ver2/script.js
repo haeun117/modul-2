@@ -296,6 +296,8 @@
   function startStageTimer() {
     if (state.timerInterval) clearInterval(state.timerInterval);
     state.timeLeft = state.stageDuration;
+    state.hintFirstId = null;
+    state.hintSecondId = null;
     updateTimerUI();
     state.isPaused = true;
     updateClockToggle();
