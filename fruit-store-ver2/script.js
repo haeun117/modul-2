@@ -246,6 +246,9 @@
     if (state.currentStage === 4) state.currentOrder = generateStage4();
     pickCustomer();
     renderOrder();
+    if (state.currentStage === 3 || state.currentStage === 4) {
+      renderFruitBins();
+    }
   }
 
   function startStage(stage) {
@@ -578,6 +581,9 @@
 
   function renderFruitBins() {
     dom.fruitBins.innerHTML = "";
+    const target = state.currentOrder.items && state.currentOrder.items[0];
+    const disabledTargetId =
+      (state.currentStage === 3 || state.currentStage === 4) && target ? target.id : null;
     const fruitStyles = {
       orange: { light: "#ffb259", dark: "#f47c2a", leaf: "#73c06b" },
       apple: { light: "#ff6f6f", dark: "#c83232", leaf: "#6abf69" },
@@ -603,6 +609,7 @@
       pineapple: { type: "whole", label: "온쉼표" }
     };
     FRUITS.forEach((fruit) => {
+      const isTargetDisabled = disabledTargetId && fruit.id === disabledTargetId;
       const style = fruitStyles[fruit.id] || {
         light: "#ffd4b8",
         dark: "#f2a07b",
@@ -616,11 +623,19 @@
       const button = document.createElement("button");
       button.className = `fruit-slot ${fruit.id}`.trim();
       button.type = "button";
-      button.draggable = true;
+      button.draggable = !isTargetDisabled;
+      if (isTargetDisabled) {
+        button.setAttribute("aria-disabled", "true");
+        button.dataset.disabled = "true";
+      }
       button.style.setProperty("--fruit-light", style.light);
       button.style.setProperty("--fruit-dark", style.dark);
       button.style.setProperty("--leaf", style.leaf);
       button.addEventListener("dragstart", (event) => {
+        if (isTargetDisabled) {
+          event.preventDefault();
+          return;
+        }
         if (!state.isStarted || state.isPaused) {
           event.preventDefault();
           showStartPrompt();
