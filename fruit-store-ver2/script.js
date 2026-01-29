@@ -627,6 +627,7 @@
       if (isTargetDisabled) {
         button.setAttribute("aria-disabled", "true");
         button.dataset.disabled = "true";
+        button.classList.add("is-disabled");
       }
       button.style.setProperty("--fruit-light", style.light);
       button.style.setProperty("--fruit-dark", style.dark);
