@@ -10,6 +10,9 @@
       "background:#fff5f5;color:#7f1d1d;border:2px solid #fecaca;padding:10px;" +
       "font-size:12px;z-index:9999;white-space:pre-wrap;border-radius:10px;";
     debugBox.textContent = "[DEBUG] active\\n";
+    if (!debugBox.isConnected) {
+      (document.body || document.documentElement).appendChild(debugBox);
+    }
     document.addEventListener("DOMContentLoaded", () => {
       if (!debugBox.isConnected) document.body.appendChild(debugBox);
     });
