@@ -576,14 +576,6 @@
       peach: "VVV",
       pineapple: "VVVV"
     };
-    const rhythmMarks = {
-      orange: "V",
-      apple: null,
-      blueberry: null,
-      melon: "VV",
-      peach: "VVV",
-      pineapple: "VVVV"
-    };
     state.plate.forEach((id) => {
       const note = (state.isRestMode ? restLabels : noteLabels)[id];
       if (!note) return;
@@ -732,12 +724,8 @@
       const noteIcon = state.isRestMode ? buildRestIcon(note.type) : buildNoteIcon(note.type);
       const noteLabel = document.createElement("div");
       noteLabel.textContent = note.label;
-      const rhythm = document.createElement("div");
-      rhythm.className = "rhythm";
-      rhythm.textContent = rhythmMarks[fruit.id] || "";
       sticker.appendChild(noteIcon);
       sticker.appendChild(noteLabel);
-      sticker.appendChild(rhythm);
       basket.appendChild(plankTop);
       basket.appendChild(plankMid);
       basket.appendChild(plankBottom);

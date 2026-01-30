@@ -1529,16 +1529,16 @@
       .crate-sticker {
         position: absolute;
         right: 6px;
-        top: 26px;
+        top: 30px;
         transform: none;
         background: #fff8f1;
         border: 3px solid var(--line);
         border-radius: 10px;
-        padding: 6px 8px;
+        padding: 4px 6px;
         text-align: center;
         font-weight: 700;
-        font-size: 12px;
-        min-width: 70px;
+        font-size: 11px;
+        min-width: 56px;
         box-shadow: 0 2px 0 var(--line);
         line-height: 1.2;
         font-family: system-ui, sans-serif;
@@ -1546,14 +1546,7 @@
 
       .crate-sticker span {
         display: block;
-        font-size: 15px;
-      }
-
-      .crate-sticker .rhythm {
-        display: block;
-        margin-top: 2px;
         font-size: 13px;
-        letter-spacing: 0.08em;
       }
 
       .fruit-label {
