@@ -9,7 +9,13 @@
       "position:fixed;bottom:12px;left:12px;right:12px;max-height:40vh;overflow:auto;" +
       "background:#fff5f5;color:#7f1d1d;border:2px solid #fecaca;padding:10px;" +
       "font-size:12px;z-index:9999;white-space:pre-wrap;border-radius:10px;";
-    debugBox.textContent = "[DEBUG] error log\\n";
+    debugBox.textContent = "[DEBUG] active\\n";
+    document.addEventListener("DOMContentLoaded", () => {
+      if (!debugBox.isConnected) document.body.appendChild(debugBox);
+    });
+    window.addEventListener("load", () => {
+      if (!debugBox.isConnected) document.body.appendChild(debugBox);
+    });
     window.addEventListener("error", (event) => {
       debugBox.textContent += `Error: ${event.message}\\n${event.filename}:${event.lineno}\\n`;
       if (!debugBox.isConnected) document.body.appendChild(debugBox);
