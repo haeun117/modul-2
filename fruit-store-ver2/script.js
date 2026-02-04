@@ -26,6 +26,10 @@
     hintCombo: null,
     hintTarget: null,
     hintElapsed: 0,
+    hintFirstFruitId: null,
+    hintSecondFruitId: null,
+    hintFirstCount: 1,
+    hintSecondCount: 1,
     lastOrderFruitId: null,
     lastOrderFruitId2: null
   };
@@ -92,32 +96,64 @@
     updateTimedHintBubble();
   }
 
-  function buildHintCombo(totalLength, excludeId) {
+  function buildHintCombo(totalLength, excludeId, requireMulti = false) {
     const options = FRUITS.filter((fruit) => fruit.id !== excludeId)
       .slice()
       .sort((a, b) => b.length - a.length);
-    const prev = Array(totalLength + 1).fill(null);
-    prev[0] = { sum: 0, fruitId: null };
+    const best = Array.from({ length: totalLength + 1 }, () => null);
+    best[0] = { combo: [], types: new Set() };
     for (let sum = 0; sum <= totalLength; sum += 1) {
-      if (!prev[sum]) continue;
+      const entry = best[sum];
+      if (!entry) continue;
       for (const fruit of options) {
         const next = sum + fruit.length;
         if (next > totalLength) continue;
-        if (!prev[next]) {
-          prev[next] = { sum, fruitId: fruit.id };
+        const nextTypes = new Set(entry.types);
+        nextTypes.add(fruit.id);
+        const nextEntry = {
+          combo: entry.combo.concat(fruit.id),
+          types: nextTypes
+        };
+        const existing = best[next];
+        const hasMoreTypes =
+          !existing || nextEntry.types.size > existing.types.size;
+        if (hasMoreTypes) {
+          best[next] = nextEntry;
         }
       }
     }
-    if (!prev[totalLength]) return null;
-    const combo = [];
-    let cursor = totalLength;
-    while (cursor > 0) {
-      const entry = prev[cursor];
-      if (!entry || !entry.fruitId) break;
-      combo.push(entry.fruitId);
-      cursor = entry.sum;
+    const result = best[totalLength];
+    if (!result) return null;
+    if (requireMulti && result.types.size < 2) return null;
+    return result.combo;
+  }
+
+  function pickHintPair(totalLength, excludeId) {
+    const options = FRUITS.filter((fruit) => fruit.id !== excludeId);
+    const candidates = options.filter((fruit) => fruit.length < totalLength);
+    if (!candidates.length) return { first: null, second: null };
+    const first = candidates.reduce((best, fruit) =>
+      fruit.length > best.length ? fruit : best
+    );
+    const remaining = totalLength - first.length;
+    const second = options.find((fruit) => fruit.length === remaining) || null;
+    return { first: first.id, second: second ? second.id : null };
+  }
+
+  function pickStage4Pair(totalLength, excludeId) {
+    const options = FRUITS.filter((fruit) => fruit.id !== excludeId);
+    const sorted = options.slice().sort((a, b) => b.length - a.length);
+    for (const first of sorted) {
+      const remaining = totalLength - first.length * 2;
+      if (remaining <= 0) continue;
+      const secondLen = remaining / 2;
+      if (!Number.isInteger(secondLen)) continue;
+      const second = options.find((fruit) => fruit.length === secondLen);
+      if (second) {
+        return { first: first.id, second: second.id, firstCount: 2, secondCount: 2 };
+      }
     }
-    return combo.reverse();
+    return { first: null, second: null, firstCount: 1, secondCount: 1 };
   }
 
   function prepareStageHints() {
@@ -125,6 +161,10 @@
     if (!target || !(state.currentStage === 3 || state.currentStage === 4)) {
       state.hintCombo = null;
       state.hintTarget = null;
+      state.hintFirstFruitId = null;
+      state.hintSecondFruitId = null;
+      state.hintFirstCount = 1;
+      state.hintSecondCount = 1;
       return;
     }
     const targetFruit = FRUITS.find((fruit) => fruit.id === target.id);
@@ -134,7 +174,31 @@
       return;
     }
     const totalLength = targetFruit.length * Math.max(1, target.qty || 1);
-    state.hintCombo = buildHintCombo(totalLength, target.id);
+    const stage4Pair =
+      state.currentStage === 4 && target.qty === 2
+        ? pickStage4Pair(totalLength, target.id)
+        : null;
+    if (stage4Pair && stage4Pair.first && stage4Pair.second) {
+      state.hintFirstFruitId = stage4Pair.first;
+      state.hintSecondFruitId = stage4Pair.second;
+      state.hintFirstCount = stage4Pair.firstCount;
+      state.hintSecondCount = stage4Pair.secondCount;
+      state.hintCombo = [stage4Pair.first, stage4Pair.second];
+    } else {
+      const pair = pickHintPair(totalLength, target.id);
+      state.hintFirstFruitId = pair.first;
+      state.hintSecondFruitId = pair.second;
+      state.hintFirstCount = 1;
+      state.hintSecondCount = 1;
+      if (pair.first && pair.second) {
+        state.hintCombo = [pair.first, pair.second];
+      } else {
+        state.hintCombo = buildHintCombo(totalLength, target.id, true);
+        if (!state.hintCombo) {
+          state.hintCombo = buildHintCombo(totalLength, target.id, false);
+        }
+      }
+    }
     state.hintTarget = { id: target.id, qty: Math.max(1, target.qty || 1) };
   }
 
@@ -143,6 +207,7 @@
     dom.stage3HintItems.innerHTML = "";
     const targetFruit = FRUITS.find((fruit) => fruit.id === target.id);
     if (!targetFruit) return;
+    const totalLength = targetFruit.length * Math.max(1, target.qty || 1);
     const addSymbol = (text) => {
       const span = document.createElement("span");
       span.className = "symbol";
@@ -176,18 +241,35 @@
     const comboIds = Object.keys(countCombo);
 
     if (partial) {
-      const firstId = comboIds[0] || combo[0];
-      addFruit(firstId);
-      addMultiplier(countCombo[firstId]);
+      const firstId = state.hintFirstFruitId || comboIds[0] || combo[0];
+      if (firstId) {
+        addFruit(firstId);
+        addMultiplier(state.hintFirstCount || countCombo[firstId]);
+      }
       addSymbol("+");
       addUnknown();
       addSymbol("=");
     } else {
-      comboIds.forEach((id, idx) => {
-        if (idx > 0) addSymbol("+");
-        addFruit(id);
-        addMultiplier(countCombo[id]);
-      });
+      if (state.hintSecondFruitId) {
+        addFruit(state.hintFirstFruitId);
+        addMultiplier(state.hintFirstCount);
+        addSymbol("+");
+        addFruit(state.hintSecondFruitId);
+        addMultiplier(state.hintSecondCount);
+      } else if (comboIds.length === 1 && countCombo[comboIds[0]] === 2) {
+        const repeatId = comboIds[0];
+        const repeatCount = countCombo[repeatId];
+        for (let i = 0; i < repeatCount; i += 1) {
+          if (i > 0) addSymbol("+");
+          addFruit(repeatId);
+        }
+      } else {
+        comboIds.forEach((id, idx) => {
+          if (idx > 0) addSymbol("+");
+          addFruit(id);
+          addMultiplier(countCombo[id]);
+        });
+      }
       addSymbol("=");
     }
 
@@ -360,11 +442,11 @@
       (fruit) => fruit.id !== state.lastOrderFruitId && fruit.id !== state.lastOrderFruitId2
     );
     let target = randomItem(filtered.length ? filtered : eligible);
-    let qty = Math.floor(Math.random() * 2) + 2;
+    let qty = 2;
     let attempts = 0;
     while (attempts < 12 && !canMakeLength(target.length * qty, target.id)) {
       target = randomItem(filtered.length ? filtered : eligible);
-      qty = Math.floor(Math.random() * 2) + 2;
+      qty = 2;
       attempts += 1;
     }
     return { stage: 4, items: [{ id: target.id, qty }] };
