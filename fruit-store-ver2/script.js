@@ -1,34 +1,6 @@
 (function () {
   'use strict';
 
-  const debugMode = new URLSearchParams(window.location.search).get("debug") === "1";
-  if (debugMode) {
-    const debugBox = document.createElement("pre");
-    debugBox.id = "debug-log";
-    debugBox.style.cssText =
-      "position:fixed;bottom:12px;left:12px;right:12px;max-height:40vh;overflow:auto;" +
-      "background:#fff5f5;color:#7f1d1d;border:2px solid #fecaca;padding:10px;" +
-      "font-size:12px;z-index:9999;white-space:pre-wrap;border-radius:10px;";
-    debugBox.textContent = "[DEBUG] active\\n";
-    if (!debugBox.isConnected) {
-      (document.body || document.documentElement).appendChild(debugBox);
-    }
-    document.addEventListener("DOMContentLoaded", () => {
-      if (!debugBox.isConnected) document.body.appendChild(debugBox);
-    });
-    window.addEventListener("load", () => {
-      if (!debugBox.isConnected) document.body.appendChild(debugBox);
-    });
-    window.addEventListener("error", (event) => {
-      debugBox.textContent += `Error: ${event.message}\\n${event.filename}:${event.lineno}\\n`;
-      if (!debugBox.isConnected) document.body.appendChild(debugBox);
-    });
-    window.addEventListener("unhandledrejection", (event) => {
-      debugBox.textContent += `Promise rejection: ${event.reason}\\n`;
-      if (!debugBox.isConnected) document.body.appendChild(debugBox);
-    });
-  }
-
   const FRUITS = [
     { id: "blueberry", emoji: "🫐", name: "블루베리", note: "𝅘𝅥𝅯", desc: "16분", length: 1 },
     { id: "apple", emoji: "🍎", name: "사과", note: "♪", desc: "8분", length: 2 },
@@ -51,8 +23,11 @@
     isPaused: true,
     isStarted: false,
     isRestMode: false,
-    hintFirstId: null,
-    hintSecondId: null
+    hintCombo: null,
+    hintTarget: null,
+    hintElapsed: 0,
+    lastOrderFruitId: null,
+    lastOrderFruitId2: null
   };
 
   const dom = {};
@@ -89,6 +64,8 @@
     dom.stage4Note = document.getElementById("stage4-note");
     dom.stage4NoteSecondary = document.getElementById("stage4-note-secondary");
     dom.countingPanel = document.getElementById("counting-panel");
+    dom.stage3HintBubble = document.getElementById("stage3-hint-bubble");
+    dom.stage3HintItems = document.getElementById("stage3-hint-items");
   }
 
   function renderOrder() {
@@ -112,36 +89,148 @@
       dom.orderItems.appendChild(wrapper);
     });
     updateStageNotice();
+    updateTimedHintBubble();
+  }
+
+  function buildHintCombo(totalLength, excludeId) {
+    const options = FRUITS.filter((fruit) => fruit.id !== excludeId)
+      .slice()
+      .sort((a, b) => b.length - a.length);
+    const prev = Array(totalLength + 1).fill(null);
+    prev[0] = { sum: 0, fruitId: null };
+    for (let sum = 0; sum <= totalLength; sum += 1) {
+      if (!prev[sum]) continue;
+      for (const fruit of options) {
+        const next = sum + fruit.length;
+        if (next > totalLength) continue;
+        if (!prev[next]) {
+          prev[next] = { sum, fruitId: fruit.id };
+        }
+      }
+    }
+    if (!prev[totalLength]) return null;
+    const combo = [];
+    let cursor = totalLength;
+    while (cursor > 0) {
+      const entry = prev[cursor];
+      if (!entry || !entry.fruitId) break;
+      combo.push(entry.fruitId);
+      cursor = entry.sum;
+    }
+    return combo.reverse();
+  }
+
+  function prepareStageHints() {
+    const target = state.currentOrder.items && state.currentOrder.items[0];
+    if (!target || !(state.currentStage === 3 || state.currentStage === 4)) {
+      state.hintCombo = null;
+      state.hintTarget = null;
+      return;
+    }
+    const targetFruit = FRUITS.find((fruit) => fruit.id === target.id);
+    if (!targetFruit) {
+      state.hintCombo = null;
+      state.hintTarget = null;
+      return;
+    }
+    const totalLength = targetFruit.length * Math.max(1, target.qty || 1);
+    state.hintCombo = buildHintCombo(totalLength, target.id);
+    state.hintTarget = { id: target.id, qty: Math.max(1, target.qty || 1) };
+  }
+
+  function renderHintItems(combo, target, partial) {
+    if (!dom.stage3HintItems) return;
+    dom.stage3HintItems.innerHTML = "";
+    const targetFruit = FRUITS.find((fruit) => fruit.id === target.id);
+    if (!targetFruit) return;
+    const addSymbol = (text) => {
+      const span = document.createElement("span");
+      span.className = "symbol";
+      span.textContent = text;
+      dom.stage3HintItems.appendChild(span);
+    };
+    const addFruit = (fruitId) => {
+      const chip = createFruitChip(fruitId);
+      if (chip) {
+        chip.classList.add("home-fruit-chip");
+        dom.stage3HintItems.appendChild(chip);
+      }
+    };
+    const addMultiplier = (count) => {
+      if (!count || count <= 1) return;
+      const label = document.createElement("span");
+      label.className = "hint-mult";
+      label.textContent = `x${count}`;
+      dom.stage3HintItems.appendChild(label);
+    };
+    const addUnknown = () => {
+      const dot = document.createElement("span");
+      dot.className = "hint-unknown";
+      dot.textContent = "?";
+      dom.stage3HintItems.appendChild(dot);
+    };
+    const countCombo = combo.reduce((acc, id) => {
+      acc[id] = (acc[id] || 0) + 1;
+      return acc;
+    }, {});
+    const comboIds = Object.keys(countCombo);
+
+    if (partial) {
+      const firstId = comboIds[0] || combo[0];
+      addFruit(firstId);
+      addMultiplier(countCombo[firstId]);
+      addSymbol("+");
+      addUnknown();
+      addSymbol("=");
+    } else {
+      comboIds.forEach((id, idx) => {
+        if (idx > 0) addSymbol("+");
+        addFruit(id);
+        addMultiplier(countCombo[id]);
+      });
+      addSymbol("=");
+    }
+
+    const targetCount = Math.max(1, target.qty || 1);
+    addFruit(target.id);
+    addMultiplier(targetCount);
+  }
+
+  function updateTimedHintBubble() {
+    if (!dom.stage3HintBubble || !dom.stage3HintItems) return;
+    const isStageHint = state.currentStage === 3 || state.currentStage === 4;
+    const elapsed = Math.max(0, state.hintElapsed);
+    if (!isStageHint || !state.hintCombo || !state.hintTarget || elapsed < 5) {
+      dom.stage3HintBubble.classList.remove("is-visible");
+      dom.stage3HintBubble.setAttribute("aria-hidden", "true");
+      dom.stage3HintItems.innerHTML = "";
+      return;
+    }
+    const partial = elapsed < 10;
+    renderHintItems(state.hintCombo, state.hintTarget, partial);
+    dom.stage3HintBubble.classList.add("is-visible");
+    dom.stage3HintBubble.setAttribute("aria-hidden", "false");
   }
 
   function updateStageNotice() {
-    if (!dom.stage4Note || !dom.stage4NoteSecondary) return;
+    if (!dom.stage4Note) return;
     const target = state.currentOrder.items && state.currentOrder.items[0];
     const term = state.isRestMode ? "쉼표" : "음표";
     if (state.currentStage === 1 || state.currentStage === 2) {
       dom.stage4Note.textContent =
         "손님이 주문한 과일을 접시에 드래그 해서 서빙해봅시다.";
       dom.stage4Note.classList.add("is-visible");
-      dom.stage4NoteSecondary.innerHTML =
-        state.currentStage === 2
-          ? "주문한 과일과 같은 길이의 과일을<br>하단의 보라색 블록으로 확인해봅시다."
-          : `과일에 해당되는 ${term}를 익혀봅시다.`;
-      dom.stage4NoteSecondary.classList.add("is-visible");
       return;
     }
     if ((state.currentStage === 3 || state.currentStage === 4) && target) {
       const fruit = FRUITS.find((item) => item.id === target.id);
       const name = fruit ? fruit.name : "과일";
       const particle = getSubjectParticle(name);
-      dom.stage4Note.innerHTML = `${name}${particle} 다 떨어졌어요.<br>${name} 대신 다른 과일로, 주문한 것과 똑같은 ${term} 길이를 만들어봅시다.`;
+      dom.stage4Note.innerHTML = `${name}${particle} 다 떨어졌어요.<br>${name} 대신 다른 과일로 주문한 것과 똑같은 ${term} 길이를 만들어봅시다.`;
       dom.stage4Note.classList.add("is-visible");
-      dom.stage4NoteSecondary.innerHTML =
-        "주문한 과일과 같은 길이의 과일을<br>하단의 보라색 블록으로 확인해봅시다.";
-      dom.stage4NoteSecondary.classList.add("is-visible");
       return;
     }
     dom.stage4Note.classList.remove("is-visible");
-    dom.stage4NoteSecondary.classList.remove("is-visible");
   }
 
   function getSubjectParticle(word) {
@@ -224,23 +313,32 @@
     return Object.entries(counts).map(([id, qty]) => ({ id, qty }));
   }
 
+  function pickRandomFruit(excludeIds = []) {
+    const exclude = new Set(excludeIds.filter(Boolean));
+    const pool = FRUITS.filter((fruit) => !exclude.has(fruit.id));
+    return randomItem(pool.length ? pool : FRUITS);
+  }
+
   function generateStage1() {
-    const fruit = randomItem(FRUITS);
+    const fruit = pickRandomFruit([state.lastOrderFruitId, state.lastOrderFruitId2]);
     return { stage: 1, items: [{ id: fruit.id, qty: 1 }] };
   }
 
   function generateStage2() {
-    const fruit = randomItem(FRUITS);
+    const fruit = pickRandomFruit([state.lastOrderFruitId, state.lastOrderFruitId2]);
     const qty = 2 + Math.floor(Math.random() * 3);
     return { stage: 2, items: [{ id: fruit.id, qty }] };
   }
 
   function generateStage3() {
     const eligible = FRUITS.filter((fruit) => fruit.id !== "blueberry");
-    let target = randomItem(eligible);
+    const filtered = eligible.filter(
+      (fruit) => fruit.id !== state.lastOrderFruitId && fruit.id !== state.lastOrderFruitId2
+    );
+    let target = randomItem(filtered.length ? filtered : eligible);
     let attempts = 0;
     while (attempts < 12 && !canMakeLength(target.length, target.id)) {
-      target = randomItem(eligible);
+      target = randomItem(filtered.length ? filtered : eligible);
       attempts += 1;
     }
     return { stage: 3, items: [{ id: target.id, qty: 1 }] };
@@ -258,11 +356,14 @@
 
   function generateStage4() {
     const eligible = FRUITS.filter((fruit) => fruit.id !== "blueberry");
-    let target = randomItem(eligible);
+    const filtered = eligible.filter(
+      (fruit) => fruit.id !== state.lastOrderFruitId && fruit.id !== state.lastOrderFruitId2
+    );
+    let target = randomItem(filtered.length ? filtered : eligible);
     let qty = Math.floor(Math.random() * 2) + 2;
     let attempts = 0;
     while (attempts < 12 && !canMakeLength(target.length * qty, target.id)) {
-      target = randomItem(eligible);
+      target = randomItem(filtered.length ? filtered : eligible);
       qty = Math.floor(Math.random() * 2) + 2;
       attempts += 1;
     }
@@ -274,13 +375,17 @@
     if (state.currentStage === 2) state.currentOrder = generateStage2();
     if (state.currentStage === 3) state.currentOrder = generateStage3();
     if (state.currentStage === 4) state.currentOrder = generateStage4();
-    state.hintFirstId = null;
-    state.hintSecondId = null;
     pickCustomer();
-    renderOrder();
-    if (state.currentStage === 3 || state.currentStage === 4) {
-      renderFruitBins();
+    prepareStageHints();
+    state.lastOrderFruitId2 = state.lastOrderFruitId;
+    state.lastOrderFruitId = state.currentOrder.items?.[0]?.id || null;
+    state.hintElapsed = 0;
+    if (dom.stage3HintBubble) {
+      dom.stage3HintBubble.classList.remove("is-visible");
+      dom.stage3HintBubble.setAttribute("aria-hidden", "true");
     }
+    renderOrder();
+    renderFruitBins();
   }
 
   function startStage(stage) {
@@ -311,7 +416,6 @@
       const angle = Math.max(0, ratio) * 360;
       dom.clockHandle.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
     }
-    updateHintState();
   }
 
   function updateClockToggle() {
@@ -324,21 +428,24 @@
   function startStageTimer() {
     if (state.timerInterval) clearInterval(state.timerInterval);
     state.timeLeft = state.stageDuration;
-    state.hintFirstId = null;
-    state.hintSecondId = null;
+    state.hintElapsed = 0;
     updateTimerUI();
+    updateTimedHintBubble();
     state.isPaused = true;
     updateClockToggle();
     state.timerInterval = setInterval(() => {
       if (state.isPaused) return;
+      state.hintElapsed += 1;
       state.timeLeft -= 1;
       if (state.timeLeft <= 0) {
         state.timeLeft = 0;
         updateTimerUI();
+        updateTimedHintBubble();
         showStageComplete();
         return;
       }
       updateTimerUI();
+      updateTimedHintBubble();
     }, 1000);
   }
 
@@ -616,9 +723,20 @@
 
   function renderFruitBins() {
     dom.fruitBins.innerHTML = "";
-    const target = state.currentOrder.items && state.currentOrder.items[0];
-    const disabledTargetId =
-      (state.currentStage === 3 || state.currentStage === 4) && target ? target.id : null;
+    const disabledFruitId =
+      (state.currentStage === 3 || state.currentStage === 4) &&
+      state.currentOrder.items &&
+      state.currentOrder.items[0]
+        ? state.currentOrder.items[0].id
+        : null;
+    const rhythmMarks = {
+      orange: "V",
+      apple: null,
+      blueberry: null,
+      melon: "VV",
+      peach: "VVV",
+      pineapple: "VVVV"
+    };
     const fruitStyles = {
       orange: { light: "#ffb259", dark: "#f47c2a", leaf: "#73c06b" },
       apple: { light: "#ff6f6f", dark: "#c83232", leaf: "#6abf69" },
@@ -644,7 +762,6 @@
       pineapple: { type: "whole", label: "온쉼표" }
     };
     FRUITS.forEach((fruit) => {
-      const isTargetDisabled = disabledTargetId && fruit.id === disabledTargetId;
       const style = fruitStyles[fruit.id] || {
         light: "#ffd4b8",
         dark: "#f2a07b",
@@ -658,17 +775,17 @@
       const button = document.createElement("button");
       button.className = `fruit-slot ${fruit.id}`.trim();
       button.type = "button";
-      button.draggable = !isTargetDisabled;
-      if (isTargetDisabled) {
-        button.setAttribute("aria-disabled", "true");
-        button.dataset.disabled = "true";
-        button.classList.add("is-disabled");
-      }
+      button.draggable = true;
       button.style.setProperty("--fruit-light", style.light);
       button.style.setProperty("--fruit-dark", style.dark);
       button.style.setProperty("--leaf", style.leaf);
+      if (disabledFruitId && fruit.id === disabledFruitId) {
+        button.classList.add("is-disabled");
+        button.disabled = true;
+        button.draggable = false;
+      }
       button.addEventListener("dragstart", (event) => {
-        if (isTargetDisabled) {
+        if (button.disabled) {
           event.preventDefault();
           return;
         }
@@ -726,6 +843,31 @@
       noteLabel.textContent = note.label;
       sticker.appendChild(noteIcon);
       sticker.appendChild(noteLabel);
+      if (fruit.id === "apple" || fruit.id === "blueberry") {
+        const markWrap = document.createElement("span");
+        markWrap.className = `rhythm-mark rhythm-${fruit.id}`;
+        if (fruit.id === "apple") {
+          const left = document.createElement("span");
+          left.className = "count-mark v-left";
+          const right = document.createElement("span");
+          right.className = "count-mark v-right";
+          markWrap.appendChild(left);
+          markWrap.appendChild(right);
+        } else {
+          const leftSplit = document.createElement("span");
+          leftSplit.className = "count-mark v-left-split";
+          const right = document.createElement("span");
+          right.className = "count-mark v-right";
+          markWrap.appendChild(leftSplit);
+          markWrap.appendChild(right);
+        }
+        sticker.appendChild(markWrap);
+      } else {
+        const rhythm = document.createElement("span");
+        rhythm.className = "rhythm";
+        rhythm.textContent = rhythmMarks[fruit.id] || "";
+        sticker.appendChild(rhythm);
+      }
       basket.appendChild(plankTop);
       basket.appendChild(plankMid);
       basket.appendChild(plankBottom);
@@ -735,86 +877,6 @@
       button.appendChild(basket);
       dom.fruitBins.appendChild(button);
     });
-    updateHintState();
-  }
-
-  function updateHintState() {
-    if (!dom.fruitBins) return;
-    const slots = dom.fruitBins.querySelectorAll(".fruit-slot");
-    slots.forEach((slot) => slot.classList.remove("is-hint"));
-    const target = state.currentOrder.items && state.currentOrder.items[0];
-    if (!target) return;
-
-    if (state.currentStage === 1 || state.currentStage === 2) {
-      if (state.timeLeft > state.stageDuration / 2) return;
-      const slot = dom.fruitBins.querySelector(`.fruit-slot.${target.id}`);
-      if (slot) {
-        slot.classList.add("is-hint");
-      }
-      return;
-    }
-
-    if (state.currentStage !== 3 && state.currentStage !== 4) return;
-    const targetFruit = FRUITS.find((fruit) => fruit.id === target.id);
-    if (!targetFruit) return;
-    const totalLength = targetFruit.length * target.qty;
-    const hintStart = state.stageDuration - 15;
-    const hintExpand = state.stageDuration - 30;
-    if (state.timeLeft > hintStart) return;
-
-    const firstHints = getStage34HintFruits(totalLength, target.id);
-    if (!state.hintFirstId && firstHints.length > 0) {
-      state.hintFirstId = firstHints[0];
-    }
-    let hintIds = state.hintFirstId ? [state.hintFirstId] : [];
-    if (state.timeLeft <= hintExpand && state.hintFirstId) {
-      if (!state.hintSecondId) {
-        const secondHints = getStage34SecondHints(
-          totalLength,
-          target.id,
-          state.hintFirstId
-        );
-        state.hintSecondId = secondHints.length > 0 ? randomItem(secondHints) : null;
-      }
-      if (state.hintSecondId) {
-        hintIds = Array.from(new Set([...hintIds, state.hintSecondId]));
-      }
-    }
-    hintIds.forEach((id) => {
-      const slot = dom.fruitBins.querySelector(`.fruit-slot.${id}`);
-      if (slot) {
-        slot.classList.add("is-hint");
-      }
-    });
-  }
-
-  function getStage34HintFruits(totalLength, excludeId) {
-    const candidates = FRUITS.filter((fruit) => fruit.id !== excludeId)
-      .filter((fruit) => {
-        const remaining = totalLength - fruit.length;
-        return remaining >= 0 && canMakeLength(remaining, excludeId);
-      });
-    if (candidates.length === 0) return [];
-    let maxLength = -1;
-    let selectedId = null;
-    candidates.forEach((fruit) => {
-      if (fruit.length > maxLength) {
-        maxLength = fruit.length;
-        selectedId = fruit.id;
-      }
-    });
-    return selectedId ? [selectedId] : [];
-  }
-
-  function getStage34SecondHints(totalLength, excludeId, firstHintId) {
-    const firstFruit = FRUITS.find((fruit) => fruit.id === firstHintId);
-    if (!firstFruit) return [];
-    return FRUITS.filter((fruit) => fruit.id !== excludeId && fruit.id !== firstHintId)
-      .filter((fruit) => {
-        const remaining = totalLength - firstFruit.length - fruit.length;
-        return remaining >= 0 && canMakeLength(remaining, excludeId);
-      })
-      .map((fruit) => fruit.id);
   }
 
   function updateServeButton() {
