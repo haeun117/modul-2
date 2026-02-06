@@ -8,7 +8,7 @@
       href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&family=Nanum+Pen+Script&family=Noto+Music&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./style.css?v=20260130b" />
+    <link rel="stylesheet" href="./style.css?v=20260205a" />
   </head>
   <body>
     <script>
@@ -24,7 +24,9 @@
         });
       }
     </script>
-    <div class="app">
+    <div class="viewport-shell">
+      <div class="viewport-stage">
+        <div class="app">
       <div class="home-screen" id="home-screen" aria-hidden="true">
         <div class="home-title">
           <img class="home-title-logo" data-asset-src="assets/logo/title-logo.png" alt="" />
@@ -70,8 +72,7 @@
                 <img class="home-customer-image" data-asset-src="assets/characters/woman.png" alt="손님" />
               </div>
 </div>
-          </div>
-          <div class="home-stages">
+          </div><div class="home-stages note-group">
             <div class="home-stage-group">
               <div class="home-stage-title">음표 학습</div>
               <button class="stage-button rest note-color" type="button" data-stage-button="1">1단계</button>
@@ -80,7 +81,7 @@
               <button class="stage-button rest note-color" type="button" data-stage-button="4">4단계</button>
             </div>
           </div>
-          <div class="home-stages">
+<div class="home-stages rest-group">
             <div class="home-stage-group">
               <div class="home-stage-title">쉼표 학습</div>
               <button class="stage-button rest" type="button" data-stage-button="1" data-mode="rest">1단계</button>
@@ -89,6 +90,11 @@
               <button class="stage-button rest" type="button" data-stage-button="4" data-mode="rest">4단계</button>
             </div>
           </div>
+
+
+
+          
+          
         </div>
       </div>
 
@@ -150,6 +156,8 @@
 
         <div class="bottom-bar" aria-hidden="true"></div>
         
+      </div>
+        </div>
       </div>
     </div>
 

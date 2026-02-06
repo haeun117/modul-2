@@ -372,6 +372,27 @@
     }
   }
 
+    function updateViewportScale() {
+    const stage = document.querySelector('.viewport-stage');
+    if (!stage) return;
+    const homeScreen = document.getElementById('home-screen');
+    const isHomeVisible = homeScreen && !homeScreen.classList.contains('is-hidden') && homeScreen.classList.contains('is-visible');
+    if (isHomeVisible) {
+      stage.style.transform = 'scale(1)';
+      return;
+    }
+    const padding = 32;
+    const baseWidth = 1100;
+    const baseHeight = 900;
+    const scale = Math.min(
+      (window.innerWidth - padding) / baseWidth,
+      (window.innerHeight - padding) / baseHeight,
+      1
+    );
+    stage.style.transform = `scale(${scale})`;
+  }
+
+
   function initAssetImages() {
     const images = document.querySelectorAll("[data-asset-src]");
     images.forEach((img) => {
@@ -589,6 +610,33 @@
         updateServeButton();
       }
     });
+  }
+
+  const touchDrag = {
+    active: false,
+    fruitId: null,
+    ghost: null
+  };
+
+  function cleanupTouchGhost() {
+    if (touchDrag.ghost) {
+      touchDrag.ghost.remove();
+    }
+    touchDrag.active = false;
+    touchDrag.fruitId = null;
+    touchDrag.ghost = null;
+  }
+
+  function moveTouchGhost(x, y) {
+    if (!touchDrag.ghost) return;
+    touchDrag.ghost.style.transform = `translate(${x - 16}px, ${y - 16}px)`;
+  }
+
+  function isOverPlate(x, y) {
+    const plate = document.getElementById("plate-drop");
+    if (!plate) return false;
+    const rect = plate.getBoundingClientRect();
+    return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
   }
 
   function createFruitChip(fruitId) {
@@ -887,6 +935,48 @@
           requestAnimationFrame(() => dragChip.remove());
         }
       });
+      button.addEventListener("touchstart", (event) => {
+        if (!state.isStarted || state.isPaused) {
+          showStartPrompt();
+          return;
+        }
+        if (button.disabled) return;
+        const touch = event.touches[0];
+        if (!touch) return;
+        event.preventDefault();
+        touchDrag.active = true;
+        touchDrag.fruitId = fruit.id;
+        const ghost = createFruitChip(fruit.id);
+        if (ghost) {
+          ghost.style.position = "fixed";
+          ghost.style.left = "0";
+          ghost.style.top = "0";
+          ghost.style.pointerEvents = "none";
+          ghost.style.zIndex = "9999";
+          ghost.style.transform = `translate(${touch.clientX - 16}px, ${touch.clientY - 16}px)`;
+          document.body.appendChild(ghost);
+          touchDrag.ghost = ghost;
+        }
+      }, { passive: false });
+      button.addEventListener("touchmove", (event) => {
+        if (!touchDrag.active) return;
+        const touch = event.touches[0];
+        if (!touch) return;
+        event.preventDefault();
+        moveTouchGhost(touch.clientX, touch.clientY);
+      }, { passive: false });
+      button.addEventListener("touchend", (event) => {
+        if (!touchDrag.active) return;
+        const touch = event.changedTouches[0];
+        if (touch && isOverPlate(touch.clientX, touch.clientY)) {
+          state.plate.push(touchDrag.fruitId);
+          renderPlateItems();
+          renderNoteStickers();
+          updateServeButton();
+        }
+        cleanupTouchGhost();
+      });
+      button.addEventListener("touchcancel", cleanupTouchGhost);
       const cluster = document.createElement("div");
       cluster.className = "fruit-cluster";
       const totalPieces =
@@ -1069,7 +1159,6 @@
     dom.resultOverlay.setAttribute("aria-hidden", "true");
     dom.resultOverlay.style.display = "none";
   }
-
   function bindCoreEvents() {
     if (dom.clockToggle) {
       dom.clockToggle.addEventListener("click", () => {
@@ -1166,22 +1255,72 @@
     }
   }
 
+  function syncHomeStagesForTablet() {
+    const noteGroup = document.querySelector(".home-stages.note-group");
+    const restGroup = document.querySelector(".home-stages.rest-group");
+    if (!noteGroup || !restGroup) return;
+
+    if (!noteGroup.dataset.original) {
+      noteGroup.dataset.original = noteGroup.innerHTML;
+    }
+    if (!restGroup.dataset.original) {
+      restGroup.dataset.original = restGroup.innerHTML;
+    }
+
+    const isTablet = window.matchMedia("(max-width: 900px)").matches;
+    const swapped = noteGroup.dataset.swapped === "true";
+
+    if (isTablet && !swapped) {
+      const temp = noteGroup.innerHTML;
+      noteGroup.innerHTML = restGroup.innerHTML;
+      restGroup.innerHTML = temp;
+      noteGroup.dataset.swapped = "true";
+      restGroup.dataset.swapped = "true";
+    }
+
+    if (!isTablet && swapped) {
+      noteGroup.innerHTML = noteGroup.dataset.original;
+      restGroup.innerHTML = restGroup.dataset.original;
+      noteGroup.dataset.swapped = "false";
+      restGroup.dataset.swapped = "false";
+    }
+  }
+
+  function bindHomeStageSwap() {
+    syncHomeStagesForTablet();
+    let resizeTimer;
+    window.addEventListener("resize", () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(syncHomeStagesForTablet, 150);
+    });
+  }
+
+  function safeRun(fn) {
+    try {
+      fn();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   function init() {
     cacheDom();
-    renderToppings();
-    renderFruitBins();
-    renderNoteStickers();
-    updateTimerUI();
-    updateClockToggle();
-    initAssetImages();
-    bindCoreEvents();
-    renderHomeBubbles();
-    updateServeButton();
+    safeRun(renderToppings);
+    safeRun(renderFruitBins);
+    safeRun(renderNoteStickers);
+    safeRun(updateTimerUI);
+    safeRun(updateClockToggle);
+    safeRun(initAssetImages);
+    safeRun(bindCoreEvents);
+    safeRun(renderHomeBubbles);
+    safeRun(updateServeButton);
     state.isStarted = false;
-    startStage(1);
+    safeRun(() => startStage(1));
+    updateViewportScale();
+    window.addEventListener("resize", updateViewportScale);
     updateModeLabel();
     showHome();
-    bindOverlayEvents();
+    safeRun(bindOverlayEvents);
   }
 
   init();
