@@ -72,6 +72,19 @@
     dom.stage3HintItems = document.getElementById("stage3-hint-items");
   }
 
+  function isTabletViewport() {
+    return window.matchMedia("(min-width: 768px) and (max-width: 1023px)").matches;
+  }
+
+  function getFruitPieceCount(fruitId) {
+    if (!isTabletViewport()) {
+      return fruitId === "blueberry" ? 20 : fruitId === "melon" ? 5 : 7;
+    }
+    if (fruitId === "blueberry") return 8;
+    if (fruitId === "melon") return 3;
+    return 4;
+  }
+
   function renderOrder() {
     dom.orderItems.innerHTML = "";
     state.currentOrder.items.forEach((item) => {
@@ -979,8 +992,7 @@
       button.addEventListener("touchcancel", cleanupTouchGhost);
       const cluster = document.createElement("div");
       cluster.className = "fruit-cluster";
-      const totalPieces =
-        fruit.id === "blueberry" ? 20 : fruit.id === "melon" ? 5 : 7;
+      const totalPieces = getFruitPieceCount(fruit.id);
       for (let i = 1; i <= totalPieces; i += 1) {
         const piece = document.createElement("span");
         const leafClass =

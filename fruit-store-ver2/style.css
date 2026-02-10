@@ -2269,10 +2269,10 @@
         }
       }
 
-      @media (max-width: 900px) {
-      .app {
-        min-height: 900px;
-      }
+      @media (max-width: 767px) {
+        .app {
+          min-height: 900px;
+        }
 
         .main-grid {
           grid-template-columns: 1fr;
@@ -2290,7 +2290,6 @@
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
-        /* Tablet adjustments: hint bubble below 안내문구, order bubble to the right/below */
         .stage3-hint-bubble {
           top: 40px;
           right: 24px;
@@ -2311,65 +2310,6 @@
           justify-self: center;
           margin-top: -16px;
         }
-
-        /* Tablet home layout: customers row on top, stage groups side-by-side underneath */
-        .home-content {
-          grid-template-columns: 1fr 1fr;
-          grid-auto-rows: auto;
-          justify-items: center;
-          text-align: center;
-          row-gap: 16px;
-          column-gap: 12px;
-          transform: translateX(140px);
-        }
-
-        .home-panel {
-          justify-self: center;
-          grid-column: 1 / -1;
-          width: calc(100% + 120px);
-          max-width: none;
-          padding: 10px;
-          min-height: 190px;
-          transform: translateX(150px);
-        }
-
-        .home-customers {
-          justify-content: center;
-          gap: 16px;
-          flex-wrap: nowrap;
-          overflow-x: visible;
-        }
-
-        .home-customer {
-          min-width: 60px;
-        }
-
-        .home-customer-image {
-          width: 68px;
-          height: 64px;
-        }
-
-        .home-bubble {
-          transform: scale(0.92);
-          transform-origin: top center;
-        }
-
-        .home-stages {
-          justify-items: center;
-          width: 230px;
-          grid-row: 2;
-        }
-
-        .home-stages.note-group {
-          grid-column: 2;
-          transform: translateX(-70px);
-        }
-
-        .home-stages.rest-group {
-          grid-column: 3;
-          transform: translateX(-70px);
-        }
-
       }
 
 .fruit-slot:hover,
@@ -2397,76 +2337,223 @@
         left: 20px;
       }
 
-@media (min-width: 901px) {
-        /* Laptop home layout only */
-        .home-content {
-          grid-template-columns: 1fr 240px 240px;
-          grid-auto-rows: auto;
-          justify-items: center;
-          text-align: center;
-          row-gap: 18px;
-          column-gap: 20px;
-        }
+      /* Laptop layout baseline: tablet also uses this layout via viewport scaling */
+      .home-content {
+        grid-template-columns: 1fr 240px 240px;
+        grid-auto-rows: auto;
+        justify-items: center;
+        text-align: center;
+        row-gap: 18px;
+        column-gap: 20px;
+      }
 
-        .home-panel {
-          justify-self: center;
-          grid-column: 1 / -1;
-          width: 100%;
-          max-width: 860px;
-          padding: 12px;
-          min-height: 210px;
-          transform: translateX(170px);
-        }
+      .home-panel {
+        justify-self: center;
+        grid-column: 1 / -1;
+        width: 100%;
+        max-width: 860px;
+        padding: 12px;
+        min-height: 210px;
+        transform: translateX(170px);
+      }
 
-        .home-customers {
-          justify-content: center;
-          gap: 10px;
-        }
+      .home-customers {
+        justify-content: center;
+        gap: 10px;
+      }
 
-        .home-customer {
-          min-width: 80px;
-        }
+      .home-customer {
+        min-width: 80px;
+      }
 
-        .home-customer-image {
-          width: 90px;
-          height: 86px;
-        }
+      .home-customer-image {
+        width: 90px;
+        height: 86px;
+      }
 
-        .home-bubble {
-          transform: scale(0.95);
-          transform-origin: top center;
-        }
+      .home-bubble {
+        transform: scale(0.95);
+        transform-origin: top center;
+      }
 
-        .home-stages {
-          justify-items: center;
-          width: 240px;
-          grid-row: 2;
-        }
+      .home-stages {
+        justify-items: center;
+        width: 240px;
+        grid-row: 2;
+      }
 
+      .home-stages.note-group {
+        grid-column: 2;
+        transform: translateX(-30px);
+      }
+
+      .home-stages.rest-group {
+        grid-column: 3;
+        margin-top: 0;
+        transform: translateX(-30px);
+      }
+
+      @media (min-width: 1440px) {
         .home-stages.note-group {
-          grid-column: 2;
-          transform: translateX(-30px);
+          transform: translateX(-100px) !important;
         }
-
         .home-stages.rest-group {
-          grid-column: 3;
-          margin-top: 0;
-          transform: translateX(-30px);
+          transform: translateX(-100px) !important;
         }
-}
+      }
 
+      @media (min-width: 768px) and (max-width: 1023px) {
+        .home-screen {
+          transform: translateX(-140px) scale(0.86);
+          transform-origin: top left;
+          width: calc(100% / 0.86);
+        }
 
+        .home-stages.note-group,
+        .home-stages.rest-group {
+          transform: translateX(0);
+        }
 
-@media (min-width: 1440px) {
-  .home-stages.note-group {
-    transform: translateX(-100px) !important;
-  }
-  .home-stages.rest-group {
-    transform: translateX(-100px) !important;
-  }
-}
+        .stage-notes {
+          top: 8px;
+          right: 8px;
+        }
 
-  .home-stages.rest-group {
-    transform: translateX(-50px) !important;
-  }
-}
+        .stage4-note {
+          max-width: 190px;
+          padding: 6px 8px;
+          font-size: 11px;
+          border-width: 2px;
+          border-radius: 10px;
+          line-height: 1.3;
+          box-shadow: 0 2px 0 var(--line);
+        }
+
+        .customer-panel {
+          gap: 12px;
+        }
+
+        .customer-image {
+          width: 112px;
+        }
+
+        .stage3-hint-bubble {
+          top: 2px;
+          right: -8px;
+          padding: 6px 10px;
+          min-height: 30px;
+          min-width: 126px;
+          max-width: 180px;
+          border-width: 3px;
+          border-radius: 24px;
+          box-shadow: 0 3px 0 var(--line);
+          transform: translate(0, -96%);
+        }
+
+        .stage3-hint-bubble .hint-items {
+          gap: 4px;
+          font-size: 11px;
+          line-height: 1.2;
+        }
+
+        .stage3-hint-bubble .hint-items .symbol,
+        .stage3-hint-bubble .hint-unknown {
+          font-size: 11px;
+        }
+
+        .stage3-hint-bubble .hint-mult {
+          font-size: 10px;
+        }
+
+        .stage3-hint-bubble .plate-fruit {
+          width: 18px;
+          height: 18px;
+        }
+
+        .stage3-hint-bubble .plate-fruit.pineapple {
+          width: 16px;
+          height: 24px;
+        }
+
+        .stage3-hint-bubble .thought-dot {
+          width: 12px;
+          height: 12px;
+          border-width: 3px;
+          bottom: -14px;
+          left: 18px;
+        }
+
+        .stage3-hint-bubble .thought-dot.small {
+          width: 8px;
+          height: 8px;
+          border-width: 2px;
+          bottom: -23px;
+          left: 10px;
+        }
+
+        .order-card {
+          max-width: 118px;
+          padding: 6px 8px;
+        }
+
+        .order-card::after {
+          left: -10px;
+          width: 11px;
+          height: 11px;
+          border-left-width: 3px;
+          border-bottom-width: 3px;
+        }
+
+        .order-item {
+          padding: 4px 7px;
+          border-width: 2px;
+          font-size: 12px;
+          gap: 4px;
+        }
+
+        .order-item .plate-fruit {
+          width: 18px;
+          height: 18px;
+        }
+
+        .order-item .plate-fruit.blueberry,
+        .order-item .plate-fruit.peach {
+          width: 18px;
+          height: 18px;
+        }
+
+        .order-item .plate-fruit.pineapple {
+          width: 16px;
+          height: 24px;
+        }
+
+        .basket {
+          height: 82px;
+        }
+
+        .fruit-cluster {
+          top: 8px;
+          left: 6px;
+          width: 132px;
+          height: 76px;
+          transform: scale(0.62);
+          transform-origin: left top;
+        }
+
+        .fruit-slot.blueberry .fruit-cluster {
+          transform: translateX(-2px) scale(0.62);
+        }
+
+        .crate-sticker {
+          top: 6px;
+          right: 4px;
+          min-width: 52px;
+          padding: 3px 5px;
+          font-size: 10px;
+          z-index: 4;
+        }
+
+        .crate-sticker span {
+          font-size: 12px;
+        }
+      }
